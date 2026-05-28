@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Módulo 3 — Tambor Tradicional. Curso interactivo de instrumentos de Tabasco.">
+    <title>Módulo 3 — Tambor Tradicional | Raíces de Tabasco</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="module1.css">
+    <link rel="stylesheet" href="module3.css">
+</head>
+
+<body>
+    <!-- ===== Toolbar ===== -->
+    <nav class="toolbar" id="toolbar">
+        <div class="toolbar-container">
+            <button class="toolbar-back" id="btnBack" aria-label="Volver al curso">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="15 18 9 12 15 6" />
+                </svg>
+                <span>Volver</span>
+            </button>
+            <div class="toolbar-center">
+                <div class="toolbar-module-badge">Módulo 03</div>
+                <h1 class="toolbar-title">Tambor Tradicional</h1>
+            </div>
+            <div class="toolbar-progress">
+                <div class="progress-ring" id="progressRing">
+                    <svg viewBox="0 0 44 44">
+                        <circle cx="22" cy="22" r="18" fill="none" stroke="rgba(255,255,255,0.15)" stroke-width="3" />
+                        <circle cx="22" cy="22" r="18" fill="none" stroke="url(#progGrad)" stroke-width="3" stroke-linecap="round" stroke-dasharray="113.1" stroke-dashoffset="113.1" id="progressCircle" />
+                        <defs>
+                            <linearGradient id="progGrad" x1="0" y1="0" x2="44" y2="44">
+                                <stop offset="0%" stop-color="#3b82f6" />
+                                <stop offset="100%" stop-color="#10b981" />
+                            </linearGradient>
+                        </defs>
+                    </svg>
+                    <span class="progress-text" id="progressText">0%</span>
+                </div>
+            </div>
+        </div>
+        <!-- Step indicators -->
+        <div class="toolbar-steps">
+            <div class="step active" data-step="1">
+                <div class="step-dot"></div>
+                <span>Intro</span>
+            </div>
+            <div class="step-line"></div>
+            <div class="step" data-step="2">
+                <div class="step-dot"></div>
+                <span>Partes</span>
+            </div>
+            <div class="step-line"></div>
+            <div class="step" data-step="3">
+                <div class="step-dot"></div>
+                <span>Simulador</span>
+            </div>
+            <div class="step-line"></div>
+            <div class="step" data-step="4">
+                <div class="step-dot"></div>
+                <span>Cultura</span>
+            </div>
+            <div class="step-line"></div>
+            <div class="step" data-step="5">
+                <div class="step-dot"></div>
+                <span>Ritmo</span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- ===== Main Content ===== -->
+    <main class="module-main">
+        <div class="music-notes-bg">
+            <span class="note note-1">♪</span>
+            <span class="note note-2">♫</span>
+            <span class="note note-3">♩</span>
+            <span class="note note-4">♬</span>
+            <span class="note note-5">♪</span>
+            <span class="note note-6">♫</span>
+            <span class="note note-7">♩</span>
+            <span class="note note-8">♬</span>
+            <span class="note note-9">♪</span>
+            <span class="note note-10">♫</span>
+        </div>
+
+        <!-- ===== Section 1: Intro ===== -->
+        <section class="content-section active" id="sectionIntro">
+            <div class="section-container">
+                <div class="context-hero module3-hero">
+                    <div class="context-hero-bg">
+                        <div class="ctx-shape ctx-shape-1"></div>
+                        <div class="ctx-shape ctx-shape-2"></div>
+                        <div class="ctx-shape ctx-shape-3"></div>
+                    </div>
+                    <div class="context-hero-content">
+                        <div class="context-badge">
+                            <span class="badge-icon">🥁</span>
+                            Instrumento de Percusión
+                        </div>
+                        <h2 class="context-title">Tambor <span class="gradient-text" style="--tw-gradient-from: #ef4444; --tw-gradient-to: #b91c1c;">Tradicional</span></h2>
+                    </div>
+                </div>
+
+                <div class="intro-content fade-up">
+                    <div class="intro-image-container">
+                        <img src="Tambor.png" alt="Tambor Tradicional" class="intro-img" onerror="this.src='https://placehold.co/400x400?text=Tambor+Tradicional'; this.classList.add('placeholder-img')">
+                    </div>
+                    <div class="intro-text-card">
+                        <p class="intro-text">
+                            El tambor tabasqueño es el corazón de la música tradicional, marcando el pulso en danzas y celebraciones, y aportando la base rítmica más dinámica.
+                        </p>
+                        <div class="section-action">
+                            <button class="btn-continue" id="btnContinueToParts">
+                                <span>Siguiente</span>
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6" /></svg>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ===== Section 2: Partes del tambor ===== -->
+        <section class="content-section" id="sectionParts">
+            <div class="section-container">
+                <div class="section-intro">
+                    <div class="section-intro-badge red">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+                        </svg>
+                        Estructura
+                    </div>
+                    <h2 class="section-intro-title">Partes del tambor</h2>
+                    <p class="section-intro-desc">Descubre los elementos que componen el instrumento interactuando con ellos.</p>
+                </div>
+
+                <div class="interactive-image-container">
+                    <img src="Tambor.png" alt="Partes del Tambor" class="interactive-img" onerror="this.src='https://placehold.co/600x400?text=Tambor+Tradicional';">
+
+                    <button class="hotspot" id="hsCuerpo" style="top: 65%; left: 48%;" data-info="Cuerpo de madera">
+                        <span class="hotspot-pulse"></span>
+                        <span class="hotspot-dot"></span>
+                    </button>
+                    <button class="hotspot" id="hsParche" style="top: 26%; left: 55%;" data-info="Parche">
+                        <span class="hotspot-pulse"></span>
+                        <span class="hotspot-dot"></span>
+                    </button>
+                    <button class="hotspot" id="hsCuerdas" style="top: 48%; left: 64%;" data-info="Cuerdas o amarres">
+                        <span class="hotspot-pulse"></span>
+                        <span class="hotspot-dot"></span>
+                    </button>
+                    <button class="hotspot" id="hsBaquetas" style="top: 22%; left: 40%;" data-info="Baquetas o manos">
+                        <span class="hotspot-pulse"></span>
+                        <span class="hotspot-dot"></span>
+                    </button>
+
+                    <div class="hotspot-info-panel" id="hotspotInfoPanel">
+                        <h4 id="hsTitle">Selecciona un punto</h4>
+                        <p id="hsDesc">Explora la imagen para conocer más.</p>
+                    </div>
+                </div>
+
+                <div class="section-action mt-8">
+                    <button class="btn-continue" id="btnContinueToSimulador" disabled>
+                        <span>Siguiente</span>
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6" /></svg>
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- ===== Section 3: Simulador Básico ===== -->
+        <section class="content-section" id="sectionSimulador">
+            <div class="section-container">
+                <div class="section-intro">
+                    <div class="section-intro-badge amber">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5" />
+                            <path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07" />
+                        </svg>
+                        Simulador interactivo
+                    </div>
+                    <h2 class="section-intro-title">¡Toca el Tambor!</h2>
+                    <p class="section-intro-desc">El tambor produce sonidos distintos dependiendo de dónde lo golpees. Presiona las 3 zonas para experimentar.</p>
+                </div>
+
+                <div class="simulator-container">
+                    <div class="drum-pad-wrapper">
+                        <!-- Círculo que representa el tambor -->
+                        <div class="drum-surface">
+                            <button class="drum-zone zone-center" data-sound="grave" id="padCenter">
+                                <span>Centro (Grave)</span>
+                            </button>
+                            <button class="drum-zone zone-edge" data-sound="medio" id="padEdge">
+                                <span>Orilla (Medio)</span>
+                            </button>
+                            <button class="drum-zone zone-soft" data-sound="ligero" id="padSoft">
+                                <span>Golpe Suave (Ligero)</span>
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="simulator-feedback" id="simFeedback">
+                        <span class="sim-tag">¡Explora!</span>
+                        Toca las tres zonas distintas para continuar.
+                    </div>
+                </div>
+
+                <div class="section-action mt-8">
+                    <button class="btn-continue" id="btnContinueToCultura" disabled>
+                        <span>Siguiente</span>
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6" /></svg>
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- ===== Section 4: Cápsula Cultural ===== -->
+        <section class="content-section" id="sectionCultura">
+            <div class="section-container">
+                <div class="section-intro">
+                    <div class="section-intro-badge blue">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="12" cy="12" r="10" />
+                            <line x1="12" y1="16" x2="12" y2="12" />
+                            <line x1="12" y1="8" x2="12.01" y2="8" />
+                        </svg>
+                        Cápsula Cultural
+                    </div>
+                    <h2 class="section-intro-title">El latido de la comunidad</h2>
+                </div>
+
+                <div class="cultura-card fade-up">
+                    <div class="cultura-visual">
+                        <video src="Danza.mp4" autoplay loop muted playsinline class="cultura-video"></video>
+                    </div>
+                    <div class="cultura-text">
+                        <p>El tambor acompaña danzas y celebraciones tradicionales.</p>
+                        <p>Su sonido fuerte y grave <strong>marca el ritmo colectivo</strong> y fortalece la identidad cultural de los pueblos, sirviendo como un elemento que une a las personas al compás de su tradición.</p>
+                    </div>
+                </div>
+
+                <div class="section-action mt-8">
+                    <button class="btn-continue" id="btnContinueToRitmo">
+                        <span>Siguiente</span>
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6" /></svg>
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- ===== Section 5: Repite el Ritmo ===== -->
+        <section class="content-section" id="sectionRitmo">
+            <div class="section-container">
+                <div class="section-intro">
+                    <div class="section-intro-badge red">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <polyline points="22 12 18 12 15 21 9 3 6 12 2 12" />
+                        </svg>
+                        Juego Rítmico
+                    </div>
+                    <h2 class="section-intro-title">Repite el Ritmo</h2>
+                    <p class="section-intro-desc">Supera los 4 niveles repitiendo exactamente los patrones sonoros que escuches. A medida que avanzas, la complejidad aumenta.</p>
+                </div>
+
+                <div class="rhythm-game-container">
+                    <div class="level-indicator" id="levelIndicator" style="font-weight: bold; margin-bottom: 10px; color: var(--purple);">
+                        Nivel 1 de 4
+                    </div>
+                    
+                    <div class="sequence-display-box" id="sequenceDisplayBox" style="border: 2px solid #16a34a; padding: 20px; margin-bottom: 30px; border-radius: var(--radius-sm); min-height: 80px; display: flex; align-items: center; justify-content: center;">
+                        <h3 id="sequenceStatusText" style="text-align: center; text-transform: uppercase; letter-spacing: 2px; margin: 0;">Secuencia</h3>
+                        <div class="rhythm-dots" id="rhythmDots" style="display: none; justify-content: center; gap: 15px; margin: 0;">
+                            <!-- Dots will be generated here -->
+                        </div>
+                    </div>
+                    
+                    <div class="rhythm-status" id="rhythmStatus" style="font-size: 1.2rem; font-weight: bold; text-align: center; margin-bottom: 20px;">
+                        Haz clic en "Escuchar" para conocer el patrón.
+                    </div>
+
+                    <div style="text-align: center; margin-bottom: 30px;">
+                        <button class="btn-play-rhythm" id="btnPlayPattern" style="background: var(--red); color: white; padding: 12px 24px; border-radius: var(--radius-sm); border: none; font-weight: bold; cursor: pointer; display: inline-flex; align-items: center; gap: 8px; font-size: 1.1rem;">
+                            <svg viewBox="0 0 24 24" fill="currentColor" width="20" height="20"><path d="M8 5v14l11-7z"/></svg>
+                            Escuchar Ritmo
+                        </button>
+                    </div>
+
+                    <div class="rhythm-pads">
+                        <button class="rhythm-pad" data-pad="tum" id="padTum" disabled>
+                            <img src="Tamborcito.png" alt="Tambor Tum" class="pad-img">
+                            <span class="color-dot dot-tum"></span>
+                        </button>
+                        <button class="rhythm-pad" data-pad="ta" id="padTa" disabled>
+                            <img src="Tamborcito.png" alt="Tambor Ta" class="pad-img">
+                            <span class="color-dot dot-ta"></span>
+                        </button>
+                        <button class="rhythm-pad" data-pad="pa" id="padPa" disabled>
+                            <img src="Tamborcito.png" alt="Tambor Pa" class="pad-img">
+                            <span class="color-dot dot-pa"></span>
+                        </button>
+                        <button class="rhythm-pad" data-pad="ti" id="padTi" disabled>
+                            <img src="Tamborcito.png" alt="Tambor Ti" class="pad-img">
+                            <span class="color-dot dot-ti"></span>
+                        </button>
+                    </div>
+
+                    <div class="sort-feedback" id="rhythmFeedback"></div>
+                </div>
+
+                <!-- Quiz Results -->
+                <div class="quiz-results" id="quizResults" style="display:none; margin-top: 2rem;">
+                    <div class="results-card">
+                        <div class="results-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" />
+                                <polyline points="22 4 12 14.01 9 11.01" />
+                            </svg>
+                        </div>
+                        <h2 class="results-title">¡Módulo Completado!</h2>
+                        <p class="results-subtitle">Has finalizado con éxito el Módulo del Tambor Tradicional.</p>
+                        <button class="btn-finish" id="btnFinish">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
+                                <polyline points="9 22 9 12 15 12 15 22" />
+                            </svg>
+                            <span>Volver al Curso</span>
+                        </button>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Confetti Canvas -->
+    <canvas id="confettiCanvas"></canvas>
+
+    <script src="ui-sounds.js"></script>
+    <script src="module3.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Módulo 2 — Caparazón de Tortuga. Curso interactivo de instrumentos de Tabasco.">
+    <title>Módulo 2 — Caparazón de Tortuga | Raíces de Tabasco</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&display=swap"
+        rel="stylesheet">
+    <!-- Reutilizamos el estilo base y agregaremos uno específico -->
+    <link rel="stylesheet" href="module1.css">
+    <link rel="stylesheet" href="module2.css">
+</head>
+
+<body>
+    <!-- ===== Toolbar ===== -->
+    <nav class="toolbar" id="toolbar">
+        <div class="toolbar-container">
+            <button class="toolbar-back" id="btnBack" aria-label="Volver al curso">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"
+                    stroke-linejoin="round">
+                    <polyline points="15 18 9 12 15 6" />
+                </svg>
+                <span>Volver</span>
+            </button>
+            <div class="toolbar-center">
+                <div class="toolbar-module-badge">Módulo 02</div>
+                <h1 class="toolbar-title">Caparazón de Tortuga</h1>
+            </div>
+            <div class="toolbar-progress">
+                <div class="progress-ring" id="progressRing">
+                    <svg viewBox="0 0 44 44">
+                        <circle cx="22" cy="22" r="18" fill="none" stroke="rgba(255,255,255,0.15)" stroke-width="3" />
+                        <circle cx="22" cy="22" r="18" fill="none" stroke="url(#progGrad)" stroke-width="3"
+                            stroke-linecap="round" stroke-dasharray="113.1" stroke-dashoffset="113.1"
+                            id="progressCircle" />
+                        <defs>
+                            <linearGradient id="progGrad" x1="0" y1="0" x2="44" y2="44">
+                                <stop offset="0%" stop-color="#3b82f6" />
+                                <stop offset="100%" stop-color="#10b981" />
+                            </linearGradient>
+                        </defs>
+                    </svg>
+                    <span class="progress-text" id="progressText">0%</span>
+                </div>
+            </div>
+        </div>
+        <!-- Step indicators -->
+        <div class="toolbar-steps">
+            <div class="step active" data-step="1">
+                <div class="step-dot"></div>
+                <span>Intro</span>
+            </div>
+            <div class="step-line"></div>
+            <div class="step" data-step="2">
+                <div class="step-dot"></div>
+                <span>Explora</span>
+            </div>
+            <div class="step-line"></div>
+            <div class="step" data-step="3">
+                <div class="step-dot"></div>
+                <span>Sonido</span>
+            </div>
+            <div class="step-line"></div>
+            <div class="step" data-step="4">
+                <div class="step-dot"></div>
+                <span>Historia</span>
+            </div>
+            <div class="step-line"></div>
+            <div class="step" data-step="5">
+                <div class="step-dot"></div>
+                <span>Actividad</span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- ===== Main Content ===== -->
+    <main class="module-main">
+        <div class="music-notes-bg">
+            <span class="note note-1">♪</span>
+            <span class="note note-2">♫</span>
+            <span class="note note-3">♩</span>
+            <span class="note note-4">♬</span>
+            <span class="note note-5">♪</span>
+            <span class="note note-6">♫</span>
+            <span class="note note-7">♩</span>
+            <span class="note note-8">♬</span>
+            <span class="note note-9">♪</span>
+            <span class="note note-10">♫</span>
+        </div>
+
+        <!-- ===== Section 1: Intro ===== -->
+        <section class="content-section active" id="sectionIntro">
+            <div class="section-container">
+                <div class="context-hero module2-hero">
+                    <div class="context-hero-bg">
+                        <div class="ctx-shape ctx-shape-1"></div>
+                        <div class="ctx-shape ctx-shape-2"></div>
+                        <div class="ctx-shape ctx-shape-3"></div>
+                    </div>
+                    <div class="context-hero-content">
+                        <div class="context-badge">
+                            <span class="badge-icon">🥁</span>
+                            Instrumento de Percusión
+                        </div>
+                        <h2 class="context-title">Caparazón de <span class="gradient-text"
+                                style="--tw-gradient-from: #10b981; --tw-gradient-to: #059669;">Tortuga</span></h2>
+                    </div>
+                </div>
+
+                <div class="intro-content fade-up">
+                    <div class="intro-image-container">
+                        <!-- Usando un placeholder hasta que el usuario tenga la imagen Caparazon.png -->
+                        <img src="Caparazon.png" alt="Caparazón de Tortuga" class="intro-img"
+                            onerror="this.src='https://placehold.co/400x300?text=Caparazón+de+Tortuga'; this.classList.add('placeholder-img')">
+                    </div>
+                    <div class="intro-text-card">
+                        <p class="intro-text">
+                            El caparazón de tortuga ha sido utilizado como instrumento de percusión en prácticas
+                            tradicionales, rituales y expresiones culturales de la región.
+                        </p>
+                        <div class="section-action">
+                            <button class="btn-continue" id="btnContinueToParts">
+
+                                <span>Siguiente</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ===== Section 2: Explora el instrumento ===== -->
+        <section class="content-section" id="sectionParts">
+            <div class="section-container">
+                <div class="section-intro">
+                    <div class="section-intro-badge green">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+                        </svg>
+                        Estructura
+                    </div>
+                    <h2 class="section-intro-title">Explora el instrumento</h2>
+                    <p class="section-intro-desc">Haz clic en los puntos interactivos para descubrir las características
+                        y uso del caparazón.</p>
+                </div>
+
+                <div class="interactive-image-container">
+                    <img src="Caparazon.png" alt="Caparazón de Tortuga" class="interactive-img"
+                        onerror="this.src='https://placehold.co/600x400?text=Caparazón+de+Tortuga';">
+
+                    <button class="hotspot" id="hsCaparazon" style="top: 50%; left: 50%;" data-info="Caparazón">
+                        <span class="hotspot-pulse"></span>
+                        <span class="hotspot-dot"></span>
+                    </button>
+
+                    <button class="hotspot" id="hsBaquetas" style="top: 70%; left: 20%;" data-info="Baquetas o astas">
+                        <span class="hotspot-pulse"></span>
+                        <span class="hotspot-dot"></span>
+                    </button>
+                    <button class="hotspot" id="hsResonancia" style="top: 40%; left: 70%;" data-info="Resonancia">
+                        <span class="hotspot-pulse"></span>
+                        <span class="hotspot-dot"></span>
+                    </button>
+
+                    <!-- Info Panel for Hotspots -->
+                    <div class="hotspot-info-panel" id="hotspotInfoPanel">
+                        <h4 id="hsTitle">Selecciona un punto</h4>
+                        <p id="hsDesc">Explora la imagen para conocer más.</p>
+                    </div>
+                </div>
+
+                <div class="section-action mt-8">
+                    <button class="btn-continue" id="btnContinueToCompare" disabled>
+                        <span>Siguiente</span>
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                            <polyline points="9 18 15 12 9 6" />
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- ===== Section 3: Comparador de Sonidos ===== -->
+        <section class="content-section" id="sectionCompare">
+            <div class="section-container">
+                <div class="section-intro">
+                    <div class="section-intro-badge purple">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5" />
+                            <path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07" />
+                        </svg>
+                        Comparador Acústico
+                    </div>
+                    <h2 class="section-intro-title">¿Cuál es el caparazón?</h2>
+                    <p class="section-intro-desc">Escucha los tres sonidos e identifica cuál corresponde al caparazón de
+                        tortuga.</p>
+                </div>
+
+                <div class="audio-compare-grid">
+                    <div class="audio-compare-card" data-sound="flauta">
+                        <div class="audio-wave small">
+                            <div class="wave-bar"></div>
+                            <div class="wave-bar"></div>
+                            <div class="wave-bar"></div>
+                            <div class="wave-bar"></div>
+                        </div>
+                        <button class="btn-play-compare">
+                            <svg viewBox="0 0 24 24" fill="currentColor" class="play-icon">
+                                <path d="M8 5v14l11-7z" />
+                            </svg>
+                            <svg viewBox="0 0 24 24" fill="currentColor" class="pause-icon" style="display:none;">
+                                <rect x="6" y="4" width="4" height="16" />
+                                <rect x="14" y="4" width="4" height="16" />
+                            </svg>
+                        </button>
+                        <span>Sonido A</span>
+                    </div>
+                    <div class="audio-compare-card" data-sound="caparazon">
+                        <div class="audio-wave small">
+                            <div class="wave-bar"></div>
+                            <div class="wave-bar"></div>
+                            <div class="wave-bar"></div>
+                            <div class="wave-bar"></div>
+                        </div>
+                        <button class="btn-play-compare">
+                            <svg viewBox="0 0 24 24" fill="currentColor" class="play-icon">
+                                <path d="M8 5v14l11-7z" />
+                            </svg>
+                            <svg viewBox="0 0 24 24" fill="currentColor" class="pause-icon" style="display:none;">
+                                <rect x="6" y="4" width="4" height="16" />
+                                <rect x="14" y="4" width="4" height="16" />
+                            </svg>
+                        </button>
+                        <span>Sonido B</span>
+                    </div>
+                    <div class="audio-compare-card" data-sound="tambor">
+                        <div class="audio-wave small">
+                            <div class="wave-bar"></div>
+                            <div class="wave-bar"></div>
+                            <div class="wave-bar"></div>
+                            <div class="wave-bar"></div>
+                        </div>
+                        <button class="btn-play-compare">
+                            <svg viewBox="0 0 24 24" fill="currentColor" class="play-icon">
+                                <path d="M8 5v14l11-7z" />
+                            </svg>
+                            <svg viewBox="0 0 24 24" fill="currentColor" class="pause-icon" style="display:none;">
+                                <rect x="6" y="4" width="4" height="16" />
+                                <rect x="14" y="4" width="4" height="16" />
+                            </svg>
+                        </button>
+                        <span>Sonido C</span>
+                    </div>
+                </div>
+
+                <div class="compare-question-card fade-up" id="compareQuestionCard" style="display:none;">
+                    <h3>Selecciona el sonido del Caparazón de Tortuga:</h3>
+                    <div class="audio-options">
+                        <button class="audio-opt" data-answer="flauta">Sonido A</button>
+                        <button class="audio-opt" data-answer="caparazon">Sonido B</button>
+                        <button class="audio-opt" data-answer="tambor">Sonido C</button>
+                    </div>
+                    <p class="audio-feedback" id="compareFeedback"></p>
+                </div>
+
+                <div class="section-action mt-8">
+                    <button class="btn-continue" id="btnContinueToHistory" disabled>
+                        <span>Siguiente</span>
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                            <polyline points="9 18 15 12 9 6" />
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- ===== Section 4: Microhistoria cultural ===== -->
+        <section class="content-section" id="sectionHistory">
+            <div class="section-container">
+                <div class="section-intro">
+                    <div class="section-intro-badge amber">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20" />
+                            <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z" />
+                        </svg>
+                        Historia Cultural
+                    </div>
+                    <h2 class="section-intro-title">Memoria Sonora</h2>
+                    <p class="section-intro-desc">Navega por las tarjetas para conocer la importancia del caparazón.</p>
+                </div>
+
+                <div class="process-carousel history-carousel">
+                    <!-- Step 1 -->
+                    <div class="process-card active" id="historyStep1">
+                        <div class="process-step-number">I</div>
+                        <div class="process-content">
+                            <div class="process-icon">
+                                <img src="Tortugas.jpg" alt="Tortugas" style="border-radius: 8px;">
+                            </div>
+                            <div class="process-text">
+                                <h3>El origen natural</h3>
+                                <p>El caparazón de tortuga se obtiene de la concha de la tortuga hicotea. Es un
+                                    material natural que ha sido utilizado por las comunidades de Tabasco como
+                                    parte de la musica tradicional tabasqueña.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Step 2 -->
+                    <div class="process-card" id="historyStep2">
+                        <div class="process-step-number">II</div>
+                        <div class="process-content">
+                            <div class="process-icon">
+                                <img src="Caparazon.png" alt="Caparazón" style="border-radius: 8px;">
+                            </div>
+                            <div class="process-text">
+                                <h3>Integración sonora</h3>
+                                <p>El caparazón de tortuga se integró orgánicamente a las prácticas sonoras y rituales,
+                                    aprovechando su increíble acústica.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Step 3 -->
+                    <div class="process-card" id="historyStep3">
+                        <div class="process-step-number">III</div>
+                        <div class="process-content">
+                            <div class="process-icon">⏳</div>
+                            <div class="process-text">
+                                <h3>Valor ancestral</h3>
+                                <p>Su valor no está solo en el sonido rítmico que produce, sino en la memoria cultural e
+                                    histórica que representa para su pueblo.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Carousel Controls -->
+                    <div class="carousel-controls">
+                        <button class="btn-carousel" id="btnHistPrev" disabled>
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <polyline points="15 18 9 12 15 6" />
+                            </svg>
+                        </button>
+                        <div class="carousel-dots" id="carouselDotsHist">
+                            <span class="dot active"></span>
+                            <span class="dot"></span>
+                            <span class="dot"></span>
+                        </div>
+                        <button class="btn-carousel" id="btnHistNext">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <polyline points="9 18 15 12 9 6" />
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="section-action mt-8">
+                    <button class="btn-continue" id="btnContinueToMatch" style="display:none;">
+                        <span>Siguiente</span>
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                            <polyline points="9 18 15 12 9 6" />
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- ===== Section 5: Relaciona sonido y función ===== -->
+        <section class="content-section" id="sectionMatch">
+            <div class="section-container">
+                <div class="section-intro">
+                    <div class="section-intro-badge red">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <polyline points="22 12 18 12 15 21 9 3 6 12 2 12" />
+                        </svg>
+                        Actividad Final
+                    </div>
+                    <h2 class="section-intro-title">Explora la Concha</h2>
+                    <p class="section-intro-desc">Supera los 4 niveles repitiendo exactamente la secuencia de sonidos en
+                        la concha.</p>
+                </div>
+
+                <div class="rhythm-game-container">
+                    <div class="level-indicator" id="conchaLevelIndicator"
+                        style="font-weight: bold; margin-bottom: 10px; color: var(--green-dark);">
+                        Nivel 1 de 4
+                    </div>
+
+                    <div class="sequence-display-box" id="sequenceDisplayBox"
+                        style="border: 2px solid var(--green); border-radius: var(--radius-md); padding: 15px; text-align: center; margin-bottom: 25px;">
+                        <h3 style="margin-top: 0; color: var(--gray-800); font-size: 1.1rem; letter-spacing: 1px;">
+                            SECUENCIA EN COLORES</h3>
+                        <div class="sequence-dots-container" id="conchaSequenceDotsContainer"
+                            style="display: flex; justify-content: center; gap: 15px; min-height: 30px; align-items: center; margin-top: 15px;">
+                            <span id="sequenceStatusText" style="color: var(--gray-500); font-size: 0.95rem;">Haz clic
+                                en "Escuchar" para conocer la secuencia</span>
+                        </div>
+                    </div>
+
+                    <button class="btn-play-rhythm" id="btnPlayConchaPattern" style="margin-bottom: 30px;">
+                        <svg viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M8 5v14l11-7z" />
+                        </svg>
+                        Escuchar Secuencia
+                    </button>
+
+                    <div class="sort-feedback" id="conchaRhythmFeedback"></div>
+
+                    <div class="concha-row"
+                        style="display: flex; justify-content: space-around; align-items: flex-end; gap: 15px; max-width: 600px; margin: 0 auto;">
+                        <!-- Concha 1 (Blue) -->
+                        <div class="concha-item" style="text-align: center; flex: 1;">
+                            <button class="concha-btn" data-id="0" data-tone="grave" disabled>
+                                <img src="Concha.png" alt="Concha"
+                                    onerror="this.src='https://placehold.co/150x120?text=Concha';">
+                            </button>
+                            <div class="color-dot color-blue"></div>
+                        </div>
+                        <!-- Concha 2 (Orange) -->
+                        <div class="concha-item" style="text-align: center; flex: 1;">
+                            <button class="concha-btn" data-id="1" data-tone="medio" disabled>
+                                <img src="Concha.png" alt="Concha"
+                                    onerror="this.src='https://placehold.co/150x120?text=Concha';">
+                            </button>
+                            <div class="color-dot color-orange"></div>
+                        </div>
+                        <!-- Concha 3 (Green) -->
+                        <div class="concha-item" style="text-align: center; flex: 1;">
+                            <button class="concha-btn" data-id="2" data-tone="ligero" disabled>
+                                <img src="Concha.png" alt="Concha"
+                                    onerror="this.src='https://placehold.co/150x120?text=Concha';">
+                            </button>
+                            <div class="color-dot color-green"></div>
+                        </div>
+                        <!-- Concha 4 (Yellow) -->
+                        <div class="concha-item" style="text-align: center; flex: 1;">
+                            <button class="concha-btn" data-id="3" data-tone="agudo" disabled>
+                                <img src="Concha.png" alt="Concha"
+                                    onerror="this.src='https://placehold.co/150x120?text=Concha';">
+                            </button>
+                            <div class="color-dot color-yellow"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="section-action mt-8" style="text-align: center;">
+                    <button class="btn-check" id="btnFinishModule2" disabled>
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                            style="width: 24px; height: 24px; margin-right: 8px;">
+                            <path d="M5 12l5 5l10 -10"></path>
+                        </svg>
+                        Terminar Actividad
+                    </button>
+                </div>
+
+                <!-- Quiz Results -->
+                <div class="quiz-results" id="quizResults" style="display:none; margin-top: 2rem;">
+                    <div class="results-card">
+                        <div class="results-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" />
+                                <polyline points="22 4 12 14.01 9 11.01" />
+                            </svg>
+                        </div>
+                        <h2 class="results-title">¡Módulo Completado!</h2>
+                        <p class="results-subtitle">Has finalizado con éxito el Módulo del Caparazón de Tortuga.</p>
+                        <button class="btn-finish" id="btnFinish">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
+                                <polyline points="9 22 9 12 15 12 15 22" />
+                            </svg>
+                            <span>Volver al Curso</span>
+                        </button>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Confetti Canvas -->
+    <canvas id="confettiCanvas"></canvas>
+
+    <script src="ui-sounds.js"></script>
+    <script src="module2.js"></script>
+</body>
+
+</html>

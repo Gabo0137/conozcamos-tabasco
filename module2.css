@@ -1,0 +1,303 @@
+/* ===== Specific Styles for Module 2: Caparazón de Tortuga ===== */
+
+/* Intro */
+.module2-hero {
+    background: linear-gradient(135deg, #064e3b 0%, #0f766e 50%, #064e3b 100%);
+}
+
+/* Audio Compare Grid */
+.audio-compare-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
+    margin-bottom: 30px;
+}
+
+.audio-compare-card {
+    background: var(--white);
+    border-radius: var(--radius-lg);
+    padding: 24px;
+    text-align: center;
+    box-shadow: var(--shadow-sm);
+    transition: var(--transition);
+    border: 2px solid transparent;
+}
+
+.audio-compare-card:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-md);
+    border-color: var(--gray-200);
+}
+
+.audio-compare-card span {
+    display: block;
+    margin-top: 15px;
+    font-weight: 600;
+    color: var(--gray-700);
+}
+
+.audio-wave.small {
+    height: 40px;
+    gap: 4px;
+    margin-bottom: 15px;
+}
+
+.audio-wave.small .wave-bar {
+    width: 6px;
+    background: var(--purple);
+}
+
+.btn-play-compare {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background: var(--purple);
+    color: var(--white);
+    border: none;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.btn-play-compare:hover {
+    background: var(--purple-dark);
+    transform: scale(1.05);
+}
+
+.btn-play-compare svg {
+    width: 24px;
+    height: 24px;
+}
+
+.compare-question-card {
+    background: var(--white);
+    padding: 30px;
+    border-radius: var(--radius-xl);
+    box-shadow: var(--shadow-md);
+    text-align: center;
+    border-top: 4px solid var(--purple);
+}
+
+.compare-question-card h3 {
+    margin-bottom: 20px;
+    color: var(--gray-800);
+}
+
+/* Match Activity (Relaciona) */
+.match-activity {
+    background: var(--white);
+    border-radius: var(--radius-xl);
+    padding: 40px;
+    box-shadow: var(--shadow-md);
+}
+
+.match-columns {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+    margin-bottom: 30px;
+}
+
+.match-source-col {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+}
+
+.match-item {
+    background: var(--gray-50);
+    border: 2px solid var(--gray-200);
+    padding: 15px 20px;
+    border-radius: var(--radius-md);
+    cursor: grab;
+    font-weight: 500;
+    text-align: center;
+    transition: var(--transition);
+    user-select: none;
+}
+
+.match-item:hover {
+    background: var(--gray-100);
+    border-color: var(--green);
+}
+
+.match-item.dragging {
+    opacity: 0.5;
+    cursor: grabbing;
+}
+
+.match-target-col {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.match-row {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.match-target-zone {
+    flex: 1;
+    min-height: 54px;
+    background: var(--gray-50);
+    border: 2px dashed var(--gray-300);
+    border-radius: var(--radius-md);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: var(--transition);
+}
+
+.match-target-zone.drag-over {
+    background: var(--gray-100);
+    border-color: var(--green);
+}
+
+.match-target-zone.filled {
+    border-style: solid;
+    border-color: var(--green);
+    background: transparent;
+    padding: 0;
+}
+
+.match-target-zone .match-item {
+    margin: 0;
+    width: 100%;
+    border-color: var(--green);
+    background: var(--green-bg);
+    color: var(--green-dark);
+}
+
+.match-def {
+    flex: 1.5;
+    background: var(--gray-100);
+    padding: 15px 20px;
+    border-radius: var(--radius-md);
+    font-weight: 500;
+    color: var(--gray-700);
+}
+
+@media (max-width: 768px) {
+    .match-columns {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* ===== Rhythm Game in Shell Explorer ===== */
+.rhythm-game-container {
+    background: var(--white);
+    border-radius: var(--radius-xl);
+    padding: 30px;
+    box-shadow: var(--shadow-md);
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.rhythm-status {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: var(--gray-800);
+    margin-bottom: 20px;
+}
+
+.btn-play-rhythm {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--green);
+    color: var(--white);
+    border: none;
+    padding: 12px 24px;
+    border-radius: var(--radius-full);
+    font-weight: 600;
+    cursor: pointer;
+    margin-bottom: 20px;
+    transition: var(--transition);
+}
+.btn-play-rhythm:hover { background: var(--green-dark); }
+.btn-play-rhythm svg { width: 20px; height: 20px; }
+
+.rhythm-dots {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-bottom: 10px;
+}
+
+.rdot {
+    width: 15px;
+    height: 15px;
+    border-radius: 50%;
+    background: var(--gray-200);
+    transition: var(--transition);
+}
+
+.rdot.filled { background: var(--green); }
+.rdot.error { background: var(--red); }
+
+/* ===== Concha Buttons & Sequence Game ===== */
+.concha-btn {
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    transition: transform 0.2s ease, filter 0.2s ease;
+    width: 100%;
+}
+
+.concha-btn img {
+    width: 100%;
+    max-width: 120px;
+    height: auto;
+    filter: drop-shadow(0 4px 6px rgba(0,0,0,0.2));
+    transition: all 0.2s ease;
+}
+
+.concha-btn:disabled {
+    cursor: not-allowed;
+    opacity: 0.8;
+}
+
+.concha-btn:not(:disabled):hover img {
+    transform: translateY(-5px);
+    filter: drop-shadow(0 8px 12px rgba(0,0,0,0.3));
+}
+
+.concha-btn:not(:disabled):active img {
+    transform: translateY(2px) scale(0.95);
+}
+
+.concha-btn.playing img {
+    transform: translateY(-10px) scale(1.05);
+    filter: drop-shadow(0 0 15px var(--green));
+}
+
+.concha-btn.error img {
+    filter: drop-shadow(0 0 15px var(--red));
+    animation: shake 0.4s ease-in-out;
+}
+
+.color-dot {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    margin: 15px auto 0;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+}
+
+.color-blue { background-color: #3b82f6; }
+.color-orange { background-color: #f97316; }
+.color-green { background-color: #10b981; }
+.color-yellow { background-color: #eab308; }
+
+@keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-5px); }
+    50% { transform: translateX(5px); }
+    75% { transform: translateX(-5px); }
+}

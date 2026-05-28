@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Módulo 4 — Resumen del Curso interactivo de instrumentos de Tabasco.">
+    <title>Resumen Final | Raíces de Tabasco</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="module1.css">
+    <style>
+        .resumen-container {
+            position: relative;
+            z-index: 1;
+            margin: 40px auto;
+            max-width: 1200px;
+            background: linear-gradient(135deg, rgba(59, 130, 246, 0.1), rgba(16, 185, 129, 0.1));
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 24px;
+            padding: 40px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+            text-align: center;
+            backdrop-filter: blur(10px);
+        }
+
+        body {
+            background: #0f172a;
+            color: white;
+            margin: 0;
+            font-family: 'Outfit', sans-serif;
+        }
+
+        .resource-card {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 16px;
+            padding: 25px;
+            transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.4s ease;
+            cursor: pointer;
+        }
+
+        .resource-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.3);
+            border-color: rgba(255, 255, 255, 0.2);
+        }
+
+        .resource-card img {
+            width: 100%;
+            height: 200px;
+            object-fit: contain;
+            margin-bottom: 20px;
+            border-radius: 12px;
+            background: rgba(0, 0, 0, 0.2);
+            transition: transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        .resource-card:hover img {
+            transform: scale(1.12) translateY(-6px) rotate(-3deg);
+        }
+    </style>
+</head>
+
+<body>
+    <!-- ===== Toolbar ===== -->
+    <nav class="toolbar" id="toolbar">
+        <div class="toolbar-container">
+            <button class="toolbar-back" id="btnBack" aria-label="Volver al curso"
+                style="display: flex; align-items: center; gap: 8px; background: rgba(255,255,255,0.1); border: none; padding: 10px 20px; border-radius: 50px; color: white; cursor: pointer; transition: 0.3s; font-family: inherit; font-size: 1rem;">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"
+                    stroke-linejoin="round" width="20" height="20">
+                    <polyline points="15 18 9 12 15 6" />
+                </svg>
+                <span>Volver al Curso</span>
+            </button>
+            <div class="toolbar-center">
+                <div class="toolbar-module-badge"
+                    style="background: rgba(139,92,246,0.2); color: #c4b5fd; padding: 4px 12px; border-radius: 20px; font-size: 0.85rem; font-weight: 700; margin-bottom: 5px;">
+                    Sección 04</div>
+                <h1 class="toolbar-title" style="margin: 0; font-size: 1.5rem; font-weight: 700;">Resumen Final</h1>
+            </div>
+            <div style="width: 120px;"></div>
+        </div>
+    </nav>
+
+    <!-- ===== Main Content ===== -->
+    <main class="module-main" style="padding-top: 100px; padding-bottom: 100px; min-height: 100vh;">
+        <div class="music-notes-bg">
+            <span class="note note-1">♪</span>
+            <span class="note note-2">♫</span>
+            <span class="note note-3">♩</span>
+            <span class="note note-4">♬</span>
+            <span class="note note-5">♪</span>
+        </div>
+
+        <div class="container" style="padding: 0 20px;">
+            <div class="resumen-container">
+                <h2 style="font-size: 2.5rem; font-weight: 800; color: #fff; margin-bottom: 20px;">Lo que aprendiste en
+                    este recorrido</h2>
+                <p style="font-size: 1.2rem; color: #cbd5e1; max-width: 800px; margin: 0 auto 40px; line-height: 1.6;">
+                    Durante este recorrido conociste tres instrumentos tradicionales de Tabasco: la flauta de carrizo,
+                    el tambor y el caparazón de tortuga. Aprendiste de dónde provienen, cómo se relacionan con la música
+                    tradicional tabasqueña y por qué forman parte importante de la identidad cultural del estado.
+                </p>
+
+                <div
+                    style="background: rgba(0,0,0,0.3); border-radius: 16px; padding: 40px; margin-top: 30px; text-align: left;">
+                    <h3
+                        style="font-size: 1.8rem; font-weight: 700; color: #fff; margin-bottom: 15px; text-align: center;">
+                        Materiales didácticos complementarios</h3>
+                    <p style="font-size: 1.1rem; color: #cbd5e1; margin-bottom: 40px; text-align: center;">Explora estos
+                        recursos para reforzar lo aprendido de forma visual y sonora.</p>
+
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 30px;">
+                        <!-- Flauta -->
+                        <div class="resource-card">
+                            <img src="Flauta01.png" alt="Flauta de Carrizo">
+                            <h4
+                                style="color: #60a5fa; font-size: 1.4rem; font-weight: 600; margin-bottom: 15px; margin-top:0;">
+                                Flauta de Carrizo</h4>
+                            <p style="font-size: 1rem; color: #94a3b8; margin-bottom: 20px; line-height: 1.5;">
+                                Instrumento de viento fundamental en la música
+                                tradicional, caracterizado por su manufactura artesanal y su sonido agudo que guía las
+                                melodías de las danzas.</p>
+                        </div>
+
+                        <!-- Tambor -->
+                        <div class="resource-card">
+                            <img src="Tambor.png" alt="Tambor Tradicional">
+                            <h4
+                                style="color: #f87171; font-size: 1.4rem; font-weight: 600; margin-bottom: 15px; margin-top:0;">
+                                Tambor Tradicional</h4>
+                            <p style="font-size: 1rem; color: #94a3b8; margin-bottom: 20px; line-height: 1.5;">Base
+                                rítmica de nuestra identidad musical.
+                                Su sonido profundo se logra mediante el golpeo con baquetas de madera y el tensado
+                                tradicional de la piel.</p>
+                        </div>
+
+                        <!-- Caparazón -->
+                        <div class="resource-card">
+                            <img src="Caparazon.png" alt="Caparazón de Tortuga">
+                            <h4
+                                style="color: #34d399; font-size: 1.4rem; font-weight: 600; margin-bottom: 15px; margin-top:0;">
+                                Caparazón de Tortuga</h4>
+                            <p style="font-size: 1rem; color: #94a3b8; margin-bottom: 20px; line-height: 1.5;">
+                                Instrumento de percusión único que produce distintas
+                                tonalidades según el área donde se golpee con el asta de venado, aportando un matiz
+                                acústico ancestral.</p>
+                        </div>
+                    </div>
+
+                    <!-- Single Video Showcase -->
+                    <div
+                        style="margin-top: 50px; text-align: center; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 40px;">
+                        <h3 style="font-size: 1.8rem; font-weight: 700; color: #fff; margin-bottom: 30px;">
+                            Demostración</h3>
+                        <div
+                            style="max-width: 840px; margin: 0 auto; background: rgba(0,0,0,0.4); padding: 15px; border-radius: 20px; border: 1px solid rgba(255,255,255,0.05); box-shadow: 0 15px 40px rgba(0,0,0,0.3);">
+                            <video src="TAMBORILEROS.mp4" controls
+                                style="width: 100%; border-radius: 12px; display: block; outline: none;"></video>
+                            <p style="font-size: 0.8rem; color: #94a3b8; margin: 12px 0 4px 0; text-align: right;">
+                                © Grupo de Tamborileros de Tabasco
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    <script src="ui-sounds.js"></script>
+    <script>
+        document.getElementById('btnBack').addEventListener('click', () => {
+            if (window.playUIEntry) {
+                window.playUIEntry();
+                setTimeout(() => window.location.href = 'course.html', 300);
+            } else {
+                window.location.href = 'course.html';
+            }
+        });
+    </script>
+</body>
+
+</html>

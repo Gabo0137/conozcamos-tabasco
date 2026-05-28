@@ -1,0 +1,332 @@
+/* ===== Specific Styles for Module 3: Tambor Tradicional ===== */
+
+/* Intro */
+.module3-hero {
+    background: linear-gradient(135deg, #7f1d1d 0%, #b91c1c 50%, #7f1d1d 100%);
+}
+
+.btn-play-intro {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    background: var(--red);
+    color: var(--white);
+    border: none;
+    padding: 14px 28px;
+    border-radius: var(--radius-full);
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: var(--transition);
+    overflow: hidden;
+    margin-bottom: 10px;
+}
+
+.btn-play-intro:hover {
+    background: var(--red-dark);
+    transform: translateY(-2px);
+}
+
+.btn-play-intro svg {
+    width: 24px;
+    height: 24px;
+    z-index: 1;
+}
+
+.btn-play-intro span {
+    z-index: 1;
+}
+
+.pulse-ring {
+    position: absolute;
+    top: 50%;
+    left: 20%;
+    transform: translate(-50%, -50%);
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.4);
+    animation: pulseBtn 2s infinite;
+}
+
+@keyframes pulseBtn {
+    0% { transform: translate(-50%, -50%) scale(0.8); opacity: 1; }
+    100% { transform: translate(-50%, -50%) scale(3); opacity: 0; }
+}
+
+/* Simulator */
+.simulator-container {
+    background: var(--white);
+    border-radius: var(--radius-xl);
+    padding: 40px;
+    box-shadow: var(--shadow-md);
+    text-align: center;
+}
+
+.drum-pad-wrapper {
+    position: relative;
+    width: 100%;
+    max-width: 400px;
+    margin: 0 auto 30px;
+    aspect-ratio: 1;
+}
+
+.drum-surface {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    background: radial-gradient(circle at 30% 30%, #fcd34d, #d97706);
+    border: 15px solid #78350f;
+    box-shadow: 
+        inset 0 0 50px rgba(0,0,0,0.5),
+        0 10px 20px rgba(0,0,0,0.2);
+    overflow: hidden;
+}
+
+.drum-zone {
+    position: absolute;
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: background 0.1s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+    font-size: 0.9rem;
+    color: rgba(255, 255, 255, 0.9);
+    text-shadow: 0 1px 2px rgba(0,0,0,0.8);
+}
+
+.drum-zone span {
+    pointer-events: none;
+}
+
+/* Zone: Center (Grave) */
+.zone-center {
+    top: 20%;
+    left: 20%;
+    width: 60%;
+    height: 60%;
+    background: rgba(0, 0, 0, 0.15);
+    z-index: 2;
+}
+.zone-center:active { background: rgba(0, 0, 0, 0.4); transform: scale(0.98); }
+
+/* Zone: Edge (Medio) */
+.zone-edge {
+    top: 5%;
+    left: 5%;
+    width: 90%;
+    height: 90%;
+    background: transparent;
+    border: 4px dashed rgba(255, 255, 255, 0.3);
+    z-index: 1;
+    align-items: flex-start;
+    padding-top: 10%;
+}
+.zone-edge:active { background: rgba(255, 255, 255, 0.2); }
+
+/* Zone: Soft (Ligero) */
+.zone-soft {
+    bottom: 5%;
+    right: 5%;
+    width: 30%;
+    height: 30%;
+    background: rgba(255, 255, 255, 0.1);
+    border: 2px dotted rgba(255, 255, 255, 0.5);
+    z-index: 3;
+}
+.zone-soft:active { background: rgba(255, 255, 255, 0.4); }
+
+.simulator-feedback {
+    background: var(--amber-light);
+    color: var(--amber-dark);
+    padding: 15px 20px;
+    border-radius: var(--radius-md);
+    font-weight: 500;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.sim-tag {
+    background: var(--amber);
+    color: white;
+    padding: 4px 8px;
+    border-radius: var(--radius-sm);
+    font-size: 0.8rem;
+    text-transform: uppercase;
+}
+
+/* Cultura Card */
+.cultura-card {
+    display: flex;
+    flex-wrap: wrap;
+    background: var(--white);
+    border-radius: var(--radius-xl);
+    overflow: hidden;
+    box-shadow: var(--shadow-md);
+}
+
+.cultura-visual {
+    flex: 1;
+    min-width: 250px;
+    background: linear-gradient(135deg, var(--blue), var(--blue-dark));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 40px;
+    position: relative;
+    overflow: hidden;
+}
+
+.cultura-video {
+    width: 100%;
+    max-width: 260px;
+    border-radius: 12px;
+    box-shadow: 0 12px 24px rgba(0,0,0,0.3);
+    border: 4px solid rgba(255,255,255,0.15);
+    object-fit: cover;
+    display: block;
+    margin: 0 auto;
+}
+
+.cultura-text {
+    flex: 2;
+    padding: 40px;
+    font-size: 1.1rem;
+    color: var(--gray-700);
+}
+
+.cultura-text strong {
+    color: var(--blue-dark);
+}
+
+/* Rhythm Game */
+.rhythm-game-container {
+    background: var(--white);
+    border-radius: var(--radius-xl);
+    padding: 40px;
+    box-shadow: var(--shadow-md);
+    text-align: center;
+}
+
+.rhythm-status {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: var(--gray-800);
+    margin-bottom: 20px;
+}
+
+.btn-play-rhythm {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--red);
+    color: var(--white);
+    border: none;
+    padding: 12px 24px;
+    border-radius: var(--radius-full);
+    font-weight: 600;
+    cursor: pointer;
+    margin-bottom: 30px;
+    transition: var(--transition);
+}
+.btn-play-rhythm:hover { background: var(--red-dark); }
+.btn-play-rhythm svg { width: 20px; height: 20px; }
+
+.rhythm-pads {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin-bottom: 30px;
+}
+
+.rhythm-pad {
+    background: transparent;
+    border: none;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+    cursor: pointer;
+    transition: var(--transition);
+    padding: 10px;
+}
+
+.pad-img {
+    width: 100px;
+    height: auto;
+    transition: var(--transition);
+    filter: drop-shadow(0 4px 6px rgba(0,0,0,0.15));
+}
+
+.color-dot {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.2), inset 0 -2px 4px rgba(0,0,0,0.2);
+}
+
+.dot-tum { background-color: #1d4ed8; } /* Azul Oscuro */
+.dot-ta { background-color: #f97316; } /* Naranja */
+.dot-pa { background-color: #16a34a; } /* Verde */
+.dot-ti { background-color: #0ea5e9; } /* Azul Claro */
+
+.rhythm-pad:not(:disabled):hover .pad-img {
+    transform: translateY(-5px);
+}
+
+.rhythm-pad:not(:disabled):active .pad-img,
+.rhythm-pad.playing .pad-img {
+    transform: scale(0.9) translateY(5px);
+    filter: drop-shadow(0 2px 3px rgba(0,0,0,0.15)) brightness(1.1);
+}
+
+.seq-dot {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+    transition: var(--transition);
+    opacity: 0.5;
+}
+
+.seq-dot.playing, .seq-dot.filled {
+    opacity: 1;
+    transform: scale(1.2);
+}
+
+.seq-dot.error {
+    background-color: var(--amber) !important;
+    animation: shake 0.4s ease-in-out;
+    opacity: 1;
+}
+
+@keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-5px); }
+    75% { transform: translateX(5px); }
+}
+
+.rhythm-dots {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+.rdot {
+    width: 15px;
+    height: 15px;
+    border-radius: 50%;
+    background: var(--gray-200);
+    transition: var(--transition);
+}
+
+.rdot.filled { background: var(--red); }
+.rdot.error { background: var(--amber); }

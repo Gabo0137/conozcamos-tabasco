@@ -1,0 +1,245 @@
+/* ===== Specific Styles for Games Hub ===== */
+
+.games-main {
+    padding-top: 150px;
+}
+
+/* Toolbar overrides for games */
+.games-toolbar .toolbar-back {
+    background: rgba(255, 255, 255, 0.2);
+    color: #ffffff;
+    font-weight: 600;
+}
+
+.games-toolbar .toolbar-back:hover {
+    background: rgba(255, 255, 255, 0.35);
+    color: #ffffff;
+    transform: translateY(-2px);
+}
+
+.games-selector {
+    background: var(--white);
+    padding: 10px 20px;
+    border-radius: var(--radius-full);
+    box-shadow: var(--shadow-sm);
+    margin-top: 20px;
+}
+
+.games-selector .step {
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.games-selector .step:hover {
+    transform: translateY(-2px);
+}
+
+.games-selector .step span {
+    color: var(--gray-500);
+    font-weight: 600;
+}
+
+.games-selector .step.active span {
+    color: #7c3aed;
+    font-weight: 700;
+}
+
+/* Memorama */
+.memory-board {
+    display: grid;
+    grid-template-columns: repeat(4, 130px);
+    justify-content: center;
+    gap: 15px;
+    margin: 0 auto;
+}
+
+.memory-card {
+    aspect-ratio: 3/4;
+    perspective: 1000px;
+    cursor: pointer;
+}
+
+.memory-card-inner {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    transition: transform 0.6s cubic-bezier(0.4, 0.2, 0.2, 1);
+    transform-style: preserve-3d;
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-md);
+}
+
+.memory-card.flipped .memory-card-inner {
+    transform: rotateY(180deg);
+}
+
+.memory-card-front, .memory-card-back {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    backface-visibility: hidden;
+    border-radius: var(--radius-md);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 15px;
+    font-weight: 700;
+    font-size: 1.2rem;
+}
+
+.memory-card-front {
+    background: linear-gradient(135deg, #8b5cf6 0%, var(--blue) 100%);
+    color: white;
+    font-size: 2.5rem;
+}
+
+.memory-card-front::after {
+    content: '?';
+}
+
+.memory-card-back {
+    background: white;
+    color: var(--gray-800);
+    transform: rotateY(180deg);
+    border: 3px solid #8b5cf6;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.memory-card-back img {
+    max-width: 80%;
+    max-height: 50%;
+    object-fit: contain;
+}
+
+.memory-card.matched .memory-card-inner {
+    transform: rotateY(180deg) scale(0.95);
+    box-shadow: 0 0 15px var(--green);
+}
+
+.memory-card.matched .memory-card-back {
+    border-color: var(--green);
+    background: var(--green-light);
+}
+
+@media (max-width: 600px) {
+    .memory-board {
+        grid-template-columns: repeat(4, 80px);
+        gap: 10px;
+    }
+}
+@media (max-width: 400px) {
+    .memory-board {
+        grid-template-columns: repeat(4, 65px);
+        gap: 8px;
+    }
+}
+
+/* Adivina el Sonido */
+.guess-container {
+    background: var(--white);
+    border-radius: var(--radius-xl);
+    padding: 40px;
+    box-shadow: var(--shadow-md);
+    text-align: center;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.btn-play-mystery {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    background: var(--red);
+    color: white;
+    border: none;
+    padding: 20px 40px;
+    border-radius: var(--radius-full);
+    font-size: 1.2rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: var(--transition);
+    margin-bottom: 40px;
+    box-shadow: 0 10px 20px rgba(239, 68, 68, 0.3);
+}
+
+.btn-play-mystery:hover {
+    transform: scale(1.05);
+    background: var(--red-dark);
+}
+
+.btn-play-mystery svg {
+    width: 28px;
+    height: 28px;
+}
+
+.btn-play-mystery.playing {
+    animation: pulseMystery 1s infinite;
+}
+
+@keyframes pulseMystery {
+    0% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.7); }
+    70% { box-shadow: 0 0 0 20px rgba(239, 68, 68, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0); }
+}
+
+.guess-options {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.guess-opt {
+    background: var(--gray-50);
+    border: 3px solid var(--gray-200);
+    border-radius: var(--radius-lg);
+    padding: 20px;
+    flex: 1;
+    min-width: 200px;
+    cursor: pointer;
+    transition: var(--transition);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+    font-weight: 600;
+    font-size: 1.1rem;
+    color: var(--gray-700);
+}
+
+.guess-opt:hover {
+    border-color: var(--red-light);
+    background: white;
+    transform: translateY(-5px);
+}
+
+.guess-opt .g-icon {
+    font-size: 3rem;
+}
+
+.guess-opt.correct {
+    border-color: var(--green);
+    background: var(--green-light);
+    color: var(--green-dark);
+}
+
+.guess-opt.wrong {
+    border-color: var(--red);
+    background: var(--red-light);
+    color: var(--red-dark);
+    opacity: 0.7;
+}
+
+/* Rhythm Game Arcade */
+.rhythm-level {
+    display: inline-block;
+    background: #ede9fe;
+    color: #7c3aed;
+    padding: 5px 15px;
+    border-radius: var(--radius-full);
+    font-weight: 700;
+    font-size: 1.2rem;
+    margin-bottom: 10px;
+}
