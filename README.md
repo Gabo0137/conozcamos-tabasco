@@ -2,6 +2,11 @@
 
 Proyecto web educativo e interactivo sobre los tamborileros y los instrumentos tradicionales de Tabasco. Desarrollado con HTML, CSS y JavaScript, con una paleta de verde, crema y dorado.
 
+Sitio publicado: https://conozcamos-tabasco.vercel.app
+
+Vercel está conectado a este repositorio privado y publica automáticamente los
+cambios enviados a `main` en el proyecto `conozcamos-tabasco`.
+
 ## Estructura principal
 
 - `index.html`: pantalla de entrada y redireccion al curso
