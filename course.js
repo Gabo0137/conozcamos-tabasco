@@ -1,4 +1,4 @@
-// ===== Raíces de Tabasco — Course Page =====
+// ===== Conozcamos Tabasco — Course Page =====
 
 document.addEventListener('DOMContentLoaded', () => {
 
@@ -39,6 +39,7 @@ document.addEventListener('DOMContentLoaded', () => {
     mobileToggle.addEventListener('click', () => {
         navLinksContainer.classList.toggle('open');
         mobileToggle.classList.toggle('open');
+        mobileToggle.setAttribute('aria-expanded', String(navLinksContainer.classList.contains('open')));
     });
 
     // Close mobile menu when clicking a link
@@ -46,6 +47,7 @@ document.addEventListener('DOMContentLoaded', () => {
         link.addEventListener('click', () => {
             navLinksContainer.classList.remove('open');
             mobileToggle.classList.remove('open');
+            mobileToggle.setAttribute('aria-expanded', 'false');
         });
     });
 
@@ -66,11 +68,71 @@ document.addEventListener('DOMContentLoaded', () => {
 
     moduleCards.forEach(card => observer.observe(card));
 
+    // ===== Zoom from the welcome screen into the route =====
+    let routeTransitionRunning = false;
+    async function enterRoute() {
+        if (routeTransitionRunning) return;
+        const hero = document.querySelector('.hero');
+        const route = document.getElementById('mapa');
+        if (!route) return;
+        const heading = route.querySelector('h2');
+        const animations = [];
+        routeTransitionRunning = true;
+
+        function revealRoute() {
+            const top = route.getBoundingClientRect().top + window.scrollY;
+            window.scrollTo({ top: Math.max(0, top - navbar.getBoundingClientRect().height), behavior: 'instant' });
+            if (heading) {
+                heading.setAttribute('tabindex', '-1');
+                heading.focus({ preventScroll: true });
+            }
+        }
+
+        try {
+            const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+            if (reduceMotion || !hero || typeof route.animate !== 'function') {
+                revealRoute();
+                return;
+            }
+            const exit = hero.animate([
+                { transform: 'scale(1)', opacity: 1, transformOrigin: 'center center' },
+                { transform: 'scale(1.08)', opacity: 0, transformOrigin: 'center center' }
+            ], { duration: 280, easing: 'cubic-bezier(.4,0,1,1)', fill: 'both' });
+            animations.push(exit);
+            await exit.finished;
+
+            // Cover the scroll jump with the entrance's transparent first frame.
+            const entrance = route.animate([
+                { transform: 'scale(.94)', opacity: 0, transformOrigin: 'center top' },
+                { transform: 'scale(1)', opacity: 1, transformOrigin: 'center top' }
+            ], { duration: 480, easing: 'cubic-bezier(.16,1,.3,1)', fill: 'both' });
+            animations.push(entrance);
+            // Hold the first frame until the route is positioned below the header.
+            entrance.pause();
+            revealRoute();
+            entrance.play();
+            await entrance.finished;
+        } catch {
+            // Navigation remains usable even if an animation is interrupted.
+            animations.forEach(animation => animation.cancel());
+            revealRoute();
+        } finally {
+            animations.forEach(animation => animation.cancel());
+            routeTransitionRunning = false;
+        }
+    }
+
     // ===== Smooth Scroll for Anchor Links =====
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         anchor.addEventListener('click', function (e) {
+            if (e.ctrlKey || e.metaKey || e.shiftKey || e.altKey) return;
             e.preventDefault();
-            const target = document.querySelector(this.getAttribute('href'));
+            if (this.id === 'btnExplorar') {
+                void enterRoute();
+                return;
+            }
+            const href = this.getAttribute('href');
+            const target = href === '#' ? document.body : document.getElementById(href.slice(1));
             if (target) {
                 target.scrollIntoView({
                     behavior: 'smooth',
@@ -92,55 +154,76 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    const btnModule1 = document.getElementById('btnModule1');
-    if (btnModule1) {
-        btnModule1.addEventListener('click', () => {
-            navigateWithSound('module1.html');
-        });
-    }
-
-    const btnModule2 = document.getElementById('btnModule2');
-    if (btnModule2) {
-        btnModule2.addEventListener('click', () => {
-            navigateWithSound('module2.html');
-        });
-    }
-
-    const btnModule3 = document.getElementById('btnModule3');
-    if (btnModule3) {
-        btnModule3.addEventListener('click', () => {
-            navigateWithSound('module3.html');
-        });
-    }
-
     const btnJuegos = document.getElementById('btnJuegos');
-    if (btnJuegos) {
-        btnJuegos.addEventListener('click', () => {
-            navigateWithSound('games.html');
-        });
-    }
+    if (btnJuegos) btnJuegos.addEventListener('click', () => navigateWithSound('games.html'));
 
-    // ===== Resumen Final / Módulo 4 Logic =====
-    const mod1Completed = localStorage.getItem('module1_completed') === 'true';
-    const mod2Completed = localStorage.getItem('module2_completed') === 'true';
-    const mod3Completed = localStorage.getItem('module3_completed') === 'true';
+    // ===== Video de Bienvenida Modal =====
+    const btnVerVideoBienvenida = document.getElementById('btnVerVideoBienvenida');
+    const videoModalOverlay = document.getElementById('videoModalOverlay');
+    const videoModalContent = document.getElementById('videoModalContent');
+    const modalVideoPlayer = document.getElementById('modalVideoPlayer');
+    const videoEndOverlay = document.getElementById('videoEndOverlay');
+    const btnFinalizarVideo = document.getElementById('btnFinalizarVideo');
 
-    if (mod1Completed && mod2Completed && mod3Completed) {
-        const module4 = document.getElementById('module4');
-        if (module4) {
-            module4.style.display = 'block';
+    if (btnVerVideoBienvenida && videoModalOverlay && modalVideoPlayer) {
+        // Asegurarnos de que no esté en bucle
+        modalVideoPlayer.loop = false;
+
+        btnVerVideoBienvenida.addEventListener('click', (e) => {
+            e.preventDefault();
+            // Reset video and overlay state
+            videoEndOverlay.style.display = 'none';
+            modalVideoPlayer.currentTime = 0;
+            
+            // Show modal
+            videoModalOverlay.style.display = 'flex';
+            
+            // Trigger animation
             setTimeout(() => {
-                module4.classList.add('visible'); // the cards use .visible for animation based on the scroll reveal, let's just make it visible
-                module4.style.opacity = '1';
-                module4.style.transform = 'translateY(0)';
-            }, 100);
-        }
-    }
+                videoModalOverlay.style.opacity = '1';
+                videoModalContent.style.transform = 'scale(1)';
+            }, 10);
 
-    const btnModule4 = document.getElementById('btnModule4');
-    if (btnModule4) {
-        btnModule4.addEventListener('click', () => {
-            navigateWithSound('resumen.html');
+            document.getElementById('closeWelcomeVideo').focus();
+            // Play after the visitor explicitly opens the video
+            modalVideoPlayer.play().catch(err => console.log('Autoplay prevent by browser', err));
         });
+
+        document.getElementById('closeWelcomeVideo').addEventListener('click', closeVideoModal);
+        videoModalOverlay.addEventListener('click', (event) => { if (event.target === videoModalOverlay) closeVideoModal(); });
+        document.addEventListener('keydown', (event) => {
+            if (videoModalOverlay.style.display !== 'flex') return;
+            if (event.key === 'Escape') closeVideoModal();
+            if (event.key === 'Tab') {
+                const focusable = [document.getElementById('closeWelcomeVideo'), modalVideoPlayer];
+                if (videoEndOverlay.style.display === 'flex') focusable.push(btnFinalizarVideo);
+                const first = focusable[0], last = focusable[focusable.length - 1];
+                if (event.shiftKey && document.activeElement === first) { event.preventDefault(); last.focus(); }
+                else if (!event.shiftKey && document.activeElement === last) { event.preventDefault(); first.focus(); }
+            }
+        });
+        // When video ends, show "Finalizar" button
+        modalVideoPlayer.addEventListener('ended', () => {
+            videoEndOverlay.style.display = 'flex';
+        });
+
+        // "Finalizar" button logic
+        btnFinalizarVideo.addEventListener('click', () => {
+            closeVideoModal();
+        });
+
+        // Function to close the modal
+        function closeVideoModal() {
+            modalVideoPlayer.pause();
+            btnVerVideoBienvenida.focus();
+            
+            // Animate out
+            videoModalOverlay.style.opacity = '0';
+            videoModalContent.style.transform = 'scale(0.95)';
+            
+            setTimeout(() => {
+                videoModalOverlay.style.display = 'none'; 
+            }, 300);
+        }
     }
 });

@@ -1,0 +1,58 @@
+CREAR EL FORMULARIO EN GOOGLE FORMS
+
+Google Forms importa preguntas desde otros formularios de Google.
+Este archivo .gs no se sube directamente a Forms: se copia en Google Apps
+Script para crear automáticamente las 20 preguntas en tu cuenta.
+
+1. Abre CrearFormulario.gs con Bloc de notas y copia todo su contenido.
+2. Entra en https://script.google.com/ con tu cuenta de Google.
+3. Haz clic en Nuevo proyecto.
+4. En el archivo Código.gs (o Code.gs), borra el contenido inicial y pega
+   el contenido completo de CrearFormulario.gs.
+5. Guarda el proyecto. Puedes llamarlo "Encuesta Conozcamos Tabasco".
+6. En el selector de funciones de la parte superior, elige crearFormulario.
+7. Pulsa Ejecutar. Google te pedirá autorizar el acceso a Formularios
+   para que el script pueda crear el formulario en tu cuenta.
+8. Cuando termine, abre el Registro de ejecución. Encontrarás una línea
+   con "Editar:" seguida del enlace al formulario. Abre ese enlace.
+9. Revisa las preguntas y la vista previa. El formulario queda sin publicar.
+   Cuando esté listo, pulsa Publicar, configura quién puede responder y
+   copia el enlace para participantes desde Google Forms.
+10. Consulta los gráficos en la pestaña Respuestas. Allí también puedes
+    vincular una hoja de Google Sheets para analizar las respuestas.
+
+QUÉ INCLUYE
+
+- 20 preguntas de opción múltiple, con una sola respuesta.
+- Todas obligatorias.
+- Opciones de "No lo recuerdo" o "No lo exploré" donde corresponden.
+- No solicita nombres ni recopila correos electrónicos.
+- No muestra calificaciones ni respuestas correctas.
+- No envía invitaciones ni publica el formulario automáticamente.
+- Si ejecutas otra vez el mismo proyecto después de completarlo,
+  devuelve el enlace del formulario existente sin duplicarlo.
+
+El formulario todavía no se ha creado en tu cuenta: se creará cuando
+ejecutes el script. Su ejecución requiere conexión y autorización de Google.
+
+CLAVE PARA TU ANÁLISIS (NO SE INCLUYE EN EL FORMULARIO)
+
+4: Interpretar la melodía.
+5: Proporcionar el acompañamiento rítmico.
+6: Carrizo.
+7: La membrana o parche.
+8: Cambiar los sonidos al cubrir y descubrir los orificios.
+9: Compartir la música y los saberes entre las personas.
+
+Revisa los errores más frecuentes para identificar contenidos que necesitan
+refuerzo. Usa las preguntas 12 y 19 para priorizar mejoras y la pregunta 20
+para relacionar problemas de navegación con el dispositivo utilizado.
+
+Este formulario mide conocimientos al terminar y opiniones sobre el uso;
+por sí solo no demuestra cuánto aprendieron gracias a la página.
+Para explorar retención, repite las preguntas 4 a 9 unos días después,
+sin consultar el contenido.
+
+Documentación oficial:
+https://support.google.com/docs/answer/2839737?hl=es
+https://developers.google.com/apps-script/reference/forms/form-app

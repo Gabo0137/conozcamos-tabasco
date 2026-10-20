@@ -1,0 +1,123 @@
+/* Visual direction: a cultural journey in forest green, warm paper and gold. */
+:root{--forest:#074c45;--forest-deep:#063c36;--gold:#edb336;--cream:#fcf9f0;--paper:#fcf9f0;--ink:#123f38;--panel:#fffef9;--soft:#f2ebd8;--muted:#536c62;--brand:#074c45;--line:#dddcc9;--accent:#a66a09}
+body{background:var(--cream);color:var(--ink)}
+.site-header{background:var(--forest-deep);border:0;color:#fff9e8}
+.header-inner{padding-top:20px;padding-bottom:20px}
+.header-inner .eyebrow{color:#e8bc59;letter-spacing:2.4px}
+.header-inner .back{display:inline-flex;align-items:center;justify-content:center;min-height:46px;padding:11px 20px;border:1px solid var(--gold);border-radius:30px;background:var(--gold);color:var(--forest-deep);font-weight:600;text-align:center;text-decoration:none;flex-shrink:0}
+.header-inner .back:hover{background:#f5c658;border-color:#f5c658}
+.module-footer>a:not(.primary){display:inline-flex;align-items:center;justify-content:center;min-height:46px;padding:11px 20px;border:1px solid var(--forest);border-radius:30px;background:var(--forest);color:#fff9e8;font-weight:600;text-align:center;text-decoration:none}
+.module-footer>a:not(.primary):hover{background:var(--forest-deep)}
+.experience{max-width:1200px;padding-top:34px}
+.module-banner{position:relative;isolation:isolate;display:grid;grid-template-columns:1.25fr .75fr;align-items:center;min-height:350px;gap:20px;padding:46px 45px 60px;margin-bottom:44px;background:var(--forest);color:#fff9e8;border-radius:16px 16px 0 0;overflow:hidden}
+.module-banner::before{content:"";position:absolute;inset:0;z-index:-2;background:linear-gradient(90deg,rgba(3,57,48,.96),rgba(3,57,48,.78)),url('FondoRio.png') center/cover}
+.module-banner::after{content:"";position:absolute;left:0;right:0;bottom:-1px;height:24px;background:var(--cream);clip-path:polygon(0 50%,4% 30%,8% 58%,12% 38%,17% 65%,22% 35%,27% 53%,32% 27%,37% 59%,42% 39%,47% 67%,52% 40%,57% 62%,62% 26%,67% 51%,72% 36%,77% 66%,82% 39%,87% 54%,92% 33%,96% 57%,100% 40%,100% 100%,0 100%)}
+.module-banner .kicker{margin-bottom:17px}
+.module-banner .tag{background:var(--gold);color:var(--forest-deep);font-weight:600}
+.module-banner .muted{color:#e1ebe0}
+.module-banner .kicker>.muted{font-size:13px}
+.module-banner h1{font-size:clamp(34px,4.7vw,58px);font-weight:700;letter-spacing:-1.8px;max-width:620px;margin:16px 0 20px}
+.module-banner .intro p{max-width:520px;margin-bottom:0}
+.banner-art{position:relative;display:flex;align-items:center;justify-content:center;min-height:250px;padding:10px;isolation:isolate}
+.banner-art::before{content:"";position:absolute;inset:0;border-radius:44% 56% 36% 64% / 51% 35% 65% 49%;background:var(--gold);transform:rotate(-7deg);z-index:-1}
+.banner-art img{width:100%;height:250px;object-fit:contain;filter:drop-shadow(0 16px 14px #052e3260);transform:rotate(-6deg)}
+.banner-art.photo img{object-fit:cover;border:6px solid #fff6dc;border-radius:44% 56% 32% 68% / 45% 38% 62% 55%;transform:rotate(3deg);height:255px}
+.banner-art.photo::before{inset:-10px 5px 15px -8px}
+.banner-art .art-note{position:absolute;right:0;bottom:-10px;letter-spacing:2px;font-size:11px;text-transform:uppercase;background:var(--cream);color:var(--forest);padding:8px 13px;border-radius:5px;transform:rotate(-3deg);box-shadow:0 8px 18px #032c2a20}
+.panel{border-radius:18px;box-shadow:0 10px 30px #244c3808;border:1px solid #e4e4d8}
+.panel .eyebrow{color:#94600a}
+.tradition-instruments{margin:40px 0 44px}
+.tradition-instruments>.eyebrow{display:block;color:var(--accent);margin-bottom:10px}
+.instrument-cards{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:24px;margin-top:24px}
+.instrument-card{min-width:0;background:var(--panel);border:1px solid var(--line);border-radius:22px;box-shadow:0 12px 28px #063c3610;overflow:hidden}
+.instrument-flip{display:grid;width:100%;padding:0;border:0;border-radius:0;background:transparent;text-align:center;perspective:1200px}
+.instrument-flip:hover{filter:none}
+.instrument-flip[aria-pressed=true]{background:transparent}
+.instrument-flip:focus-visible{outline-offset:-5px}
+.instrument-face{grid-area:1/1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;min-width:0;padding:28px;backface-visibility:hidden;transition:transform .65s ease}
+.instrument-front{background:radial-gradient(ellipse at center,#fcf3d4,var(--soft));color:var(--ink)}
+.instrument-front img{display:block;width:100%;height:230px;object-fit:contain;filter:drop-shadow(0 12px 10px #063c3625)}
+.instrument-front .tag{align-self:flex-start;background:var(--panel)}
+.instrument-card-title{font-size:26px;font-weight:700;line-height:1.25}
+.flip-hint{font-size:14px}
+.instrument-back{background:var(--forest);color:var(--cream);transform:rotateY(-180deg);font-size:20px;line-height:1.7}
+.instrument-back .eyebrow,.instrument-back .flip-hint{color:#ffe2a1}
+.instrument-back .flip-hint{margin-top:20px}
+.instrument-flip[aria-pressed=true] .instrument-front{transform:rotateY(180deg)}
+.instrument-flip[aria-pressed=true] .instrument-back{transform:rotateY(0)}
+@media(max-width:600px){.instrument-cards{grid-template-columns:1fr}.instrument-face{padding:24px}.instrument-front img{height:210px}}
+@media(prefers-reduced-motion:reduce){.instrument-face{transition:none}}
+.heritage-card{position:relative;display:flex;align-items:flex-start;gap:24px;width:calc(100% - 64px);max-width:960px;margin:44px auto 40px;padding:32px 36px;background:linear-gradient(125deg,var(--forest),var(--forest-deep));color:var(--cream);border:1px solid #edb33655;border-top:3px solid var(--gold);border-radius:22px;box-shadow:0 18px 36px -14px #063c3659,0 5px 12px #063c3612}
+.heritage-icon{display:flex;align-items:center;justify-content:center;flex:0 0 54px;height:54px;border:1px solid #edb33655;border-radius:16px;background:#edb33614;color:var(--gold)}
+.heritage-copy{min-width:0}
+.heritage-card .eyebrow{display:block;color:var(--gold);font-size:11px;margin-bottom:8px}
+.heritage-card h2{color:var(--cream);font-size:28px;margin-bottom:16px}
+.heritage-card p{font-size:17px;line-height:1.75;margin-bottom:18px}
+.heritage-card strong{color:#ffe2a1;font-weight:600}
+.heritage-card .heritage-note{margin:0;padding-top:16px;border-top:1px solid #fcf9f030;color:#d7e4dc;font-size:15px;line-height:1.65}
+@media(max-width:760px){.heritage-card{width:100%;gap:16px;margin:32px auto;padding:24px;flex-direction:column}.heritage-icon{flex-basis:auto;width:46px;height:46px;border-radius:13px}.heritage-card h2{font-size:25px}.heritage-card p{font-size:16px}}
+.landscape{border-radius:45% 12px 42% 12px / 17% 12px 16% 12px;padding:38px;min-height:420px}
+.stage{background:radial-gradient(ellipse at center,#fcf3d4 0%,#f1e7ca 65%,#e8e6d4 100%);border-radius:45% 45% 18px 18px / 15% 15% 18px 18px}
+.stage .instrument-image{height:300px}
+.primary,button.primary{background:var(--gold);color:var(--forest-deep);font-weight:600;border-radius:30px;padding-left:22px;padding-right:22px}
+button,.action{transition:background-color .18s ease,box-shadow .18s ease}
+.chips button{border-radius:30px}
+.feedback.success{color:var(--forest)}
+.postcard{background:#f5e7bb;border:1px solid #e1cd90;border-radius:44px 8px 44px 8px;box-shadow:0 14px 30px #5e50100b}
+.postcard .eyebrow{color:#785019}
+.postcard .stamp{border-color:#bc9c4a}
+.postcard .instrument-image{filter:drop-shadow(0 12px 12px #80612025)}
+.module-footer{padding-top:30px;padding-bottom:25px;margin-top:42px}
+.page-end{position:relative;margin-top:26px;padding:38px 20px 26px;background:var(--forest-deep);color:#e5ecdf}
+.page-end::before{content:"";position:absolute;left:0;right:0;top:-1px;height:15px;background:var(--cream);clip-path:polygon(0 0,100% 0,100% 20%,93% 60%,86% 30%,79% 75%,72% 35%,65% 65%,58% 25%,51% 60%,44% 30%,37% 70%,30% 35%,23% 65%,16% 30%,9% 60%,0 25%)}
+/* The home page keeps its landscape, guide character and four separate links. */
+.navbar{background:var(--forest-deep)!important;border-bottom:1px solid #ffffff1a}
+.navbar .brand-name,.navbar .nav-link{color:#fff8e5}
+.navbar .nav-link.active{background:#fff8e51c;color:#f6cb61}
+.navbar .mobile-toggle span{background:#fff8e5}
+.hero{background:linear-gradient(90deg,rgba(3,55,48,.94) 0%,rgba(3,55,48,.8) 52%,rgba(3,55,48,.25) 100%),url('FondoRio.png') center/cover!important;padding-top:125px;padding-bottom:90px}
+.hero .hero-title{color:#fff9e8!important;text-shadow:none;font-size:clamp(36px,4.4vw,62px);line-height:1.12;letter-spacing:-1.6px}
+.hero .gradient-text{background:none!important;color:#efbd48!important;-webkit-text-fill-color:#efbd48!important}
+.hero .hero-desc{color:#e1eee3;text-shadow:none;max-width:540px}
+.hero .hero-desc strong{font-weight:400}
+.hero .hero-badge{background:#ffffff16;color:#f6cb61;border-color:#ffffff24}
+.hero .hero-bg-shapes{display:none}
+.hero .hero-video{position:relative;isolation:isolate}
+.hero .hero-video::before{content:"";position:absolute;inset:0 2%;border-radius:48% 52% 34% 66% / 46% 33% 67% 54%;background:var(--gold);z-index:-1;transform:rotate(-8deg)}
+.hero #heroImage{max-width:310px!important;animation:none!important}
+.hero #btnExplorar{background:var(--gold);color:var(--forest-deep);border-radius:30px;box-shadow:none}
+.hero #btnVerVideoBienvenida{border-radius:30px}
+.map-section{border-top:12px solid var(--gold);padding-top:80px!important;padding-bottom:80px!important}
+.map-section .pin-circle{background:var(--forest)!important;box-shadow:0 8px 18px #042f3350!important;border-color:#f2c557!important}
+.map-section .pin-label{background:var(--cream);color:var(--forest);border-radius:8px}
+.cultural-route{background:var(--cream)!important;padding-top:80px}
+.cultural-route .section-title{color:var(--forest)}
+.cultural-route .module-card{border-radius:16px;box-shadow:0 12px 35px #17483809;border-color:#dfdfce}
+.route-card-number{color:#93600c}
+.route-card-action{background:var(--forest);border-radius:30px}
+.route-card-action:hover{background:var(--forest-deep)}
+.games-banner-section{padding-top:20px!important;background:var(--cream)}
+.games-banner-section .video-glow{display:none}
+.games-banner-section .container>div>div:last-child{background:var(--forest)!important;border-radius:35px 10px 35px 10px!important;box-shadow:none!important;color:#fff8e6}
+.games-banner-section #btnJuegos{background:var(--gold)!important;color:var(--forest-deep)!important;border-radius:30px!important}
+.footer{background:var(--forest-deep);color:#e9efdf}
+.footer .footer-wave{color:var(--forest-deep)}
+.footer .brand-name{color:#fff8e5}
+.footer .footer-desc,.footer .footer-links-col a,.footer .footer-bottom{color:#c5d7cd}
+@media(max-width:760px){
+ .header-inner{flex-wrap:wrap;align-items:center}
+ .header-inner .back{max-width:none;font-size:14px}
+ .module-banner{grid-template-columns:1fr;padding:28px 24px 43px;gap:24px;margin-bottom:28px}
+ .module-banner h1{font-size:38px;letter-spacing:-1px}
+ .banner-art{width:240px;max-width:100%;min-height:175px;justify-self:center}
+ .banner-art img,.banner-art.photo img{height:175px}
+ .banner-art .art-note{right:-5px;font-size:10px}
+ .landscape{min-height:330px;padding:26px}
+ .stage .instrument-image{height:240px}
+ .hero{padding-top:100px;padding-bottom:55px}
+ .hero .hero-video{max-width:310px;width:100%;margin:auto}
+ .navbar .nav-links{background:var(--forest-deep)}
+ .map-section{padding-top:50px!important;padding-bottom:50px!important}
+}
+@media(min-width:761px) and (max-width:1024px){.hero .hero-video{max-width:370px;width:100%;margin:auto}}
+@media print{.module-banner{display:none!important}.postcard{box-shadow:none;background:white;color:#173f31}.experience{padding:0}}

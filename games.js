@@ -526,9 +526,9 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     const padColors = {
-        '0': '#16a34a', // Green (Hueco)
-        '1': '#f97316', // Orange (Concha)
-        '2': '#0ea5e9'  // Blue (Tambor)
+        '0': '#70916a', // Green (Hueco)
+        '1': '#edb336', // Orange (Concha)
+        '2': '#074c45'  // Blue (Tambor)
     };
 
     function updateSequenceDisplay() {
@@ -706,7 +706,7 @@ document.addEventListener('DOMContentLoaded', () => {
     canvas.height = window.innerHeight;
 
     let particles = [];
-    const colors = ['#3b82f6', '#10b981', '#f59e0b', '#ef4444', '#8b5cf6'];
+    const colors = ['#074c45', '#70916a', '#edb336', '#a66a09', '#fcf9f0'];
 
     function fireConfetti() {
         for (let i = 0; i < 100; i++) {

@@ -5,14 +5,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description"
-        content="Raíces de Tabasco — Curso interactivo sobre los instrumentos musicales tradicionales de Tabasco.">
-    <title>Raíces de Tabasco — Curso</title>
+        content="Conozcamos Tabasco — Experiencia cultural interactiva sobre los tamborileros tabasqueños, sus instrumentos y sus sonidos.">
+    <title>Conozcamos Tabasco</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&display=swap"
         rel="stylesheet">
     <link rel="stylesheet" href="course.css">
-</head>
+<link rel="stylesheet" href="cultural-design.css"></head>
 
 <body>
     <!-- ===== Navigation Bar ===== -->
@@ -38,7 +38,7 @@
                         </defs>
                     </svg>
                 </div>
-                <span class="brand-name">Raíces de Tabasco</span>
+                <span class="brand-name">Conozcamos Tabasco</span>
             </a>
 
             <div class="nav-links" id="navLinks">
@@ -58,14 +58,15 @@
                         <rect x="3" y="14" width="7" height="7" />
                         <rect x="14" y="14" width="7" height="7" />
                     </svg>
-                    <span>Instrumentos</span>
+                    <span>El recorrido</span>
                 </a>
 
 
-                <button class="mobile-toggle" id="mobileToggle" aria-label="Menú">
+            </div>
+                <button class="mobile-toggle" id="mobileToggle" aria-label="Menú" aria-expanded="false" aria-controls="navLinks">
                     <span></span><span></span><span></span>
                 </button>
-            </div>
+        </div>
     </nav>
 
     <!-- ===== Hero / Bienvenida ===== -->
@@ -82,242 +83,188 @@
                     Nuestra cultura
                 </div>
                 <h1 class="hero-title">
-                    Bienvenido a <span class="gradient-text">Raíces de Tabasco</span>
+                    Bienvenido a <span class="gradient-text">Conozcamos Tabasco</span>
                 </h1>
                 <p class="hero-desc">
-                    <strong>Aprende, escucha y pon a prueba lo que sabes.</strong> Explora los instrumentos que
-                    forman parte del patrimonio cultural de Tabasco mediante
-                    una experiencia interactiva de aprendizaje.
+                    <strong>Bienvenidos a este espacio dedicado a la cultura de Tabasco.
+                        Explora y descubre saberes y expresiones que forman parte de nuestra riqueza cultural.</strong>
                 </p>
-                <div class="hero-stats">
-                    <div class="stat">
-                        <span class="stat-number">4</span>
-                        <span class="stat-label">Secciones</span>
-                    </div>
-                    <div class="stat-divider"></div>
-                    <div class="stat">
-                        <span class="stat-number">3</span>
-                        <span class="stat-label">Instrumentos</span>
-                    </div>
-                    <div class="stat-divider"></div>
-                    <div class="stat">
-                        <span class="stat-number" style="-webkit-text-fill-color: initial; background: none;">🪈</span>
-                        <span class="stat-label">Cultura</span>
-                    </div>
-                </div>
-                <a href="#modulos" class="btn-hero" id="btnExplorar">
-                    Explorar Instrumentos
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                        stroke-linejoin="round">
-                        <line x1="5" y1="12" x2="19" y2="12" />
-                        <polyline points="12 5 19 12 12 19" />
-                    </svg>
-                </a>
-            </div>
-            <div class="hero-video">
-                <div class="video-wrapper">
-                    <div class="video-glow"></div>
-                    <div class="video-frame">
-                        <video id="heroVideo" src="VideoInicial.mp4" autoplay loop muted playsinline controls
-                            style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; border-radius: 16px;">
-                            Tu navegador no soporta el elemento de video.
-                        </video>
-                    </div>
-                    <div class="video-label">
-                        <svg viewBox="0 0 24 24" fill="currentColor" width="16" height="16">
-                            <path d="M8 5v14l11-7z" />
+
+                <div class="hero-actions" style="display: flex; gap: 15px; flex-wrap: wrap;">
+                    <button class="btn-hero" id="btnVerVideoBienvenida"
+                        style="background: rgba(255,255,255,0.15); border: 1px solid rgba(255,255,255,0.3); backdrop-filter: blur(10px); color: #ecfdf5; box-shadow: 0 4px 20px rgba(0,0,0,0.2); cursor: pointer;">
+                        Ver video de bienvenida
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                            stroke-linecap="round" stroke-linejoin="round">
+                            <polygon points="5 3 19 12 5 21 5 3" />
                         </svg>
-                        Bienvenidos
-                    </div>
+                    </button>
+                    <a href="#mapa" class="btn-hero" id="btnExplorar">
+                        Comenzar
+                        
+                    </a>
                 </div>
+            </div>
+
+            <div class="hero-video" style="display: flex; justify-content: center; align-items: center;">
+                <style>
+                    @keyframes avatarFloat {
+
+                        0%,
+                        100% {
+                            transform: translateY(0px);
+                        }
+
+                        50% {
+                            transform: translateY(-20px);
+                        }
+                    }
+                </style>
+                <img id="heroImage" src="iguapeje.png" alt="Iguapeje"
+                    style="width: 100%; max-width: 300px; height: auto; object-fit: contain; filter: drop-shadow(0 20px 30px rgba(0,0,0,0.4)); animation: avatarFloat 6s ease-in-out infinite;">
             </div>
         </div>
     </section>
 
-    <!-- ===== Módulos ===== -->
-    <section class="modules" id="modulos">
-        <div class="container">
-            <div class="section-header">
-                <h2 class="section-title">Instrumentos Tradicionales de Tabasco</h2>
-                <p class="section-desc">Recorre cada sección para descubrir su construcción y ejecución
-                    de los instrumentos que definen nuestra identidad cultural.</p>
-            </div>
+    <!-- ===== Mapa Interactivo de Contenidos ===== -->
+    <section class="map-section" id="mapa"
+        style="position: relative; padding: 120px 0; background: url('mapa.png') center/cover no-repeat; min-height: 600px; display: flex; flex-direction: column; align-items: center; justify-content: center; overflow: hidden; background-attachment: fixed; box-shadow: inset 0 0 50px rgba(0,0,0,0.1);">
+        
+        <div style="position: absolute; inset: 0; background: rgba(0,0,0,0.25); z-index: 0;"></div>
+        
+        <div class="container" style="text-align: center; margin-bottom: 20px; position: relative; z-index: 2;">
+            <h2 style="font-size: 3.5rem; font-weight: 800; color: #ffffff; letter-spacing: -0.02em; text-shadow: 0 4px 15px rgba(0,0,0,0.6);">Nuestro Recorrido</h2>
+        </div>
 
-            <div style="position: relative; z-index: 1;">
-                <div class="video-glow" style="inset: -40px; opacity: 0.6;"></div>
-                <div class="modules-grid">
-                    <!-- Module 1 -->
-                    <div class="module-card" id="module1" data-color="blue">
-                        <div class="card-accent"></div>
-                        <div class="card-inner">
-                            <div class="card-header">
-                                <div class="module-number">01</div>
-                                <div class="module-icon blue">
-                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                                        stroke-linecap="round" stroke-linejoin="round">
-                                        <circle cx="12" cy="12" r="10" />
-                                        <path d="M2 12h20" />
-                                        <path
-                                            d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" />
-                                    </svg>
-                                </div>
-                            </div>
+        <div style="position: relative; width: 100%; max-width: 1000px; height: 350px; margin: 0 auto; z-index: 2;">
+            <style>
+                .pin-btn {
+                    position: absolute;
+                    transform: translate(-50%, -50%);
+                    display: flex;
+                    flex-direction: column;
+                    align-items: center;
+                    text-decoration: none;
+                    z-index: 10;
+                    cursor: pointer;
+                    outline: none;
+                }
+                .pin-circle {
+                    width: 75px;
+                    height: 75px;
+                    border-radius: 50%;
+                    border: 4px solid white;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    color: white;
+                    font-size: 1.8rem;
+                    font-weight: 800;
+                    position: relative;
+                    transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.4s ease;
+                }
+                .pin-pulse {
+                    position: absolute;
+                    inset: -8px;
+                    border-radius: 50%;
+                    border: 2px solid transparent;
+                    animation: pinPulse 2s infinite;
+                }
+                @keyframes pinPulse {
+                    0% { transform: scale(1); opacity: 0.8; }
+                    100% { transform: scale(1.4); opacity: 0; }
+                }
+                
+                .pin-label {
+                    margin-top: 15px;
+                    background: rgba(255,255,255,0.95);
+                    backdrop-filter: blur(10px);
+                    padding: 8px 18px;
+                    border-radius: 100px;
+                    font-weight: 700;
+                    color: #0f172a;
+                    box-shadow: 0 8px 25px rgba(0,0,0,0.12);
+                    white-space: nowrap;
+                    font-size: 1.05rem;
+                    transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+                    opacity: 0;
+                    transform: translateY(10px);
+                    pointer-events: none;
+                }
 
-                            <h3 class="module-title">Flauta de Carrizo</h3>
-                            <p class="module-desc">Aprende sobre la flauta de carrizo, un instrumento de viento
-                                tradicional
-                                utilizado en expresiones musicales y festividades de gran importancia cultural.</p>
-                            <div class="module-topics">
-                                <span class="topic">Melodía</span>
-                                <span class="topic">Viento</span>
-                                <span class="topic">Carrizo</span>
-                            </div>
-                            <div class="card-footer">
-                                <div class="module-meta">
-                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                        <rect x="3" y="4" width="18" height="18" rx="2" ry="2" />
-                                        <line x1="16" y1="2" x2="16" y2="6" />
-                                        <line x1="8" y1="2" x2="8" y2="6" />
-                                        <line x1="3" y1="10" x2="21" y2="10" />
-                                    </svg>
-                                </div>
-                                <button class="btn-module blue" id="btnModule1">
-                                    Comenzar
-                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
-                                        <polyline points="9 18 15 12 9 6" />
-                                    </svg>
-                                </button>
-                            </div>
-                        </div>
-                    </div>
+                .pin-btn:hover .pin-circle {
+                    transform: scale(1.15) translateY(-5px);
+                }
+                
+                .pin-btn:hover .pin-label {
+                    opacity: 1;
+                    transform: translateY(0);
+                }
 
-                    <!-- Module 2 -->
-                    <div class="module-card" id="module2" data-color="green">
-                        <div class="card-accent"></div>
-                        <div class="card-inner">
-                            <div class="card-header">
-                                <div class="module-number">02</div>
-                                <div class="module-icon green">
-                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                                        stroke-linecap="round" stroke-linejoin="round">
-                                        <path
-                                            d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z" />
-                                    </svg>
-                                </div>
-                            </div>
-
-                            <h3 class="module-title">Caparazón de Tortuga</h3>
-                            <p class="module-desc">Aprende sobre la concha de tortuga, un instrumento de percusión
-                                prehispánico utilizado en rituales y festividades de gran importancia cultural.</p>
-                            <div class="module-topics">
-                                <span class="topic">Percusión</span>
-                                <span class="topic">Ritual</span>
-                                <span class="topic">Ritmo</span>
-                            </div>
-                            <div class="card-footer">
-                                <div class="module-meta">
-                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                        <rect x="3" y="4" width="18" height="18" rx="2" ry="2" />
-                                        <line x1="16" y1="2" x2="16" y2="6" />
-                                        <line x1="8" y1="2" x2="8" y2="6" />
-                                        <line x1="3" y1="10" x2="21" y2="10" />
-                                    </svg>
-                                </div>
-                                <button class="btn-module green" id="btnModule2">
-                                    Comenzar
-                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
-                                        <polyline points="9 18 15 12 9 6" />
-                                    </svg>
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Module 3 -->
-                    <div class="module-card" id="module3" data-color="red">
-                        <div class="card-accent"></div>
-                        <div class="card-inner">
-                            <div class="card-header">
-                                <div class="module-number">03</div>
-                                <div class="module-icon red">
-                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                                        stroke-linecap="round" stroke-linejoin="round">
-                                        <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2" />
-                                    </svg>
-                                </div>
-                            </div>
-
-                            <h3 class="module-title">Tambor Tradicional</h3>
-                            <p class="module-desc">Aprende sobre el tambor tradicional, un instrumento de
-                                percusión elaborado artesanalmente y utilizado en expresiones musicales que
-                                forman parte de la identidad cultural de Tabasco.</p>
-                            <div class="module-topics">
-                                <span class="topic">Percusión</span>
-                                <span class="topic">Madera</span>
-                                <span class="topic">Danza</span>
-                            </div>
-                            <div class="card-footer">
-                                <div class="module-meta">
-                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                        <rect x="3" y="4" width="18" height="18" rx="2" ry="2" />
-                                        <line x1="16" y1="2" x2="16" y2="6" />
-                                        <line x1="8" y1="2" x2="8" y2="6" />
-                                        <line x1="3" y1="10" x2="21" y2="10" />
-                                    </svg>
-                                </div>
-                                <button class="btn-module red" id="btnModule3">
-                                    Comenzar
-                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
-                                        <polyline points="9 18 15 12 9 6" />
-                                    </svg>
-                                </button>
-                            </div>
-                        </div>
-                    </div>
+                /* Responsive */
+                @media (max-width: 768px) {
+                    .pin-circle {
+                        width: 45px;
+                        height: 45px;
+                        font-size: 1.2rem;
+                        border-width: 3px;
+                    }
+                    .pin-label {
+                        font-size: 0.85rem;
+                        padding: 6px 14px;
+                        margin-top: 8px;
+                    }
+                }
+                @media (max-width: 480px) {
+                    .pin-circle {
+                        width: 35px;
+                        height: 35px;
+                        font-size: 1rem;
+                        border-width: 2px;
+                    }
+                }
+            </style>
+            
+            <!-- Pin 1: Flauta (Dark Blue) -->
+            <a href="tradicion.html" class="pin-btn" style="left: 15%; top: 60%;">
+                <div class="pin-circle" style="background: #1e40af; box-shadow: 0 10px 25px rgba(30,64,175,0.5);">
+                    <div class="pin-pulse" style="border-color: #1e40af;"></div>
+                    01
                 </div>
-            </div>
+                <div class="pin-label">Una tradición viva</div>
+            </a>
 
-            <!-- Module 4 -->
-            <div class="module-card" id="module4" data-color="purple"
-                style="display: none; margin-top: 40px; margin-left: auto; margin-right: auto; max-width: 600px;">
-                <div class="card-accent"></div>
-                <div class="card-inner">
-                    <div class="card-header">
-                        <div class="module-number">04</div>
-                        <div class="module-icon purple" style="color: #a855f7;">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                                stroke-linecap="round" stroke-linejoin="round">
-                                <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" />
-                                <polyline points="22 4 12 14.01 9 11.01" />
-                            </svg>
-                        </div>
-                    </div>
-
-                    <h3 class="module-title">Resumen Final</h3>
-                    <p class="module-desc">Repasa lo que aprendiste y explora materiales didácticos complementarios para
-                        reforzar tus conocimientos.</p>
-                    <div class="module-topics">
-                        <span class="topic">Videos</span>
-                        <span class="topic">Recursos</span>
-                    </div>
-                    <div class="card-footer">
-                        <div class="module-meta">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <polygon points="5 3 19 12 5 21 5 3" />
-                            </svg>
-                        </div>
-                        <button class="btn-module purple" id="btnModule4"
-                            style="background: rgba(168, 85, 247, 0.1); color: #a855f7; border: 1px solid rgba(168, 85, 247, 0.2);">
-                            Ver Resumen
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
-                                <polyline points="9 18 15 12 9 6" />
-                            </svg>
-                        </button>
-                    </div>
+            <!-- Pin 2: Caparazón (Orange) -->
+            <a href="instrumentos.html" class="pin-btn" style="left: 40%; top: 30%;">
+                <div class="pin-circle" style="background: #ea580c; box-shadow: 0 10px 25px rgba(234,88,12,0.5);">
+                    <div class="pin-pulse" style="border-color: #ea580c;"></div>
+                    02
                 </div>
-            </div>
+                <div class="pin-label">Dentro de los instrumentos</div>
+            </a>
+
+            <!-- Pin 3: Tambor (Light Blue) -->
+            <a href="sonidos.html" class="pin-btn" style="left: 65%; top: 70%;">
+                <div class="pin-circle" style="background: #0ea5e9; box-shadow: 0 10px 25px rgba(14,165,233,0.5);">
+                    <div class="pin-pulse" style="border-color: #0ea5e9;"></div>
+                    03
+                </div>
+                <div class="pin-label">Escucha Tabasco</div>
+            </a>
+
+            <!-- Pin 4: Resumen (Purple) -->
+            <a href="descubrimientos.html" class="pin-btn" style="left: 90%; top: 40%;">
+                <div class="pin-circle" style="background: #9333ea; box-shadow: 0 10px 25px rgba(147,51,234,0.5);">
+                    <div class="pin-pulse" style="border-color: #9333ea;"></div>
+                    04
+                </div>
+                <div class="pin-label">Conecta lo descubierto</div>
+            </a>
         </div>
     </section>
+
+    <!-- ===== Cuatro experiencias culturales independientes ===== -->
+    
 
     <!-- ===== Zona de Juegos Banner ===== -->
     <section class="games-banner-section" style="padding: 0 0 80px;">
@@ -347,16 +294,11 @@
                         <button class="btn-module" id="btnJuegos"
                             style="background: white; color: #8b5cf6; font-size: 1.1rem; padding: 15px 30px; border-radius: var(--radius-full); border: none; font-weight: 700; cursor: pointer; display: inline-flex; align-items: center; gap: 10px; transition: transform 0.2s, box-shadow 0.2s;">
                             <span>Entrar a la sala</span>
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" width="24"
-                                height="24">
-                                <line x1="5" y1="12" x2="19" y2="12" />
-                                <polyline points="12 5 19 12 12 19" />
-                            </svg>
+                            
                         </button>
                     </div>
                 </div>
             </div>
-        </div>
         </div>
     </section>
 
@@ -389,10 +331,10 @@
                                 </linearGradient>
                             </defs>
                         </svg>
-                        <span>Raíces de Tabasco</span>
+                        <span>Conozcamos Tabasco</span>
                     </div>
-                    <p class="footer-desc">Plataforma educativa dedicada a preservar y enseñar la riqueza musical de los
-                        instrumentos tradicionales de Tabasco, México.</p>
+                    <p class="footer-desc">Plataforma educativa dedicada a preservar y enseñar la riqueza cultural
+                        de Tabasco, México.</p>
                 </div>
 
                 <div class="footer-creator">
@@ -431,7 +373,7 @@
             </div>
 
             <div class="footer-bottom">
-                <p>&copy; 2026 Raíces de Tabasco. Todos los derechos reservados.</p>
+                <p>&copy; 2026 Conozcamos Tabasco. Todos los derechos reservados.</p>
                 <p class="footer-made">Hecho con <span class="heart">❤️</span> en Tabasco, México</p>
             </div>
         </div>
@@ -439,6 +381,25 @@
 
     <script src="ui-sounds.js"></script>
     <script src="course.js"></script>
+
+    <!-- Video Modal -->
+    <div id="videoModalOverlay"
+        style="display: none; position: fixed; inset: 0; z-index: 9999; background: rgba(0,0,0,0.85); backdrop-filter: blur(5px); align-items: center; justify-content: center; padding: 5%; opacity: 0; transition: opacity 0.3s ease;">
+        <div style="position: relative; width: 100%; max-width: 900px; background: #000; border-radius: 16px; box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5); overflow: hidden; transform: scale(0.95); transition: transform 0.3s ease;"
+            id="videoModalContent" role="dialog" aria-modal="true" aria-label="Video de bienvenida">
+            <button type="button" id="closeWelcomeVideo" aria-label="Cerrar video de bienvenida">Cerrar ×</button>
+            <video id="modalVideoPlayer" src="VideoInicial.mp4" playsinline controls preload="none"
+                style="width: 100%; display: block; border-radius: 16px;"></video>
+
+            <div id="videoEndOverlay"
+                style="display: none; position: absolute; inset: 0; background: rgba(0,0,0,0.7); flex-direction: column; align-items: center; justify-content: center; border-radius: 16px;">
+                <button id="btnFinalizarVideo" class="btn-hero"
+                    style="font-size: 1.2rem; padding: 15px 35px; background: linear-gradient(135deg, #10b981, #059669);">
+                    Finalizar
+                </button>
+            </div>
+        </div>
+    </div>
 </body>
 
 </html>

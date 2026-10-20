@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Zona de Juegos interactivos. Curso de instrumentos de Tabasco.">
-    <title>Zona de Juegos | Raíces de Tabasco</title>
+    <title>Zona de Juegos | Conozcamos Tabasco</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
@@ -17,16 +17,13 @@
 
 <body>
     <!-- ===== Toolbar ===== -->
-    <nav class="toolbar games-toolbar" id="toolbar" style="background: #7c3aed;">
+    <nav class="toolbar games-toolbar" id="toolbar">
         <div class="toolbar-container">
             <button class="toolbar-back" id="btnBack" aria-label="Volver al curso">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                    <polyline points="15 18 9 12 15 6" />
-                </svg>
                 <span>Volver</span>
             </button>
             <div class="toolbar-center">
-                <div class="toolbar-module-badge" style="background: #8b5cf6; color: white;">Arcade</div>
+                <div class="toolbar-module-badge">Arcade</div>
                 <h1 class="toolbar-title">Zona de Juegos</h1>
             </div>
             <div class="toolbar-progress" style="opacity: 0;">
@@ -36,27 +33,27 @@
         <!-- Game Selector -->
         <div class="toolbar-steps games-selector">
             <div class="step active" data-step="0">
-                <div class="step-dot" style="background: var(--blue);"></div>
+                <div class="step-dot"></div>
                 <span>Memorama</span>
             </div>
             <div class="step-line"></div>
             <div class="step" data-step="1">
-                <div class="step-dot" style="background: var(--green);"></div>
+                <div class="step-dot"></div>
                 <span>Relacionar</span>
             </div>
             <div class="step-line"></div>
             <div class="step" data-step="2">
-                <div class="step-dot" style="background: var(--amber);"></div>
+                <div class="step-dot"></div>
                 <span>Ordenar</span>
             </div>
             <div class="step-line"></div>
             <div class="step" data-step="3">
-                <div class="step-dot" style="background: var(--red);"></div>
+                <div class="step-dot"></div>
                 <span>Adivinar</span>
             </div>
             <div class="step-line"></div>
             <div class="step" data-step="4">
-                <div class="step-dot" style="background: #8b5cf6;"></div>
+                <div class="step-dot"></div>
                 <span>Ritmo</span>
             </div>
         </div>
@@ -213,7 +210,7 @@
         <section class="content-section" id="gameRitmo">
             <div class="section-container">
                 <div class="section-intro">
-                    <div class="section-intro-badge purple" style="background: #ede9fe; color: #7c3aed; border-color: #8b5cf6;">🎮 Ritmo</div>
+                    <div class="section-intro-badge purple">🎮 Ritmo</div>
                     <h2 class="section-intro-title">Memoria Rítmica</h2>
                     <p class="section-intro-desc">Sigue la secuencia de sonidos. ¡Cada ronda se vuelve más larga!</p>
                 </div>
@@ -221,7 +218,7 @@
                 <div class="rhythm-game-container">
                     <div class="rhythm-level" id="rhythmLevelBadge">Nivel 1</div>
                     
-                    <div class="sequence-display-box" id="sequenceDisplayBoxArcade" style="border: 2px solid #16a34a; padding: 20px; margin-bottom: 30px; border-radius: var(--radius-sm); min-height: 80px; display: flex; align-items: center; justify-content: center; margin-top: 20px;">
+                    <div class="sequence-display-box" id="sequenceDisplayBoxArcade" style="border: 2px solid var(--forest); padding: 20px; margin-bottom: 30px; border-radius: var(--radius-sm); min-height: 80px; display: flex; align-items: center; justify-content: center; margin-top: 20px;">
                         <h3 id="sequenceStatusTextArcade" style="text-align: center; text-transform: uppercase; letter-spacing: 2px; margin: 0;">Secuencia</h3>
                         <div class="rhythm-dots" id="rhythmDotsArcade" style="display: none; justify-content: center; gap: 15px; margin: 0;">
                             <!-- Dots will be generated here -->
@@ -233,7 +230,7 @@
                     </div>
                     
                     <div style="text-align: center; margin-bottom: 30px;">
-                        <button class="btn-play-rhythm" id="btnStartArcadeRhythm" style="background:#8b5cf6; padding: 12px 24px; border-radius: var(--radius-sm); border: none; font-weight: bold; cursor: pointer; color: white; font-size: 1.1rem;">
+                        <button class="btn-play-rhythm" id="btnStartArcadeRhythm" style="background:var(--gold); padding: 12px 24px; border-radius: var(--radius-sm); border: none; font-weight: bold; cursor: pointer; color: var(--forest-deep); font-size: 1.1rem;">
                             Comenzar Juego
                         </button>
                     </div>
@@ -242,17 +239,17 @@
                         <!-- Tambor (Blue) -->
                         <button class="rhythm-pad" data-pad="2" id="padC" disabled>
                             <img src="Tamborcito.png" alt="Tambor" class="pad-img" style="width: 100px; height: 100px; object-fit: contain;">
-                            <span class="color-dot" style="background-color: #0ea5e9;"></span>
+                            <span class="color-dot" style="background-color: #074c45;"></span>
                         </button>
                         <!-- Concha (Orange) -->
                         <button class="rhythm-pad" data-pad="1" id="padB" disabled>
                             <img src="Concha.png" alt="Concha" class="pad-img" style="width: 100px; height: 100px; object-fit: contain;">
-                            <span class="color-dot" style="background-color: #f97316;"></span>
+                            <span class="color-dot" style="background-color: #edb336;"></span>
                         </button>
                         <!-- Hueco (Green) -->
                         <button class="rhythm-pad" data-pad="0" id="padA" disabled>
                             <img src="Hueco.png" alt="Hueco" class="pad-img" style="width: 100px; height: 100px; object-fit: contain;">
-                            <span class="color-dot" style="background-color: #16a34a;"></span>
+                            <span class="color-dot" style="background-color: #70916a;"></span>
                         </button>
                     </div>
 

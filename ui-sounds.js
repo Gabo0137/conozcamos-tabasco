@@ -1,5 +1,5 @@
 /**
- * Raíces Sonoras - Sistema de Sonidos UI Global
+ * Conozcamos Tabasco - Sistema de Sonidos UI Global
  * Usa la Web Audio API para generar efectos de sonido de interfaz sin requerir archivos mp3.
  */
 

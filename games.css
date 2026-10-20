@@ -1,4 +1,56 @@
 /* ===== Specific Styles for Games Hub ===== */
+:root {
+    --forest: #074c45;
+    --forest-deep: #063c36;
+    --gold: #edb336;
+    --cream: #fcf9f0;
+    --ink: #123f38;
+    --blue: var(--forest);
+    --blue-light: #327b6d;
+    --blue-dark: var(--forest-deep);
+    --blue-bg: #e6efe6;
+    --blue-glow: #074c4533;
+    --green: #32674b;
+    --green-light: #dcebdc;
+    --green-dark: #254f39;
+    --green-bg: #edf3e8;
+    --green-glow: #32674b33;
+    --amber: var(--gold);
+    --amber-bg: #fbefcf;
+    --purple: var(--forest);
+    --purple-dark: var(--forest-deep);
+    --purple-bg: #f2ebd8;
+    --red: #a64f37;
+    --red-light: #f3ded4;
+    --red-dark: #853b28;
+    --red-bg: #fcf0e9;
+    --red-glow: #a64f3733;
+    --white: #fffef9;
+    --gray-50: var(--cream);
+    --gray-100: #f2ebd8;
+    --gray-200: #dddcc9;
+    --gray-300: #c4cbb7;
+    --gray-400: #718577;
+    --gray-500: #536c62;
+    --gray-600: #456157;
+    --gray-700: #2b5045;
+    --gray-800: var(--ink);
+    --gray-900: var(--forest-deep);
+}
+
+body {
+    background: var(--cream);
+    color: var(--ink);
+    animation: none;
+}
+
+.games-toolbar { background: var(--forest-deep); }
+.games-toolbar .toolbar-title { color: var(--cream); }
+.games-toolbar .toolbar-module-badge {
+    background: var(--gold);
+    color: var(--forest-deep);
+}
+.music-notes-bg .note { color: #a66a0933; }
 
 .games-main {
     padding-top: 150px;
@@ -6,14 +58,14 @@
 
 /* Toolbar overrides for games */
 .games-toolbar .toolbar-back {
-    background: rgba(255, 255, 255, 0.2);
-    color: #ffffff;
+    background: var(--gold);
+    color: var(--forest-deep);
     font-weight: 600;
 }
 
 .games-toolbar .toolbar-back:hover {
-    background: rgba(255, 255, 255, 0.35);
-    color: #ffffff;
+    background: #f5c658;
+    color: var(--forest-deep);
     transform: translateY(-2px);
 }
 
@@ -28,7 +80,12 @@
 .games-selector .step {
     cursor: pointer;
     transition: var(--transition);
+    opacity: 1;
 }
+
+.games-selector .step-dot { background: #c4cbb7; border-color: #c4cbb7; }
+.games-selector .step.active .step-dot { background: var(--gold); border-color: var(--gold); box-shadow: 0 0 12px #edb33644; }
+.games-selector .step-line { background: var(--gray-200); }
 
 .games-selector .step:hover {
     transform: translateY(-2px);
@@ -40,7 +97,7 @@
 }
 
 .games-selector .step.active span {
-    color: #7c3aed;
+    color: var(--forest);
     font-weight: 700;
 }
 
@@ -89,8 +146,8 @@
 }
 
 .memory-card-front {
-    background: linear-gradient(135deg, #8b5cf6 0%, var(--blue) 100%);
-    color: white;
+    background: linear-gradient(135deg, var(--forest), var(--forest-deep));
+    color: var(--gold);
     font-size: 2.5rem;
 }
 
@@ -99,10 +156,10 @@
 }
 
 .memory-card-back {
-    background: white;
+    background: var(--white);
     color: var(--gray-800);
     transform: rotateY(180deg);
-    border: 3px solid #8b5cf6;
+    border: 3px solid var(--gold);
     flex-direction: column;
     gap: 10px;
 }
@@ -151,8 +208,8 @@
     display: inline-flex;
     align-items: center;
     gap: 10px;
-    background: var(--red);
-    color: white;
+    background: var(--gold);
+    color: var(--forest-deep);
     border: none;
     padding: 20px 40px;
     border-radius: var(--radius-full);
@@ -161,12 +218,12 @@
     cursor: pointer;
     transition: var(--transition);
     margin-bottom: 40px;
-    box-shadow: 0 10px 20px rgba(239, 68, 68, 0.3);
+    box-shadow: 0 10px 20px #edb33633;
 }
 
 .btn-play-mystery:hover {
     transform: scale(1.05);
-    background: var(--red-dark);
+    background: #f5c658;
 }
 
 .btn-play-mystery svg {
@@ -179,9 +236,9 @@
 }
 
 @keyframes pulseMystery {
-    0% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.7); }
-    70% { box-shadow: 0 0 0 20px rgba(239, 68, 68, 0); }
-    100% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0); }
+    0% { box-shadow: 0 0 0 0 #edb33699; }
+    70% { box-shadow: 0 0 0 20px #edb33600; }
+    100% { box-shadow: 0 0 0 0 #edb33600; }
 }
 
 .guess-options {
@@ -210,8 +267,8 @@
 }
 
 .guess-opt:hover {
-    border-color: var(--red-light);
-    background: white;
+    border-color: var(--gold);
+    background: var(--white);
     transform: translateY(-5px);
 }
 
@@ -235,11 +292,24 @@
 /* Rhythm Game Arcade */
 .rhythm-level {
     display: inline-block;
-    background: #ede9fe;
-    color: #7c3aed;
+    background: var(--amber-bg);
+    color: var(--forest);
     padding: 5px 15px;
     border-radius: var(--radius-full);
     font-weight: 700;
     font-size: 1.2rem;
     margin-bottom: 10px;
 }
+
+.section-intro-badge.blue,
+.section-intro-badge.green,
+.section-intro-badge.amber,
+.section-intro-badge.red,
+.section-intro-badge.purple {
+    background: var(--amber-bg);
+    color: var(--forest);
+    border-color: var(--gold);
+}
+.btn-check, .btn-play-rhythm { background: var(--gold); color: var(--forest-deep); }
+.btn-check:hover, .btn-play-rhythm:hover { background: #f5c658; }
+button:focus-visible, .memory-card:focus-visible { outline: 3px solid #a66a09; outline-offset: 4px; }

@@ -1,4 +1,4 @@
-// ===== Raíces de Tabasco — Splash App =====
+// ===== Conozcamos Tabasco — Splash App =====
 document.addEventListener('DOMContentLoaded', () => {
     // Generate particles
     createParticles();
