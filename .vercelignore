@@ -1,0 +1,10 @@
+.git/
+.agent/
+.vscode/
+node_modules/
+public/
+formulario-evaluacion/
+*.md
+.env
+.env.*
+*.log

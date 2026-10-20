@@ -6,6 +6,7 @@ Desktop.ini
 
 # Local dependencies, secrets and temporary files
 node_modules/
+public/
 .env
 .env.*
 !.env.example

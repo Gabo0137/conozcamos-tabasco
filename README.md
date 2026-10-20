@@ -43,10 +43,12 @@ Los audios reales están separados de la percusión sintetizada.
 
 ## Publicación y actualizaciones
 
-El sitio es estático y no requiere instalación de paquetes ni compilación.
-Para conectarlo a Vercel, importa este repositorio, selecciona el tipo de proyecto
-`Other`, usa la raíz del repositorio como carpeta del proyecto y no configures
-un comando de compilación. La página de entrada es `index.html`.
+El sitio es estático y no requiere instalación de paquetes. `vercel.json`
+configura la publicación: `node scripts/build-site.mjs` copia las páginas y sus
+recursos a `public/`, que es la carpeta publicada. Puedes ejecutar ese comando
+localmente con Node.js. La página de entrada es `index.html`.
+El formulario de evaluación, los documentos y las herramientas de trabajo no
+se incluyen en la carpeta pública.
 
 La rama principal es `main`. Una vez configurada la integración de alojamiento,
 los cambios enviados a esa rama podrán publicarse automáticamente.
