@@ -104,7 +104,7 @@
 
   if (module === 'sonidos') {
     const recordings = ['MusicaFlauta.mpeg','SonidoTambor.mpeg'];
-    let mystery = Math.random() < .5 ? 0 : 1, listened = false, taps = 0;
+    let mystery = Math.random() < .5 ? 0 : 1, listened = false;
     const mysteryAudio = $('#mystery-audio');
     mysteryAudio.src = recordings[mystery];
     mysteryAudio.addEventListener('playing', () => { listened = true; });
@@ -122,30 +122,7 @@
       $('#sound-feedback').classList.toggle('success', correct); if (correct) discover();
     }));
     $('#another-sound').addEventListener('click', () => { mysteryAudio.pause(); mystery = 1 - mystery; listened = false; mysteryAudio.src = recordings[mystery]; $('#sound-feedback').textContent = 'Hay una nueva grabación. Escucha antes de elegir.'; $('#mystery-error').textContent = ''; });
-    // A clearly labeled synthetic percussion pad, independent of the real recordings.
-    let audioContext, timers = [];
-    function cancelPattern() { timers.forEach(clearTimeout); timers = []; $('#hear-pattern').disabled = false; all('.beat-lights span').forEach(el => el.classList.remove('on')); }
-    function beat(index) {
-      try {
-        audioContext ??= new (window.AudioContext || window.webkitAudioContext)();
-        audioContext.resume().catch(() => {});
-        const oscillator = audioContext.createOscillator(), gain = audioContext.createGain(), time = audioContext.currentTime;
-        oscillator.frequency.setValueAtTime(140,time); oscillator.frequency.exponentialRampToValueAtTime(45,time+.25);
-        gain.gain.setValueAtTime(.15,time); gain.gain.exponentialRampToValueAtTime(.001,time+.3);
-        oscillator.connect(gain); gain.connect(audioContext.destination); oscillator.start(time); oscillator.stop(time+.32);
-        oscillator.onended = () => { oscillator.disconnect(); gain.disconnect(); };
-      } catch { $('#rhythm-feedback').textContent = 'Puedes seguir la secuencia visual aunque el audio no esté disponible.'; }
-      all('.beat-lights span').forEach((el,i) => el.classList.toggle('on', i === index));
-    }
-    $('#hear-pattern').addEventListener('click', () => {
-      cancelPattern(); all('audio,video').forEach(media => media.pause()); $('#hear-pattern').disabled = true;
-      [0,600,900].forEach((delay,i) => timers.push(setTimeout(() => beat(i),delay)));
-      timers.push(setTimeout(cancelPattern,1300));
-    });
-    $('#rhythm-pad').addEventListener('click', () => { cancelPattern(); all('audio,video').forEach(media => media.pause()); beat(taps % 3); taps++; $('#rhythm-feedback').textContent = `${taps} golpes explorados. Prueba dejar un espacio entre ellos.`; });
-    window.addEventListener('pagehide', () => { cancelPattern(); if(audioContext) audioContext.close().catch(() => {}); });
-    document.addEventListener('visibilitychange', () => { if(document.hidden) { cancelPattern(); if(audioContext) audioContext.suspend().catch(() => {}); } });
-    document.addEventListener('play', cancelPattern, true);
+
   }
 
   if (module === 'descubrimientos') {
