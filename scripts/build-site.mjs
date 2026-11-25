@@ -4,7 +4,7 @@ import { fileURLToPath } from 'node:url';
 
 const root = fileURLToPath(new URL('../', import.meta.url));
 const output = join(root, 'public');
-const extensions = new Set(['.html', '.css', '.js', '.png', '.jpg', '.jpeg', '.webp', '.svg', '.ico', '.mp4', '.mpeg', '.mp3', '.wav', '.ogg', '.vtt', '.woff', '.woff2']);
+const extensions = new Set(['.html', '.css', '.js', '.glb', '.png', '.jpg', '.jpeg', '.webp', '.svg', '.ico', '.mp4', '.mpeg', '.mp3', '.wav', '.ogg', '.vtt', '.woff', '.woff2']);
 await mkdir(output, { recursive: true });
 let count = 0;
 for (const entry of await readdir(root, { withFileTypes: true })) {

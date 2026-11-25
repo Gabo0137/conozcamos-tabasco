@@ -2,6 +2,13 @@
 
 document.addEventListener('DOMContentLoaded', () => {
 
+    const body = document.body;
+    const showRouteForHash = () => {
+        if (window.location.hash === '#mapa') body.classList.remove('welcome-pending');
+    };
+    showRouteForHash();
+    window.addEventListener('hashchange', showRouteForHash);
+
 
     // ===== Navbar Scroll Effect =====
     const navbar = document.getElementById('navbar');
@@ -11,7 +18,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // ===== Nav Link Active State =====
     const navLinks = document.querySelectorAll('.nav-link');
-    const sections = ['bienvenida', 'modulos'];
+    const sections = ['bienvenida', 'mapa', 'juegos'];
 
     function updateActiveNav() {
         const scrollY = window.scrollY + 120;
@@ -31,25 +38,6 @@ document.addEventListener('DOMContentLoaded', () => {
     window.addEventListener('scroll', updateActiveNav);
 
 
-
-    // ===== Mobile Menu Toggle =====
-    const mobileToggle = document.getElementById('mobileToggle');
-    const navLinksContainer = document.getElementById('navLinks');
-
-    mobileToggle.addEventListener('click', () => {
-        navLinksContainer.classList.toggle('open');
-        mobileToggle.classList.toggle('open');
-        mobileToggle.setAttribute('aria-expanded', String(navLinksContainer.classList.contains('open')));
-    });
-
-    // Close mobile menu when clicking a link
-    navLinksContainer.querySelectorAll('.nav-link').forEach(link => {
-        link.addEventListener('click', () => {
-            navLinksContainer.classList.remove('open');
-            mobileToggle.classList.remove('open');
-            mobileToggle.setAttribute('aria-expanded', 'false');
-        });
-    });
 
     // ===== Scroll Reveal for Module Cards =====
     const moduleCards = document.querySelectorAll('.module-card');
@@ -78,6 +66,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const heading = route.querySelector('h2');
         const animations = [];
         routeTransitionRunning = true;
+        body.classList.remove('welcome-pending');
 
         function revealRoute() {
             const top = route.getBoundingClientRect().top + window.scrollY;
@@ -127,10 +116,7 @@ document.addEventListener('DOMContentLoaded', () => {
         anchor.addEventListener('click', function (e) {
             if (e.ctrlKey || e.metaKey || e.shiftKey || e.altKey) return;
             e.preventDefault();
-            if (this.id === 'btnExplorar') {
-                void enterRoute();
-                return;
-            }
+            if (this.id === 'btnIniciarRecorrido') return;
             const href = this.getAttribute('href');
             const target = href === '#' ? document.body : document.getElementById(href.slice(1));
             if (target) {
@@ -140,6 +126,44 @@ document.addEventListener('DOMContentLoaded', () => {
                 });
             }
         });
+    });
+
+    const btnExplorar = document.getElementById('btnExplorar');
+    const btnIniciarRecorrido = document.getElementById('btnIniciarRecorrido');
+    const welcomeAudio = new Audio('Bienvenida.mp3');
+    welcomeAudio.preload = 'auto';
+    welcomeAudio.loop = false;
+    welcomeAudio.load();
+    let welcomeStarted = false;
+
+    btnExplorar?.addEventListener('click', async () => {
+        if (welcomeStarted) return;
+        welcomeStarted = true;
+        btnExplorar.hidden = true;
+
+        welcomeAudio.pause();
+        welcomeAudio.currentTime = 0;
+        const audioStarted = new Promise(resolve => {
+            welcomeAudio.addEventListener('playing', resolve, { once: true });
+        });
+        const audioFinished = new Promise(resolve => {
+            welcomeAudio.addEventListener('ended', resolve, { once: true });
+            welcomeAudio.addEventListener('error', resolve, { once: true });
+        });
+
+        welcomeAudio.play().catch(() => {});
+        await audioStarted;
+        const animationFinished = typeof window.startAvatarAnimation === 'function'
+            ? window.startAvatarAnimation(25000)
+            : new Promise(resolve => window.setTimeout(resolve, 25000));
+        await Promise.all([audioFinished, animationFinished]);
+        btnIniciarRecorrido.hidden = false;
+        btnIniciarRecorrido.focus();
+    });
+
+    btnIniciarRecorrido?.addEventListener('click', event => {
+        event.preventDefault();
+        void enterRoute();
     });
 
 
@@ -157,73 +181,4 @@ document.addEventListener('DOMContentLoaded', () => {
     const btnJuegos = document.getElementById('btnJuegos');
     if (btnJuegos) btnJuegos.addEventListener('click', () => navigateWithSound('games.html'));
 
-    // ===== Video de Bienvenida Modal =====
-    const btnVerVideoBienvenida = document.getElementById('btnVerVideoBienvenida');
-    const videoModalOverlay = document.getElementById('videoModalOverlay');
-    const videoModalContent = document.getElementById('videoModalContent');
-    const modalVideoPlayer = document.getElementById('modalVideoPlayer');
-    const videoEndOverlay = document.getElementById('videoEndOverlay');
-    const btnFinalizarVideo = document.getElementById('btnFinalizarVideo');
-
-    if (btnVerVideoBienvenida && videoModalOverlay && modalVideoPlayer) {
-        // Asegurarnos de que no esté en bucle
-        modalVideoPlayer.loop = false;
-
-        btnVerVideoBienvenida.addEventListener('click', (e) => {
-            e.preventDefault();
-            // Reset video and overlay state
-            videoEndOverlay.style.display = 'none';
-            modalVideoPlayer.currentTime = 0;
-            
-            // Show modal
-            videoModalOverlay.style.display = 'flex';
-            
-            // Trigger animation
-            setTimeout(() => {
-                videoModalOverlay.style.opacity = '1';
-                videoModalContent.style.transform = 'scale(1)';
-            }, 10);
-
-            document.getElementById('closeWelcomeVideo').focus();
-            // Play after the visitor explicitly opens the video
-            modalVideoPlayer.play().catch(err => console.log('Autoplay prevent by browser', err));
-        });
-
-        document.getElementById('closeWelcomeVideo').addEventListener('click', closeVideoModal);
-        videoModalOverlay.addEventListener('click', (event) => { if (event.target === videoModalOverlay) closeVideoModal(); });
-        document.addEventListener('keydown', (event) => {
-            if (videoModalOverlay.style.display !== 'flex') return;
-            if (event.key === 'Escape') closeVideoModal();
-            if (event.key === 'Tab') {
-                const focusable = [document.getElementById('closeWelcomeVideo'), modalVideoPlayer];
-                if (videoEndOverlay.style.display === 'flex') focusable.push(btnFinalizarVideo);
-                const first = focusable[0], last = focusable[focusable.length - 1];
-                if (event.shiftKey && document.activeElement === first) { event.preventDefault(); last.focus(); }
-                else if (!event.shiftKey && document.activeElement === last) { event.preventDefault(); first.focus(); }
-            }
-        });
-        // When video ends, show "Finalizar" button
-        modalVideoPlayer.addEventListener('ended', () => {
-            videoEndOverlay.style.display = 'flex';
-        });
-
-        // "Finalizar" button logic
-        btnFinalizarVideo.addEventListener('click', () => {
-            closeVideoModal();
-        });
-
-        // Function to close the modal
-        function closeVideoModal() {
-            modalVideoPlayer.pause();
-            btnVerVideoBienvenida.focus();
-            
-            // Animate out
-            videoModalOverlay.style.opacity = '0';
-            videoModalContent.style.transform = 'scale(0.95)';
-            
-            setTimeout(() => {
-                videoModalOverlay.style.display = 'none'; 
-            }, 300);
-        }
-    }
 });

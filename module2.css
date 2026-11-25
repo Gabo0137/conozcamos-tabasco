@@ -1,4 +1,13 @@
+@import url('palette.css');
+@import url('responsive.css');
 /* ===== Specific Styles for Module 2: Caparazón de Tortuga ===== */
+body {
+    background-image: url('FondoBeige.png') !important;
+    background-position: center !important;
+    background-size: cover !important;
+    background-repeat: no-repeat !important;
+    background-attachment: fixed !important;
+}
 
 /* Intro */
 .module2-hero {

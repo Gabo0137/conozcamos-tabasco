@@ -5,24 +5,28 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Módulo 3 — Tambor Tradicional. Curso interactivo de instrumentos de Tabasco.">
-    <title>Módulo 3 — Tambor Tradicional | Conozcamos Tabasco</title>
+    <title>TamborToque — Ritmo Zapateado | Conozcamos Tabasco</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="module1.css">
     <link rel="stylesheet" href="module3.css">
+    <link rel="stylesheet" href="tambor-toque.css">
 </head>
 
-<body>
+<body class="module3-simulator-only">
     <!-- ===== Toolbar ===== -->
     <nav class="toolbar" id="toolbar">
         <div class="toolbar-container">
-            <button class="toolbar-back" id="btnBack" aria-label="Volver al curso">
-                <span>Volver</span>
+            <button class="toolbar-back" id="btnBack" aria-label="Volver a sonidos">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19 12H5m7-7-7 7 7 7"/></svg>
+            </button>
+            <button class="toolbar-menu" id="btnMenu" aria-label="Volver al menú de Ritmos">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
             </button>
             <div class="toolbar-center">
                 <div class="toolbar-module-badge">Módulo 03</div>
-                <h1 class="toolbar-title">Tambor Tradicional</h1>
+                <h1 class="toolbar-title">Ritmos</h1>
             </div>
             <div class="toolbar-progress">
                 <div class="progress-ring" id="progressRing">
@@ -84,6 +88,110 @@
             <span class="note note-10">♫</span>
         </div>
 
+        <!-- ===== Menú principal ===== -->
+        <section class="tambor-menu-section" id="tamborMenu" aria-labelledby="tamborMenuTitle">
+            <div class="section-container tambor-menu-container">
+                <div class="tambor-demo-heading">
+                    <h2 class="section-intro-title" id="tamborMenuTitle">Ritmos y práctica</h2>
+                    <p class="section-intro-desc">Elige una experiencia para comenzar.</p>
+                </div>
+                <div class="tambor-menu-grid">
+                    <button type="button" class="tambor-menu-card" data-open-view="zapateado">
+                        <span class="menu-card-copy"><span class="menu-card-title">Toque Zapateado</span></span>
+                        <span class="menu-card-visual menu-visual-drum"><img src="TamborToque-tambor-nuevo.png" alt=""></span>
+                    </button>
+                    <button type="button" class="tambor-menu-card" data-open-view="valceo">
+                        <span class="menu-card-copy"><span class="menu-card-title">Toque Valceo</span></span>
+                        <span class="menu-card-visual menu-visual-music"><img src="TamborToque-tambor-nuevo.png" alt=""></span>
+                    </button>
+                    <button type="button" class="tambor-menu-card" data-open-view="game">
+                        <span class="menu-card-copy"><span class="menu-card-title">A prueba</span></span><span class="menu-card-visual menu-visual-trophy"><img src="TamborToque-tambor-nuevo.png" alt=""></span>
+                    </button>
+                </div>
+            </div>
+            <div class="tambor-menu-footer" aria-label="Mensaje cultural">
+                <p>Conozcamos Tabasco · Explora a tu ritmo</p>
+            </div>
+        </section>
+
+        <!-- ===== Demostración: Ritmo Zapateado ===== -->
+        <section class="content-section active tambor-demo-section tambor-view-section" id="tamborDemo" aria-label="Demostración del ritmo seleccionado">
+            <div class="section-container tambor-demo-container">
+                <div class="zapateado-card" data-rhythm="zapateado">
+                    <h3 class="rhythm-card-title">Zapateado</h3>
+                    <div class="drum-stage" aria-label="Tambor tradicional visto desde arriba con dos baquetas">
+                        <div class="drum-crop">
+                            <img class="zapateado-drum" src="TamborToque-tambor-nuevo.png" alt="Tambor hembra tradicional de Tabasco visto desde arriba">
+                            <div class="stick stick-right" aria-hidden="true"><span></span></div>
+                            <div class="stick stick-left" aria-hidden="true"><span></span></div>
+                            <div class="hit-ripple" aria-hidden="true"></div>
+                        </div>
+                    </div>
+
+                    <div class="zapateado-sequence" aria-label="Secuencia del ritmo">
+                        <div class="sequence-groups"></div>
+                        <p class="hand-legend"><span>D</span> mano derecha <span>I</span> mano izquierda</p>
+                    </div>
+
+                    <div class="demo-controls" aria-label="Controles de reproducción">
+                        <button type="button" class="demo-control primary" id="zapPlay">Reproducir</button>
+                        <button type="button" class="demo-control" id="zapPause">Pausar</button>
+                        <fieldset class="speed-control">
+                            <legend>Velocidad</legend>
+                            <label><input type="radio" name="zapSpeed" value="slow"> Lento</label>
+                            <label><input type="radio" name="zapSpeed" value="normal" checked> Normal</label>
+                            <label><input type="radio" name="zapSpeed" value="fast"> Rápido</label>
+                            <label><input type="radio" name="zapSpeed" value="veryFast"> Muy rápido</label>
+                        </fieldset>
+                    </div>
+                    <p class="demo-status" id="zapStatus" role="status" aria-live="polite">Listo para comenzar la demostración.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- ===== Minijuego: Toca el Tambor ===== -->
+        <section class="tambor-game-section tambor-view-section" id="tamborGame" aria-labelledby="tamborGameTitle">
+            <div class="section-container tambor-game-container">
+                <div class="tambor-demo-heading">
+                    <h2 class="section-intro-title" id="tamborGameTitle">¡Toca el Tambor!</h2>
+                </div>
+                <div class="tambor-game-card">
+                    <div class="game-meta">
+                        <strong id="gameChallengeName">Zapateado</strong>
+                        <span class="game-meta-divider">·</span>
+                        <span id="gameCounter">0 de 12 golpes</span>
+                        <span class="game-meta-divider">·</span>
+                        <span>Usa D e I para tocar</span>
+                    </div>
+                    <div class="game-drum-stage" aria-label="Tambor interactivo del minijuego">
+                        <div class="game-drum-visual" aria-hidden="true"></div>
+                    </div>
+                    <div class="game-hit-controls" aria-label="Golpes del tambor">
+                        <button type="button" class="game-hit-button game-hit-right" data-game-hand="D">D <small>Derecha</small></button>
+                        <button type="button" class="game-hit-button game-hit-left" data-game-hand="I">I <small>Izquierda</small></button>
+                    </div>
+                    <button type="button" class="game-reset-button" id="gameReset">Reiniciar</button>
+                    <div class="game-results" id="gameResults" hidden>
+                        <div class="game-result-block">
+                            <h3>Ritmo que debías tocar:</h3>
+                            <div class="game-result-sequence" id="expectedResult"></div>
+                        </div>
+                        <div class="game-result-block">
+                            <h3>Ritmo que tocaste:</h3>
+                            <div class="game-result-sequence" id="playedResult"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <div class="game-modal" id="gameModal" role="dialog" aria-modal="true" aria-labelledby="gameModalTitle" hidden>
+            <div class="game-modal-card">
+                <h2 id="gameModalTitle"></h2>
+                <button type="button" class="game-modal-accept" id="gameModalAccept">Aceptar</button>
+            </div>
+        </div>
+
         <!-- ===== Section 1: Intro ===== -->
         <section class="content-section active" id="sectionIntro">
             <div class="section-container">
@@ -104,7 +212,7 @@
 
                 <div class="intro-content fade-up">
                     <div class="intro-image-container">
-                        <img src="Tambor.png" alt="Tambor Tradicional" class="intro-img" onerror="this.src='https://placehold.co/400x400?text=Tambor+Tradicional'; this.classList.add('placeholder-img')">
+                        <div class="intro-img" aria-hidden="true"></div>
                     </div>
                     <div class="intro-text-card">
                         <p class="intro-text">
@@ -136,7 +244,7 @@
                 </div>
 
                 <div class="interactive-image-container">
-                    <img src="Tambor.png" alt="Partes del Tambor" class="interactive-img" onerror="this.src='https://placehold.co/600x400?text=Tambor+Tradicional';">
+                    <div class="interactive-img" aria-hidden="true"></div>
 
                     <button class="hotspot" id="hsCuerpo" style="top: 65%; left: 48%;" data-info="Cuerpo de madera">
                         <span class="hotspot-pulse"></span>
@@ -163,52 +271,6 @@
 
                 <div class="section-action mt-8">
                     <button class="btn-continue" id="btnContinueToSimulador" disabled>
-                        <span>Siguiente</span>
-                        
-                    </button>
-                </div>
-            </div>
-        </section>
-
-        <!-- ===== Section 3: Simulador Básico ===== -->
-        <section class="content-section" id="sectionSimulador">
-            <div class="section-container">
-                <div class="section-intro">
-                    <div class="section-intro-badge amber">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5" />
-                            <path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07" />
-                        </svg>
-                        Simulador interactivo
-                    </div>
-                    <h2 class="section-intro-title">¡Toca el Tambor!</h2>
-                    <p class="section-intro-desc">El tambor produce sonidos distintos dependiendo de dónde lo golpees. Presiona las 3 zonas para experimentar.</p>
-                </div>
-
-                <div class="simulator-container">
-                    <div class="drum-pad-wrapper">
-                        <!-- Círculo que representa el tambor -->
-                        <div class="drum-surface">
-                            <button class="drum-zone zone-center" data-sound="grave" id="padCenter">
-                                <span>Centro (Grave)</span>
-                            </button>
-                            <button class="drum-zone zone-edge" data-sound="medio" id="padEdge">
-                                <span>Orilla (Medio)</span>
-                            </button>
-                            <button class="drum-zone zone-soft" data-sound="ligero" id="padSoft">
-                                <span>Golpe Suave (Ligero)</span>
-                            </button>
-                        </div>
-                    </div>
-                    
-                    <div class="simulator-feedback" id="simFeedback">
-                        <span class="sim-tag">¡Explora!</span>
-                        Toca las tres zonas distintas para continuar.
-                    </div>
-                </div>
-
-                <div class="section-action mt-8">
-                    <button class="btn-continue" id="btnContinueToCultura" disabled>
                         <span>Siguiente</span>
                         
                     </button>
@@ -335,7 +397,7 @@
     <canvas id="confettiCanvas"></canvas>
 
     <script src="ui-sounds.js"></script>
-    <script src="module3.js"></script>
+    <script src="tambor-toque.js"></script>
 </body>
 
 </html>

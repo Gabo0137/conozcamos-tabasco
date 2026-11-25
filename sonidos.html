@@ -1,10 +1,36 @@
 <!doctype html>
-<html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="description" content="Escucha, compara y reconoce la flauta de carrizo y el tambor tradicional de Tabasco."><title>Escucha Tabasco | Conozcamos Tabasco</title><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet"><link rel="stylesheet" href="recorrido.css"><script src="recorrido.js" defer></script><link rel="stylesheet" href="cultural-design.css"></head>
-<body data-module="sonidos"><a class="skip" href="#contenido">Saltar al contenido</a><header class="site-header"><div class="header-inner"><a class="brand" href="course.html"><span class="eyebrow">Cultura que se comparte</span>Conozcamos Tabasco</a><a class="back" href="course.html#mapa">Volver al recorrido</a></div></header>
-<main class="experience" id="contenido">
-<noscript><p class="noscript">Activa JavaScript para comparar las grabaciones y responder el reto. El reproductor de flauta sigue disponible.</p></noscript>
-<section class="module-banner"><div><div class="kicker"><span class="tag">03 / Escucha</span><span class="muted">Atención · Contrastes · Ritmo</span></div><div class="intro"><h1>Escucha Tabasco</h1><p class="muted">Cierra los ojos un momento. ¿Qué detalles encuentras en cada sonido?</p></div></div><div class="banner-art"><img src="Flauta01.png" alt="Flauta de carrizo"><span class="art-note">La música nos reúne</span></div></section>
-<div class="split"><section class="panel"><span class="eyebrow">Exploración sonora</span><div class="chips" aria-label="Grabación para explorar"><button data-sound="0" aria-pressed="true">Flauta</button><button data-sound="1" aria-pressed="false">Tambor</button></div><img class="instrument-image sound-image" id="sound-image" src="Flauta01.png" alt="Flauta de carrizo"><audio id="explore-audio" controls preload="none" src="MusicaFlauta.mpeg" data-error="audio-error" aria-label="Grabación del instrumento seleccionado"></audio><p id="listening-guide">Escucha cómo cambia la altura del sonido a lo largo de la melodía.</p><p class="feedback" id="audio-error" role="status"></p><p class="credit">Grabaciones del archivo del proyecto. Puedes pausar, repetir y ajustar el volumen.</p></section><section class="panel"><span class="eyebrow">Del sonido a la imagen</span><h2>¿Qué instrumento suena?</h2><p class="muted">Escucha esta grabación antes de elegir. Si lo necesitas, compara con los sonidos de exploración.</p><audio id="mystery-audio" controls preload="none" data-error="mystery-error" aria-label="Grabación misteriosa para identificar"></audio><p class="feedback" id="mystery-error" role="status"></p><div class="answers"><button data-sound-answer="0">Creo que es una flauta</button><button data-sound-answer="1">Creo que es un tambor</button></div><p class="feedback" id="sound-feedback" role="status">Puedes escuchar tantas veces como quieras.</p><div class="detail"><button id="another-sound">Escuchar otro instrumento</button></div></section></div>
-
-
-<footer class="module-footer"><a href="course.html#mapa">Volver al recorrido</a><a class="action primary" href="descubrimientos.html">Conectar lo descubierto</a></footer></main><footer class="page-end">Conozcamos Tabasco · Explora a tu ritmo</footer></body></html>
+<html lang="es">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Aprende a tocar ritmos de la flauta de carrizo y el tambor tradicional de Tabasco.">
+    <title>Hora de tocar | Conozcamos Tabasco</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="recorrido.css">
+    <script src="recorrido.js" defer></script>
+    <link rel="stylesheet" href="cultural-design.css">
+</head>
+<body data-module="sonidos">
+    <a class="skip" href="#contenido">Saltar al contenido</a>
+    <header class="site-header">
+        <div class="header-inner">
+            <a class="back" href="course.html#mapa" aria-label="Volver al inicio"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 10.8 12 3l9 7.8v9.2a1 1 0 0 1-1 1h-5.5v-6h-5v6H4a1 1 0 0 1-1-1v-9.2Z"/></svg></a>
+            <span class="page-title">Hora de tocar</span>
+            <a class="brand" href="course.html">Conozcamos Tabasco</a>
+        </div>
+    </header>
+    <main class="experience" id="contenido">
+        <section class="module-banner">
+            <div><div class="intro"><h1>Hora de tocar</h1><p class="muted">Elige un instrumento y descubre sus ritmos y formas de ejecución.</p></div></div>
+            <div class="banner-art"><img src="Tocar.jpg" alt="Músico tocando la flauta de carrizo"><span class="art-note">La música nos reúne</span></div>
+        </section>
+        <section class="sound-options" aria-label="Elige un instrumento para aprender">
+            <a class="sound-option-card sound-option-flute" href="module1.html" aria-label="Aprender ritmos de la flauta de carrizo"><div class="sound-option-art"><img src="Flautis carizo.png" alt="Flauta de carrizo"></div><div class="sound-option-content"><h2>Flauta de carrizo</h2><span class="sound-option-cta">Aprender a tocar</span></div></a>
+            <a class="sound-option-card sound-option-drum" href="TamborToque.html" aria-label="Aprender ritmos del tambor tradicional"><div class="sound-option-art"><img src="Tamboril.png" alt="Tambor tradicional"></div><div class="sound-option-content"><h2>Tambor tradicional</h2><span class="sound-option-cta">Aprender a tocar</span></div></a>
+        </section>
+    </main>
+    <footer class="page-end">Conozcamos Tabasco · Explora a tu ritmo</footer>
+</body>
+</html>

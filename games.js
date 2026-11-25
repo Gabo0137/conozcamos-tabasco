@@ -1,26 +1,40 @@
 document.addEventListener('DOMContentLoaded', () => {
+    const isEmbedded = new URLSearchParams(window.location.search).get('embedded') === '1';
+    if (isEmbedded) document.body.classList.add('games-embedded');
+
+    const notifyEmbedHeight = () => {
+        if (!isEmbedded || window.parent === window) return;
+        window.parent.postMessage({ type: 'games-embed-height', height: document.documentElement.scrollHeight }, '*');
+    };
+
     // ===== Navigation =====
     const btnBack = document.getElementById('btnBack');
     const sections = document.querySelectorAll('.content-section');
     const steps = document.querySelectorAll('.games-selector .step');
 
-    btnBack.addEventListener('click', () => {
-        window.location.href = 'course.html';
-    });
+    if (!isEmbedded) {
+        btnBack.addEventListener('click', () => {
+            window.location.href = 'course.html';
+        });
+    }
+
 
     function goToGame(index) {
         if (window.playUINext) window.playUINext();
+        document.body.classList.add('memory-mode');
         sections.forEach(sec => sec.classList.remove('active'));
         steps.forEach(step => step.classList.remove('active'));
         
         sections[index].classList.add('active');
         steps[index].classList.add('active');
         window.scrollTo({ top: 0, behavior: 'smooth' });
+        window.setTimeout(notifyEmbedHeight, 50);
     }
 
     steps.forEach((step, index) => {
         step.addEventListener('click', () => goToGame(index));
     });
+    notifyEmbedHeight();
 
     // ===== Universal Audio Engine =====
     let audioCtx = null;
@@ -34,6 +48,27 @@ document.addEventListener('DOMContentLoaded', () => {
         if(!audioCtx) {
             audioCtx = new (window.AudioContext || window.webkitAudioContext)();
         }
+    }
+
+    function playMemoryTone(kind) {
+        initAudio();
+        const now = audioCtx.currentTime;
+        const notes = kind === 'victory' ? [523, 659, 784, 1046] : kind === 'match' ? [523, 659] : kind === 'stop' ? [280] : [560, 760];
+        const duration = kind === 'victory' ? 0.32 : kind === 'match' ? 0.2 : kind === 'stop' ? 0.16 : 0.14;
+        notes.forEach((frequency, index) => {
+            const osc = audioCtx.createOscillator();
+            const gain = audioCtx.createGain();
+            const start = now + (kind === 'victory' ? index * 0.07 : kind === 'match' ? index * 0.045 : kind === 'stop' ? 0 : index * 0.025);
+            osc.type = kind === 'stop' ? 'sine' : 'triangle';
+            osc.frequency.setValueAtTime(frequency, start);
+            gain.gain.setValueAtTime(0.0001, start);
+            gain.gain.exponentialRampToValueAtTime(kind === 'stop' ? 0.08 : 0.12, start + 0.008);
+            gain.gain.exponentialRampToValueAtTime(0.0001, start + duration);
+            osc.connect(gain);
+            gain.connect(audioCtx.destination);
+            osc.start(start);
+            osc.stop(start + duration);
+        });
     }
 
     function playSound(instrument) {
@@ -136,8 +171,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // ===== GAME 1: Memorama =====
     const memoryBoard = document.getElementById('memoryBoard');
-    const memoFeedback = document.getElementById('memoFeedback');
-    const btnRestartMemo = document.getElementById('btnRestartMemo');
+    const memoryWinDialog = document.getElementById('memoryWinDialog');
     
     const memoryItems = [
         { id: 'flauta', name: 'Flauta de carrizo', icon: '<img src="Hueco.png" alt="Hueco" />' },
@@ -153,8 +187,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function initMemorama() {
         memoryBoard.innerHTML = '';
-        memoFeedback.style.display = 'none';
-        btnRestartMemo.style.display = 'none';
         matchedPairs = 0;
         flippedCards = [];
         lockBoard = false;
@@ -189,7 +221,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (this === flippedCards[0]) return;
 
         this.classList.add('flipped');
-        playSound(this.dataset.id);
+        playMemoryTone('flip');
         flippedCards.push(this);
 
         if (flippedCards.length === 2) {
@@ -203,7 +235,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function disableCards() {
-        if (window.playUISuccess) window.playUISuccess();
+        playMemoryTone('match');
         flippedCards[0].removeEventListener('click', flipCard);
         flippedCards[1].removeEventListener('click', flipCard);
         flippedCards[0].classList.add('matched');
@@ -211,12 +243,10 @@ document.addEventListener('DOMContentLoaded', () => {
         
         matchedPairs++;
         if (matchedPairs === memoryItems.length) {
+            setTimeout(() => playMemoryTone('victory'), 260);
             setTimeout(() => {
-                memoFeedback.className = 'sort-feedback success';
-                memoFeedback.textContent = '¡Excelente! Encontraste todos los pares.';
-                memoFeedback.style.display = 'block';
-                btnRestartMemo.style.display = 'block';
                 fireConfetti();
+                memoryWinDialog?.showModal();
             }, 500);
         }
         
@@ -225,7 +255,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function unflipCards() {
         lockBoard = true;
-        if (window.playUIError) window.playUIError();
+        playMemoryTone('stop');
         setTimeout(() => {
             flippedCards[0].classList.remove('flipped');
             flippedCards[1].classList.remove('flipped');
@@ -237,18 +267,27 @@ document.addEventListener('DOMContentLoaded', () => {
         [flippedCards, lockBoard] = [[], false];
     }
 
-    btnRestartMemo.addEventListener('click', initMemorama);
+    document.getElementById('btnAcceptMemoryWin')?.addEventListener('click', () => {
+        memoryWinDialog?.close();
+        initMemorama();
+    });
     initMemorama();
 
     // ===== GAME 2: Arrastrar y Soltar =====
     const dragItems = document.querySelectorAll('#gameRelacionar .match-item');
     const dragTargetZones = document.querySelectorAll('#gameRelacionar .match-target-zone');
     const dragSource = document.getElementById('dragSource');
+    const dragTargets = document.getElementById('dragTargets');
     const btnCheckDrag = document.getElementById('btnCheckDrag');
-    const btnRestartDrag = document.getElementById('btnRestartDrag');
     const dragFeedback = document.getElementById('dragFeedback');
+    const dragResultDialog = document.getElementById('dragResultDialog');
+    const dragResultTitle = document.getElementById('dragResultTitle');
+    const dragResultText = document.getElementById('dragResultText');
+    const dragResultIcon = document.getElementById('dragResultIcon');
 
     let draggedItem = null;
+    let dragReviewed = false;
+    let dragWasCorrect = false;
 
     function initDragDrop() {
         // Reset items to source
@@ -262,13 +301,20 @@ document.addEventListener('DOMContentLoaded', () => {
         
         dragFeedback.style.display = 'none';
         btnCheckDrag.style.display = 'inline-flex';
+        btnCheckDrag.textContent = 'Verificar';
         btnCheckDrag.disabled = true;
-        btnRestartDrag.style.display = 'none';
+        dragResultDialog?.close();
+        dragReviewed = false;
+        dragWasCorrect = false;
+        dragTargetZones.forEach(zone => zone.classList.remove('relation-correct','relation-incorrect'));
+        dragItems.forEach(item => { item.draggable = true; item.classList.remove('relation-correct','relation-incorrect'); });
         
-        // Shuffle source items visually
-        for (let i = dragSource.children.length; i >= 0; i--) {
-            dragSource.appendChild(dragSource.children[Math.random() * i | 0]);
+        // Shuffle both the materials and the question rows on every restart.
+        for (let i = dragSource.children.length - 1; i > 0; i--) {
+            dragSource.appendChild(dragSource.children[Math.floor(Math.random() * (i + 1))]);
         }
+        const rows = [...dragTargets.querySelectorAll('.match-row')];
+        rows.sort(() => Math.random() - 0.5).forEach(row => dragTargets.appendChild(row));
     }
 
     dragItems.forEach(item => {
@@ -323,6 +369,10 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     btnCheckDrag.addEventListener('click', () => {
+        if (dragReviewed) {
+            initDragDrop();
+            return;
+        }
         let isCorrect = true;
         dragTargetZones.forEach(zone => {
             const expected = zone.getAttribute('data-pos');
@@ -330,22 +380,46 @@ document.addEventListener('DOMContentLoaded', () => {
             if(!item || item.getAttribute('data-concept') !== expected) isCorrect = false;
         });
 
-        dragFeedback.style.display = 'block';
+        dragFeedback.style.display = 'none';
         if(isCorrect) {
+            dragWasCorrect = true;
             if (window.playUISuccess) window.playUISuccess();
-            dragFeedback.className = 'sort-feedback success';
-            dragFeedback.textContent = '¡Perfecto! Has relacionado correctamente los materiales.';
+            dragResultIcon.textContent = '✓';
+            dragResultTitle.textContent = '¡Correcto!';
+            dragResultText.textContent = 'Relacionaste correctamente todos los materiales.';
             btnCheckDrag.style.display = 'none';
-            btnRestartDrag.style.display = 'inline-flex';
             fireConfetti();
         } else {
+            dragWasCorrect = false;
             if (window.playUIError) window.playUIError();
-            dragFeedback.className = 'sort-feedback error';
-            dragFeedback.textContent = 'Algunas relaciones son incorrectas. Revisa y vuelve a intentarlo.';
+            dragResultIcon.textContent = '!';
+            dragResultTitle.textContent = 'Sigue intentando';
+            dragResultText.textContent = 'Algunas relaciones no son correctas. Revisa las respuestas y vuelve a intentarlo.';
         }
+        dragResultDialog?.showModal();
     });
 
-    btnRestartDrag.addEventListener('click', initDragDrop);
+    function revealDragResults() {
+        dragReviewed = true;
+        btnCheckDrag.textContent = 'Reiniciar';
+        btnCheckDrag.disabled = false;
+        dragItems.forEach(item => { item.draggable = false; });
+        dragTargetZones.forEach(zone => {
+            const expected = zone.getAttribute('data-pos');
+            const item = zone.querySelector('.match-item');
+            const correct = item && item.getAttribute('data-concept') === expected;
+            zone.classList.toggle('relation-correct', Boolean(correct));
+            zone.classList.toggle('relation-incorrect', !correct);
+            item?.classList.toggle('relation-correct', Boolean(correct));
+            item?.classList.toggle('relation-incorrect', !correct);
+        });
+    }
+
+    document.getElementById('btnAcceptDragResult')?.addEventListener('click', () => {
+        dragResultDialog?.close();
+        if (dragWasCorrect) initDragDrop();
+        else revealDragResults();
+    });
     initDragDrop();
 
     // ===== GAME 3: Ordenar Pasos =====
@@ -353,18 +427,33 @@ document.addEventListener('DOMContentLoaded', () => {
     const sortTargetZones = document.querySelectorAll('#gameOrdenar .sort-target-zone');
     const sortSource = document.getElementById('sortSourceGames');
     const btnCheckSort = document.getElementById('btnCheckSortGames');
-    const btnRestartSort = document.getElementById('btnRestartSort');
     const sortFeedback = document.getElementById('sortFeedbackGames');
+    const sortResultDialog = document.getElementById('sortResultDialog');
+    const sortResultTitle = document.getElementById('sortResultTitle');
+    const sortResultText = document.getElementById('sortResultText');
+    const sortResultIcon = document.getElementById('sortResultIcon');
 
     let draggedSortItem = null;
+    let sortReviewed = false;
+    let sortWasCorrect = false;
 
     function initSort() {
         sortItems.forEach(item => sortSource.appendChild(item));
-        sortTargetZones.forEach(zone => zone.classList.remove('filled'));
+        sortTargetZones.forEach(zone => {
+            zone.classList.remove('filled', 'sort-correct', 'sort-incorrect');
+            zone.querySelector('.sort-item')?.classList.remove('sort-correct', 'sort-incorrect');
+        });
         sortFeedback.style.display = 'none';
         btnCheckSort.style.display = 'inline-flex';
+        btnCheckSort.textContent = 'Verificar';
         btnCheckSort.disabled = true;
-        btnRestartSort.style.display = 'none';
+        sortResultDialog?.close();
+        sortReviewed = false;
+        sortWasCorrect = false;
+        sortItems.forEach(item => {
+            item.draggable = true;
+            item.classList.remove('sort-correct', 'sort-incorrect');
+        });
         
         for (let i = sortSource.children.length; i >= 0; i--) {
             sortSource.appendChild(sortSource.children[Math.random() * i | 0]);
@@ -415,6 +504,11 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     btnCheckSort.addEventListener('click', () => {
+        if (sortReviewed) {
+            initSort();
+            return;
+        }
+
         let isCorrect = true;
         sortTargetZones.forEach(zone => {
             const expected = zone.getAttribute('data-pos');
@@ -422,22 +516,48 @@ document.addEventListener('DOMContentLoaded', () => {
             if(!item || item.getAttribute('data-step') !== expected) isCorrect = false;
         });
 
-        sortFeedback.style.display = 'block';
+        sortFeedback.style.display = 'none';
         if(isCorrect) {
+            sortWasCorrect = true;
             if (window.playUISuccess) window.playUISuccess();
-            sortFeedback.className = 'sort-feedback success';
-            sortFeedback.textContent = '¡Muy bien! Ese es el orden lógico para construir un instrumento.';
+            sortResultIcon.textContent = '✓';
+            sortResultTitle.textContent = '¡Correcto!';
+            sortResultText.textContent = 'Ordenaste correctamente el proceso de elaboración.';
             btnCheckSort.style.display = 'none';
-            btnRestartSort.style.display = 'inline-flex';
             fireConfetti();
         } else {
+            sortWasCorrect = false;
             if (window.playUIError) window.playUIError();
-            sortFeedback.className = 'sort-feedback error';
-            sortFeedback.textContent = 'El orden no es el correcto. Piensa en el proceso de elaboración e inténtalo de nuevo.';
+            sortResultIcon.textContent = '!';
+            sortResultTitle.textContent = 'Sigue intentando';
+            sortResultText.textContent = 'El orden no es correcto. Revisa tus respuestas para ver cuáles acertaste.';
         }
+        sortResultDialog?.showModal();
     });
 
-    btnRestartSort.addEventListener('click', initSort);
+    function revealSortResults() {
+        sortReviewed = true;
+        btnCheckSort.textContent = 'Reiniciar';
+        btnCheckSort.style.display = 'inline-flex';
+        btnCheckSort.disabled = false;
+        sortItems.forEach(item => { item.draggable = false; });
+        sortTargetZones.forEach(zone => {
+            const expected = zone.getAttribute('data-pos');
+            const item = zone.querySelector('.sort-item');
+            const correct = item && item.getAttribute('data-step') === expected;
+            zone.classList.toggle('sort-correct', Boolean(correct));
+            zone.classList.toggle('sort-incorrect', !correct);
+            item?.classList.toggle('sort-correct', Boolean(correct));
+            item?.classList.toggle('sort-incorrect', !correct);
+        });
+    }
+
+    document.getElementById('btnAcceptSortResult')?.addEventListener('click', () => {
+        sortResultDialog?.close();
+        if (sortWasCorrect) initSort();
+        else revealSortResults();
+    });
+
     initSort();
 
     // ===== GAME 4: Adivina el sonido =====

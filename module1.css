@@ -1,3 +1,15 @@
+@import url('palette.css');
+@import url('responsive.css');
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap');
+
+body {
+    background-image: url('FondoBeige.png') !important;
+    background-position: center !important;
+    background-size: cover !important;
+    background-repeat: no-repeat !important;
+    background-attachment: fixed !important;
+}
+
 /* ===== Module 1 — Design Tokens ===== */
 :root {
     --blue: #3b82f6;
@@ -35,7 +47,7 @@
     --gray-800: #1f2937;
     --gray-900: #111827;
 
-    --font: 'Outfit', system-ui, -apple-system, sans-serif;
+    --font: 'Poppins', system-ui, -apple-system, sans-serif;
     --radius-sm: 8px;
     --radius-md: 12px;
     --radius-lg: 16px;
@@ -1550,6 +1562,249 @@ body {
     }
 }
 
+/* ===== Explorador de notas de la flauta de carrizo ===== */
+.flute-notes-explorer {
+    margin-top: 34px;
+    padding: 28px clamp(16px, 3vw, 30px) 26px;
+    border: 1px solid #0b665d;
+    border-radius: var(--radius-xl);
+    background: #064c45;
+    box-shadow: 0 16px 34px rgba(3, 47, 42, .22);
+}
+
+.flute-notes-heading { max-width: 760px; margin: 0 auto 20px; text-align: center; }
+.flute-notes-heading .section-intro-badge { display: inline-flex; margin-bottom: 10px; }
+.flute-notes-title { margin: 0; color: #fff9e8; font-size: clamp(1.45rem, 2.8vw, 2rem); line-height: 1.15; }
+.flute-notes-desc { margin: 8px auto 0; color: #d9ebe2; font-size: 1rem; }
+.flute-notes-disclaimer {
+    max-width: 680px;
+    margin: 12px auto 0;
+    padding: 9px 12px;
+    border-left: 3px solid #d18b17;
+    background: #07594f;
+    color: #d9ebe2;
+    font-size: .82rem;
+    line-height: 1.45;
+    text-align: left;
+}
+
+.flute-notes-grid {
+    display: grid;
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    gap: 18px;
+    align-items: stretch;
+}
+
+.flute-note-card:nth-child(1) { grid-column: 1 / span 3; }
+.flute-note-card:nth-child(2) { grid-column: 4 / span 3; }
+.flute-note-card:nth-child(3) { grid-column: 7 / span 3; }
+.flute-note-card:nth-child(4) { grid-column: 10 / span 3; }
+.flute-note-card:nth-child(5) { grid-column: 2 / span 3; }
+.flute-note-card:nth-child(6) { grid-column: 5 / span 3; }
+.flute-note-card:nth-child(7) { grid-column: 8 / span 3; }
+
+.flute-note-card {
+    display: flex;
+    min-width: 0;
+    flex-direction: column;
+    align-items: center;
+    padding: 16px 12px 14px;
+    border: 1px solid #0b665d;
+    border-radius: 18px;
+    background: #07594f;
+    box-shadow: 0 8px 20px rgba(3, 47, 42, .16);
+    transition: transform .2s ease, border-color .2s ease, box-shadow .2s ease;
+}
+
+.flute-note-card.is-selected,
+.flute-note-card:focus-within {
+    border-color: #edb336;
+    box-shadow: 0 10px 24px rgba(237, 179, 54, .22);
+    transform: translateY(-3px);
+}
+
+.note-flute {
+    position: relative;
+    width: 58px;
+    height: 196px;
+    margin: 2px auto 12px;
+    transition: filter .2s ease, transform .2s ease;
+}
+
+.flute-note-card.is-playing .note-flute {
+    filter: drop-shadow(0 0 9px rgba(237, 179, 54, .75));
+    transform: translateY(-2px);
+}
+
+.flute-mouthpiece {
+    position: absolute;
+    top: 0;
+    left: 19px;
+    z-index: 2;
+    width: 20px;
+    height: 29px;
+    border: 2px solid #6f4a25;
+    clip-path: polygon(18% 0, 82% 0, 100% 100%, 0 100%);
+    background: #f0d27b;
+}
+
+.flute-opening {
+    position: absolute;
+    top: 7px;
+    left: 5px;
+    width: 10px;
+    height: 8px;
+    border-radius: 0;
+    background: #49301e;
+    box-shadow: inset 0 1px 2px rgba(0, 0, 0, .4);
+}
+
+.flute-tube {
+    position: absolute;
+    top: 27px;
+    left: 21px;
+    width: 16px;
+    height: 168px;
+    border: 2px solid #6f4a25;
+    border-radius: 0;
+    background: repeating-linear-gradient(90deg, rgba(122, 74, 28, .12) 0 1px, transparent 1px 5px), #f0d27b;
+    box-shadow: inset 3px 0 4px rgba(255, 246, 189, .45), inset -3px 0 4px rgba(112, 65, 24, .18);
+}
+
+.flute-tube::after {
+    position: absolute;
+    right: 2px;
+    bottom: 8px;
+    left: 2px;
+    height: 2px;
+    border-radius: 50%;
+    background: rgba(112, 65, 24, .35);
+    content: "";
+}
+
+.finger-hole,
+.thumb-hole {
+    position: absolute;
+    display: block;
+    width: 13px;
+    height: 13px;
+    border: 2px solid #8a572b;
+    border-radius: 50%;
+    background: #fff9e8;
+    box-shadow: inset 0 1px 2px rgba(255, 255, 255, .7);
+}
+
+.finger-hole { left: 9px; }
+.finger-hole:nth-child(1) { top: 24px; }
+.finger-hole:nth-child(2) { top: 47px; }
+.finger-hole:nth-child(3) { top: 70px; }
+.finger-hole:nth-child(4) { top: 93px; }
+.finger-hole:nth-child(5) { top: 116px; }
+.finger-hole:nth-child(6) { top: 139px; }
+.finger-hole.is-open,
+.thumb-hole.is-open { background: #fff9e8; border-color: #8a572b; box-shadow: inset 0 1px 2px rgba(255, 255, 255, .7); }
+.finger-hole.is-covered,
+.thumb-hole.is-covered { background: #3c281c; border-color: #2b1c14; box-shadow: inset 0 2px 3px rgba(0, 0, 0, .45); }
+
+.thumb-hole {
+    top: 24px;
+    left: -13px;
+    right: auto;
+    width: 14px;
+    height: 14px;
+}
+
+.flute-note-label { margin: 0 0 10px; color: #fff9e8; font-size: 1.25rem; font-weight: 900; letter-spacing: .08em; }
+.flute-note-card.is-selected .flute-note-label { color: #edb336; }
+.flute-note-controls { display: flex; width: 100%; gap: 7px; }
+.flute-note-button {
+    flex: 1 1 0;
+    min-height: 38px;
+    padding: 8px 5px;
+    border: 1px solid #a9c9bd;
+    border-radius: 999px;
+    background: #d9ebe2;
+    color: #063c36;
+    font: inherit;
+    font-size: .82rem;
+    font-weight: 800;
+    cursor: pointer;
+    transition: background .18s ease, color .18s ease, transform .18s ease;
+}
+
+.flute-note-button:hover,
+.flute-note-button:focus-visible,
+.flute-note-button.is-active {
+    border-color: #edb336;
+    background: #edb336;
+    color: #063c36;
+    outline: none;
+}
+
+.flute-note-button.is-active { transform: scale(1.03); }
+.flute-notes-status { min-height: 1.5em; margin: 18px 0 0; color: #d9ebe2; font-size: .9rem; text-align: center; }
+
+.flute-note-card.is-playing::after {
+    width: 18px;
+    height: 18px;
+    margin-top: 7px;
+    border: 2px solid #edb336;
+    border-radius: 50%;
+    animation: fluteSoundPulse 1.1s ease-out infinite;
+    content: "";
+}
+
+@keyframes fluteSoundPulse {
+    0% { opacity: .85; transform: scale(.65); }
+    100% { opacity: 0; transform: scale(1.45); }
+}
+
+/* Module1 now opens directly on the compact note explorer. */
+.module1-simulator-main {
+    min-height: 100dvh;
+    padding-top: 88px;
+    background: #063c36;
+}
+
+.module1-simulator-main .content-section.active {
+    display: flex;
+    min-height: calc(100dvh - 88px);
+    align-items: flex-start;
+}
+
+.module1-simulator-container {
+    width: 100%;
+    max-width: 1180px;
+    padding: 24px 24px 36px;
+}
+
+.module1-simulator-container .flute-notes-explorer { margin-top: 0; }
+.toolbar-back-icon { display: none; }
+
+@media (max-width: 768px) {
+    .toolbar-back .toolbar-back-icon { display: inline; font-size: 1.35rem; line-height: 1; }
+    .toolbar-back .toolbar-back-label { display: none; }
+}
+
+@media (max-width: 900px) {
+    .flute-notes-grid { grid-template-columns: repeat(3, minmax(130px, 1fr)); }
+    .flute-note-card:nth-child(n) { grid-column: auto; }
+}
+
+@media (max-width: 560px) {
+    .toolbar-back .toolbar-back-icon { display: inline; font-size: 1.35rem; line-height: 1; }
+    .toolbar-back .toolbar-back-label { display: none; }
+    .module1-simulator-main { padding-top: 76px; }
+    .module1-simulator-main .content-section.active { min-height: calc(100dvh - 76px); }
+    .module1-simulator-container { padding: 16px 12px 24px; }
+    .flute-notes-explorer { margin-top: 24px; padding: 22px 12px 20px; }
+    .flute-notes-grid { grid-template-columns: repeat(2, minmax(126px, 1fr)); gap: 12px; }
+    .flute-note-card { padding: 13px 8px 12px; }
+    .note-flute { transform: scale(.9); transform-origin: top center; margin-bottom: -4px; }
+    .flute-note-card.is-playing .note-flute { transform: scale(.9) translateY(-2px); }
+    .flute-note-button { font-size: .76rem; }
+}
+
 @media (max-width: 480px) {
     .context-title {
         font-size: 1.45rem;
@@ -1569,6 +1824,69 @@ body {
 
     .matching-activity {
         padding: 24px;
+    }
+}
+
+/* ===== Ajustes finales de presentación de Module1 ===== */
+body {
+    background: #fff;
+    animation: none;
+}
+
+.toolbar {
+    background: #064c45;
+    border-bottom-color: #0b665d;
+    box-shadow: 0 4px 18px rgba(3, 47, 42, .2);
+}
+
+.toolbar-container {
+    position: relative;
+    height: 58px;
+    justify-content: center;
+}
+
+.toolbar-back {
+    position: absolute;
+    left: 24px;
+    display: grid;
+    width: 54px;
+    height: 54px;
+    padding: 0;
+    place-items: center;
+    border-radius: 50%;
+    background: #edb336;
+    color: #063c36;
+    font-size: 0;
+}
+
+.toolbar-back-icon {
+    display: inline !important;
+    font-size: 2rem;
+    font-weight: 500;
+    line-height: 1;
+}
+
+.toolbar-back:hover,
+.toolbar-back:focus-visible {
+    background: #f5c658;
+    color: #063c36;
+}
+
+.toolbar-center { justify-content: center; }
+.toolbar-title {
+    color: #fff9e8;
+    font-size: 1.3rem;
+    font-weight: 800;
+    letter-spacing: 0;
+}
+
+.module1-simulator-main { background: #fff; }
+
+@media (max-width: 768px) {
+    .toolbar-back {
+        left: 14px;
+        width: 54px;
+        height: 54px;
     }
 }
 

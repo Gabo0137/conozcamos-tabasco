@@ -12,60 +12,20 @@
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&display=swap"
         rel="stylesheet">
     <link rel="stylesheet" href="course.css">
-<link rel="stylesheet" href="cultural-design.css"></head>
+    <link rel="stylesheet" href="cultural-design.css">
+    <script defer src="https://cdn.jsdelivr.net/npm/three@0.128.0/build/three.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/GLTFLoader.js"></script>
+    <script defer src="avatar.js"></script>
+</head>
 
-<body>
+<body class="welcome-pending">
     <!-- ===== Navigation Bar ===== -->
     <nav class="navbar" id="navbar">
         <div class="nav-container">
             <a href="#" class="nav-brand" id="navBrand">
-                <div class="brand-logo">
-                    <svg viewBox="0 0 40 40" fill="none">
-                        <circle cx="20" cy="20" r="18" fill="url(#logoGrad)" />
-                        <path
-                            d="M20 8C20 8 14 15 14 20C14 23.314 16.686 26 20 26C23.314 26 26 23.314 26 20C26 15 20 8 20 8Z"
-                            fill="white" opacity="0.9" />
-                        <circle cx="20" cy="19" r="2.5" fill="url(#logoGrad2)" />
-                        <defs>
-                            <linearGradient id="logoGrad" x1="0" y1="0" x2="40" y2="40">
-                                <stop offset="0%" stop-color="#3b82f6" />
-                                <stop offset="100%" stop-color="#10b981" />
-                            </linearGradient>
-                            <linearGradient id="logoGrad2" x1="0" y1="0" x2="5" y2="5">
-                                <stop offset="0%" stop-color="#3b82f6" />
-                                <stop offset="100%" stop-color="#10b981" />
-                            </linearGradient>
-                        </defs>
-                    </svg>
-                </div>
                 <span class="brand-name">Conozcamos Tabasco</span>
             </a>
 
-            <div class="nav-links" id="navLinks">
-                <a href="#bienvenida" class="nav-link active" id="navInicio">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                        stroke-linejoin="round">
-                        <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
-                        <polyline points="9 22 9 12 15 12 15 22" />
-                    </svg>
-                    <span>Inicio</span>
-                </a>
-                <a href="#modulos" class="nav-link" id="navModulos">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                        stroke-linejoin="round">
-                        <rect x="3" y="3" width="7" height="7" />
-                        <rect x="14" y="3" width="7" height="7" />
-                        <rect x="3" y="14" width="7" height="7" />
-                        <rect x="14" y="14" width="7" height="7" />
-                    </svg>
-                    <span>El recorrido</span>
-                </a>
-
-
-            </div>
-                <button class="mobile-toggle" id="mobileToggle" aria-label="Menú" aria-expanded="false" aria-controls="navLinks">
-                    <span></span><span></span><span></span>
-                </button>
         </div>
     </nav>
 
@@ -78,50 +38,22 @@
         </div>
         <div class="container hero-grid">
             <div class="hero-content">
-                <div class="hero-badge">
-                    <span class="badge-dot"></span>
-                    Nuestra cultura
-                </div>
                 <h1 class="hero-title">
                     Bienvenido a <span class="gradient-text">Conozcamos Tabasco</span>
                 </h1>
-                <p class="hero-desc">
-                    <strong>Bienvenidos a este espacio dedicado a la cultura de Tabasco.
-                        Explora y descubre saberes y expresiones que forman parte de nuestra riqueza cultural.</strong>
-                </p>
-
-                <div class="hero-actions" style="display: flex; gap: 15px; flex-wrap: wrap;">
-                    <button class="btn-hero" id="btnVerVideoBienvenida"
-                        style="background: rgba(255,255,255,0.15); border: 1px solid rgba(255,255,255,0.3); backdrop-filter: blur(10px); color: #ecfdf5; box-shadow: 0 4px 20px rgba(0,0,0,0.2); cursor: pointer;">
-                        Ver video de bienvenida
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                            stroke-linecap="round" stroke-linejoin="round">
-                            <polygon points="5 3 19 12 5 21 5 3" />
-                        </svg>
-                    </button>
-                    <a href="#mapa" class="btn-hero" id="btnExplorar">
+                <p class="hero-welcome-message">Descubre el ritmo de nuestras raíces y vive la tradición de los tamborileros de Tabasco</p>
+                <div class="hero-actions hero-actions-single" style="display: flex; gap: 15px; flex-wrap: wrap;">
+                    <button type="button" class="btn-hero" id="btnExplorar">
                         Comenzar
-                        
+                    </button>
+                    <a href="#mapa" class="btn-hero" id="btnIniciarRecorrido" hidden>
+                        Iniciar recorrido
                     </a>
                 </div>
             </div>
 
-            <div class="hero-video" style="display: flex; justify-content: center; align-items: center;">
-                <style>
-                    @keyframes avatarFloat {
-
-                        0%,
-                        100% {
-                            transform: translateY(0px);
-                        }
-
-                        50% {
-                            transform: translateY(-20px);
-                        }
-                    }
-                </style>
-                <img id="heroImage" src="iguapeje.png" alt="Iguapeje"
-                    style="width: 100%; max-width: 300px; height: auto; object-fit: contain; filter: drop-shadow(0 20px 30px rgba(0,0,0,0.4)); animation: avatarFloat 6s ease-in-out infinite;">
+            <div class="hero-video hero-avatar-container">
+                <canvas id="heroAvatarCanvas" aria-label="Iguanita, guía tridimensional de Conozcamos Tabasco"></canvas>
             </div>
         </div>
     </section>
@@ -249,7 +181,7 @@
                     <div class="pin-pulse" style="border-color: #0ea5e9;"></div>
                     03
                 </div>
-                <div class="pin-label">Escucha Tabasco</div>
+                <div class="pin-label">Hora de tocar</div>
             </a>
 
             <!-- Pin 4: Resumen (Purple) -->
@@ -267,7 +199,7 @@
     
 
     <!-- ===== Zona de Juegos Banner ===== -->
-    <section class="games-banner-section" style="padding: 0 0 80px;">
+    <section class="games-banner-section" id="juegos" style="padding: 0 0 80px;">
         <div class="container">
             <div style="position: relative; z-index: 1;">
                 <div class="video-glow"
@@ -313,26 +245,7 @@
         <div class="container">
             <div class="footer-grid">
                 <div class="footer-about">
-                    <div class="footer-brand">
-                        <svg viewBox="0 0 40 40" fill="none" width="36" height="36">
-                            <circle cx="20" cy="20" r="18" fill="url(#fLogoGrad)" />
-                            <path
-                                d="M20 8C20 8 14 15 14 20C14 23.314 16.686 26 20 26C23.314 26 26 23.314 26 20C26 15 20 8 20 8Z"
-                                fill="white" opacity="0.9" />
-                            <circle cx="20" cy="19" r="2.5" fill="url(#fLogoGrad2)" />
-                            <defs>
-                                <linearGradient id="fLogoGrad" x1="0" y1="0" x2="40" y2="40">
-                                    <stop offset="0%" stop-color="#3b82f6" />
-                                    <stop offset="100%" stop-color="#10b981" />
-                                </linearGradient>
-                                <linearGradient id="fLogoGrad2" x1="0" y1="0" x2="5" y2="5">
-                                    <stop offset="0%" stop-color="#3b82f6" />
-                                    <stop offset="100%" stop-color="#10b981" />
-                                </linearGradient>
-                            </defs>
-                        </svg>
-                        <span>Conozcamos Tabasco</span>
-                    </div>
+                    <div class="footer-brand"><span>Conozcamos Tabasco</span></div>
                     <p class="footer-desc">Plataforma educativa dedicada a preservar y enseñar la riqueza cultural
                         de Tabasco, México.</p>
                 </div>
@@ -347,7 +260,7 @@
                             </svg>
                         </div>
                         <div>
-                            <p class="creator-name">Gabriel López</p>
+                            <p class="creator-name">J. Gabriel López</p>
                             <p class="creator-role">Desarrollador & Diseñador</p>
                         </div>
                     </div>
@@ -357,8 +270,8 @@
                     <h4>Navegación</h4>
                     <ul>
                         <li><a href="#bienvenida">Inicio</a></li>
-                        <li><a href="#modulos">Módulos</a></li>
-                        <li><a href="#">Mi Perfil</a></li>
+                        <li><a href="#mapa">Nuestro Recorrido</a></li>
+                        <li><a href="#juegos">Zona de Juegos</a></li>
                     </ul>
                 </div>
 
@@ -382,24 +295,6 @@
     <script src="ui-sounds.js"></script>
     <script src="course.js"></script>
 
-    <!-- Video Modal -->
-    <div id="videoModalOverlay"
-        style="display: none; position: fixed; inset: 0; z-index: 9999; background: rgba(0,0,0,0.85); backdrop-filter: blur(5px); align-items: center; justify-content: center; padding: 5%; opacity: 0; transition: opacity 0.3s ease;">
-        <div style="position: relative; width: 100%; max-width: 900px; background: #000; border-radius: 16px; box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5); overflow: hidden; transform: scale(0.95); transition: transform 0.3s ease;"
-            id="videoModalContent" role="dialog" aria-modal="true" aria-label="Video de bienvenida">
-            <button type="button" id="closeWelcomeVideo" aria-label="Cerrar video de bienvenida">Cerrar ×</button>
-            <video id="modalVideoPlayer" src="VideoInicial.mp4" playsinline controls preload="none"
-                style="width: 100%; display: block; border-radius: 16px;"></video>
-
-            <div id="videoEndOverlay"
-                style="display: none; position: absolute; inset: 0; background: rgba(0,0,0,0.7); flex-direction: column; align-items: center; justify-content: center; border-radius: 16px;">
-                <button id="btnFinalizarVideo" class="btn-hero"
-                    style="font-size: 1.2rem; padding: 15px 35px; background: linear-gradient(135deg, #10b981, #059669);">
-                    Finalizar
-                </button>
-            </div>
-        </div>
-    </div>
 </body>
 
 </html>

@@ -1,0 +1,559 @@
+@import url('palette.css');
+@import url('responsive.css');
+/* TamborToque: demostración guiada, sin interacción manual con el instrumento. */
+.music-notes-bg { display: none !important; }
+.tambor-menu-section { display: block; }
+.tambor-menu-section.is-hidden { display: none !important; }
+.tambor-view-section { display: none !important; }
+.tambor-view-section.is-visible { display: block !important; }
+.tambor-demo-section .zapateado-card[hidden] { display: none !important; }
+
+body.module3-simulator-only .module-main {
+    overflow-y: auto;
+    height: auto;
+    min-height: calc(100vh - 78px);
+    background: #fff;
+}
+
+body.module3-simulator-only {
+    min-height: 100dvh;
+    display: flex;
+    flex-direction: column;
+    background: #fff;
+}
+
+body.module3-simulator-only .module-main {
+    display: flex;
+    flex: 1 1 auto;
+    min-height: 0;
+    flex-direction: column;
+}
+
+.tambor-menu-section {
+    display: flex;
+    flex: 1 1 auto;
+    min-height: 0;
+    flex-direction: column;
+}
+
+body.module3-simulator-only .content-section {
+    display: none;
+}
+
+body.module3-simulator-only #tamborDemo {
+    display: block;
+    animation: none;
+}
+
+.tambor-demo-container {
+    max-width: 980px;
+    padding-bottom: 48px;
+}
+
+.tambor-menu-container { width: calc(100% - 72px); max-width: none; margin-left: auto; margin-right: auto; padding-left: 0; padding-right: 0; }
+.tambor-menu-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 18px;
+}
+.tambor-menu-card {
+    position: relative;
+    display: flex;
+    min-height: 190px;
+    height: 100%;
+    align-items: stretch;
+    justify-content: space-between;
+    gap: 18px;
+    overflow: hidden;
+    padding: 22px 18px;
+    border: 1px solid #0b665d;
+    border-radius: 22px;
+    background: #064c45;
+    color: #fff9e8;
+    box-shadow: 0 14px 30px #063c3614;
+    text-align: left;
+    cursor: pointer;
+    transition: transform .18s ease, box-shadow .18s ease, border-color .18s ease;
+}
+.tambor-menu-card:hover, .tambor-menu-card:focus-visible {
+    border-color: #d18b17;
+    box-shadow: 0 18px 34px #063c3624;
+    transform: translateY(-4px);
+    outline: none;
+}
+.menu-card-copy { position: relative; z-index: 2; display: flex; min-width: 0; max-width: 58%; flex: 0 0 58%; flex-direction: column; align-items: flex-start; justify-content: center; }
+.menu-card-kicker { display: flex; align-items: center; gap: 9px; color: #f2c45a; font-size: .62rem; font-weight: 900; letter-spacing: .08em; }
+.menu-card-kicker span { color: #fff9e8; font-size: .66rem; letter-spacing: .02em; }
+.menu-card-kicker i { width: 22px; height: 1px; background: #a9c9bd; }
+.menu-card-title { color: #fff9e8; font-size: clamp(1.5rem, 2.5vw, 2rem); font-weight: 900; line-height: 1.05; }
+.menu-card-desc { max-width: 135px; margin-top: 10px; color: #d9ebe2; font-size: .68rem; line-height: 1.4; text-align: left; }
+.menu-card-meta { display: flex; gap: 6px; margin-top: 11px; }
+.menu-card-meta b { padding: 5px 9px; border-radius: 999px; background: #0b665d; color: #fff9e8; font-size: .6rem; font-weight: 800; }
+.menu-card-cta { display: inline-flex; align-items: center; gap: 8px; margin-top: auto; padding-top: 16px; color: #fff9e8; font-size: .72rem; font-weight: 900; }
+.menu-card-cta strong { display: grid; place-items: center; width: 23px; height: 23px; border-radius: 50%; background: #edb336; color: #063c36; font-size: .85rem; transition: transform .18s ease; }
+.tambor-menu-card:hover .menu-card-cta strong, .tambor-menu-card:focus-visible .menu-card-cta strong { transform: translateX(3px); }
+.menu-card-visual { position: absolute; z-index: 1; right: 8px; top: 14%; display: grid; width: 40%; height: 72%; place-items: center; border-radius: 50%; font-family: Georgia, serif; font-size: 3.8rem; line-height: 1; }
+.menu-visual-drum { background: #ffe8a0; }
+.menu-card-visual img { width: 100%; height: 100%; object-fit: contain; filter: drop-shadow(0 10px 10px #a56c2d33); }
+.menu-visual-music { background: #d8f0e7; color: #087165; text-shadow: 24px 20px 0 #07594f; }
+.menu-visual-hands { background: #ffd9d2; font-size: 4.5rem; }
+.menu-visual-trophy { background: #e5dbfa; color: #e8ad17; font-size: 5.5rem; text-shadow: 0 7px 0 #c28712; }
+.tambor-menu-footer {
+    position: relative;
+    display: flex;
+    width: 100vw;
+    flex-shrink: 0;
+    min-height: 0;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    margin: auto 0 0 calc(50% - 50vw);
+    padding: 30px 24px 20px;
+    background: #064c45;
+    color: #fff9e8;
+    font-size: 1rem;
+    font-weight: 600;
+    z-index: 1;
+}
+.tambor-menu-footer p {
+    position: relative;
+    z-index: 2;
+    margin: 0;
+    color: #fff9e8;
+    text-align: center;
+    white-space: nowrap;
+}
+.tambor-menu-footer span {
+    position: relative;
+    z-index: 2;
+}
+.tambor-menu-footer::before {
+    position: absolute;
+    top: -16px;
+    right: 0;
+    left: 0;
+    height: 24px;
+    background: #064c45;
+    clip-path: polygon(0 20%, 9% 68%, 16% 20%, 23% 68%, 30% 20%, 37% 68%, 44% 20%, 51% 68%, 58% 20%, 65% 68%, 72% 20%, 79% 68%, 86% 20%, 93% 68%, 100% 20%, 100% 100%, 0 100%);
+    content: "";
+}
+.view-back-button { margin-bottom: 16px; border: 0; background: transparent; color: #074c45; font: inherit; font-weight: 800; cursor: pointer; }
+.view-back-button:hover, .view-back-button:focus-visible { color: #c07912; }
+
+.tambor-demo-heading {
+    text-align: center;
+    margin-bottom: 22px;
+}
+
+.tambor-demo-heading .section-intro-badge {
+    display: inline-flex;
+    margin-bottom: 10px;
+}
+
+.zapateado-card {
+    background: #064c45;
+    border: 1px solid #0b665d;
+    border-radius: 24px;
+    padding: clamp(18px, 3vw, 30px);
+    box-shadow: 0 18px 38px #063c3618;
+    text-align: center;
+}
+
+.zapateado-card + .zapateado-card { margin-top: 24px; }
+.rhythm-card-title {
+    margin: 0 0 16px;
+    color: #fff9e8;
+    font-size: clamp(1.25rem, 2.5vw, 1.65rem);
+}
+
+.drum-stage {
+    display: flex;
+    justify-content: center;
+    min-height: clamp(285px, 34vw, 330px);
+    overflow: hidden;
+}
+
+.drum-crop {
+    position: relative;
+    width: min(80vw, 480px);
+    height: clamp(285px, 34vw, 330px);
+    overflow: hidden;
+    border-radius: 20px;
+    background: transparent;
+}
+
+.zapateado-drum {
+    position: absolute;
+    z-index: 1;
+    top: 2%;
+    left: 50%;
+    width: min(74vw, 420px);
+    max-width: none;
+    transform: translateX(-50%);
+    user-select: none;
+    pointer-events: none;
+    opacity: 1;
+}
+
+.stick {
+    position: absolute;
+    z-index: 3;
+    top: 14px;
+    width: 12px;
+    height: 53%;
+    border-radius: 999px;
+    background: linear-gradient(90deg, #8a4d26, #e4b16c 45%, #713815);
+    box-shadow: 3px 5px 8px #063c3640;
+    transform-origin: 50% 8%;
+    pointer-events: none;
+}
+
+.stick span {
+    position: absolute;
+    top: -12px;
+    left: 50%;
+    width: 18px;
+    height: 30px;
+    border-radius: 55% 55% 45% 45%;
+    background: #c58a4d;
+    transform: translateX(-50%);
+}
+
+.stick-right { left: 57%; transform: rotate(-27deg); }
+.stick-left { left: 43%; transform: rotate(27deg); }
+
+.hit-ripple {
+    position: absolute;
+    z-index: 2;
+    top: 18%;
+    left: 50%;
+    width: 30px;
+    height: 22px;
+    border: 3px solid #fff9e8;
+    border-radius: 50%;
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(.5);
+    pointer-events: none;
+}
+
+.hit-ripple.is-hit { animation: ripple 220ms ease-out; }
+
+@keyframes ripple {
+    0% { opacity: .9; transform: translate(-50%, -50%) scale(.5); }
+    100% { opacity: 0; transform: translate(-50%, -50%) scale(2.6); }
+}
+
+.zapateado-sequence { margin: -2px 0 18px; }
+.sequence-groups {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 9px;
+    color: #fff9e8;
+    font-size: clamp(1.15rem, 2.5vw, 1.55rem);
+    font-weight: 800;
+    letter-spacing: .06em;
+}
+
+.sequence-group { display: inline-flex; align-items: center; gap: 8px; }
+.sequence-divider { color: #d18b17; font-weight: 500; }
+.sequence-dash { color: #c9d4c6; font-weight: 500; }
+.sequence-hit {
+    display: inline-grid;
+    place-items: center;
+    width: 34px;
+    height: 40px;
+    padding: 0;
+    border: 0;
+    border-radius: 10px;
+    background: transparent;
+    color: inherit;
+    font: inherit;
+    cursor: default;
+    pointer-events: none;
+    transition: transform 100ms ease, background 100ms ease, color 100ms ease;
+}
+
+.sequence-hit.is-active {
+    color: #fff;
+    background: #d18b17;
+    transform: translateY(-4px) scale(1.12);
+    box-shadow: 0 5px 12px #d18b1745;
+}
+
+.hand-legend { margin: 14px 0 0; color: #fff9e8; font-size: .88rem; }
+.hand-legend span { display: inline-grid; place-items: center; width: 21px; height: 21px; margin: 0 3px 0 10px; border-radius: 50%; background: #074c45; color: #fff; font-weight: 800; }
+.hand-legend span:first-child { margin-left: 0; background: #d18b17; }
+
+.demo-controls {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
+    border-top: 1px solid #4f8179;
+    padding-top: 20px;
+}
+
+.demo-control {
+    min-width: 94px;
+    border: 1px solid #b5c2b8;
+    border-radius: 999px;
+    padding: 10px 17px;
+    background: #fff;
+    color: #074c45;
+    font: inherit;
+    font-weight: 700;
+    cursor: pointer;
+}
+.demo-control:hover, .demo-control:focus-visible { border-color: #d18b17; background: #fff7dd; }
+.demo-control.primary { border-color: #0b665d; background: #0b665d; color: #fff9e8; }
+.zapateado-card .demo-control:not(.primary) { border-color: #0b665d; background: #0b665d; color: #fff9e8; }
+.zapateado-card .demo-control.is-selected { border-color: #d18b17; background: #edb336; color: #063c36; }
+.speed-control { display: flex; align-items: center; justify-content: center; flex-wrap: wrap; gap: 10px; margin: 0 0 0 8px; padding: 0; border: 0; color: #fff9e8; font-size: .9rem; }
+.speed-control legend { margin-right: 3px; font-weight: 800; color: #fff9e8; }
+.speed-control label { display: inline-flex; align-items: center; gap: 4px; cursor: pointer; }
+.speed-control input { accent-color: #d18b17; }
+.demo-status { min-height: 1.4em; margin: 16px 0 0; color: #fff9e8; font-size: .92rem; }
+
+@media (max-width: 700px) {
+    body.module3-simulator-only .module-main { min-height: calc(100vh - 70px); }
+    .drum-stage, .drum-crop { min-height: 280px; height: 280px; }
+    .zapateado-drum { width: 315px; }
+    .speed-control { width: 100%; justify-content: center; margin: 6px 0 0; }
+    .sequence-groups { gap: 5px; }
+    .sequence-group { gap: 3px; }
+    .sequence-hit { width: 28px; }
+}
+
+/* Minijuego: evaluación inmediata de ritmos. */
+.tambor-game-section {
+    display: block;
+    padding: 18px 0 56px;
+}
+
+.tambor-game-container { max-width: 980px; }
+.tambor-game-card {
+    background: #064c45;
+    border: 1px solid #0b665d;
+    border-radius: 24px;
+    padding: clamp(18px, 3vw, 30px);
+    box-shadow: 0 18px 38px #063c3618;
+    text-align: center;
+}
+.game-meta { display: flex; align-items: center; justify-content: center; flex-wrap: wrap; gap: 6px; color: #fff9e8; font-size: .92rem; font-weight: 700; }
+.game-meta strong { color: #fff9e8; }
+.game-meta-divider { color: #d18b17; margin: 0 8px; }
+.game-drum-stage { height: clamp(175px, 22vw, 230px); margin: 8px auto 0; }
+.game-drum-visual {
+    width: min(55vw, 300px);
+    height: 100%;
+    margin: 0 auto;
+    background: url("TamborToque-tambor-nuevo.png") center / contain no-repeat;
+    pointer-events: none;
+}
+.game-hit-controls { display: flex; justify-content: center; gap: 14px; margin: 2px 0 18px; }
+.game-hit-button {
+    min-width: 118px;
+    border: 1px solid #b5c2b8;
+    border-radius: 16px;
+    padding: 10px 18px;
+    background: #fff;
+    color: #074c45;
+    font: inherit;
+    font-size: 1.2rem;
+    font-weight: 900;
+    cursor: pointer;
+    transition: transform .12s ease, background .12s ease, border-color .12s ease;
+}
+.game-hit-button small { display: block; margin-top: 2px; font-size: .68rem; font-weight: 600; }
+.game-hit-button:hover, .game-hit-button:focus-visible { border-color: #d18b17; background: #fff7dd; }
+.game-hit-button.is-playing { transform: translateY(3px) scale(.96); background: #edb336; border-color: #d18b17; }
+.game-reset-button {
+    align-self: center;
+    width: fit-content;
+    border: 0;
+    border-radius: 999px;
+    padding: 10px 18px;
+    background: #edb336;
+    color: #063c36;
+    font: inherit;
+    font-weight: 700;
+    cursor: pointer;
+}
+.game-reset-button:hover, .game-reset-button:focus-visible { background: #f4c75b; }
+.game-results { display: grid; gap: 16px; margin-top: 24px; text-align: left; }
+.game-result-block { padding: 15px; border: 1px solid #e4dfcf; border-radius: 16px; background: #fff; }
+.game-result-block h3 { margin: 0 0 10px; color: #074c45; font-size: 1rem; }
+.game-result-sequence { display: flex; align-items: center; flex-wrap: wrap; gap: 5px; color: #536c62; font-weight: 800; }
+.game-result-hit { display: inline-grid; place-items: center; min-width: 28px; height: 30px; border-radius: 8px; background: #eef1eb; }
+.game-result-hit.correct { background: #c8f1d0; color: #146c2e; }
+.game-result-hit.wrong { background: #ffd3d3; color: #a61b1b; }
+.game-result-separator { color: #c18a24; margin: 0 3px; }
+
+.game-modal[hidden] { display: none; }
+.game-modal {
+    position: fixed;
+    z-index: 20;
+    inset: 0;
+    display: grid;
+    place-items: center;
+    padding: 20px;
+    background: #063c3670;
+}
+.game-modal-card {
+    width: min(100%, 420px);
+    padding: 28px;
+    border: 1px solid #e4dfcf;
+    border-radius: 22px;
+    background: #fffef9;
+    box-shadow: 0 22px 55px #063c3645;
+    text-align: center;
+}
+.game-modal-card h2 { margin: 0 0 20px; color: #074c45; font-size: 1.45rem; }
+.game-modal-accept { border: 0; border-radius: 999px; padding: 10px 26px; background: #edb336; color: #063c36; font: inherit; font-weight: 800; cursor: pointer; }
+
+/* Vistas internas compactas: todo el simulador cabe bajo la barra. */
+body.module3-simulator-only .toolbar-container { height: 58px; }
+body.module3-simulator-only .toolbar-back {
+    left: 24px;
+    width: 40px;
+    height: 40px;
+    padding: 0;
+    display: grid;
+    place-items: center;
+}
+body.module3-simulator-only .toolbar-back svg { width: 21px; height: 21px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+body.module3-simulator-only .toolbar-back[hidden] { display: none !important; }
+body.module3-simulator-only .toolbar-menu {
+    position: absolute;
+    left: 74px;
+    width: 40px;
+    height: 40px;
+    padding: 0;
+    display: grid;
+    place-items: center;
+    border: 0;
+    border-radius: 999px;
+    background: #edb336;
+    color: #063c36;
+    cursor: pointer;
+}
+body.module3-simulator-only .toolbar-menu:hover, body.module3-simulator-only .toolbar-menu:focus-visible { background: #f5c658; outline: 2px solid #fff9e8; outline-offset: 2px; }
+body.module3-simulator-only .toolbar-menu:disabled { opacity: .45; cursor: default; pointer-events: none; }
+body.module3-simulator-only .toolbar-menu svg { width: 20px; height: 20px; fill: none; stroke: currentColor; stroke-width: 2; }
+body.module3-simulator-only .toolbar-menu[hidden] { display: none !important; }
+body.module3-simulator-only .toolbar-title { font-size: 1.35rem; }
+body.module3-simulator-only .module-main {
+    height: 100dvh;
+    min-height: 100dvh;
+    padding-top: 68px;
+    padding-bottom: 0;
+    overflow: hidden;
+}
+.tambor-demo-section.is-visible .tambor-demo-container {
+    display: flex;
+    height: calc(100dvh - 68px);
+    min-height: 0;
+    flex-direction: column;
+    padding: 0 24px 10px;
+}
+.tambor-demo-section .view-back-button, .tambor-game-section .view-back-button { display: none; }
+.tambor-demo-section.is-visible .zapateado-card {
+    display: flex;
+    min-height: 0;
+    height: auto;
+    flex: 1 1 auto;
+    flex-direction: column;
+    padding: 14px 18px 12px;
+}
+.tambor-demo-section.is-visible .rhythm-card-title { margin: 0 0 6px; font-size: 1.35rem; }
+.tambor-demo-section.is-visible .drum-stage { min-height: 0; height: auto; flex: 1 1 auto; margin: 0; }
+.tambor-demo-section.is-visible .drum-crop { height: 100%; min-height: 0; }
+.tambor-demo-section.is-visible .zapateado-drum { width: min(48vw, 360px); max-height: 100%; }
+.tambor-demo-section.is-visible .zapateado-sequence { flex: 0 0 auto; margin: 2px 0 7px; }
+.tambor-demo-section.is-visible .hand-legend { margin: 4px 0 0; font-size: .78rem; }
+.tambor-demo-section.is-visible .demo-controls { flex: 0 0 auto; gap: 7px; padding-top: 9px; }
+.tambor-demo-section.is-visible .demo-control { padding: 8px 13px; }
+.tambor-demo-section.is-visible .speed-control { gap: 7px; font-size: .78rem; }
+.tambor-demo-section.is-visible .demo-status { min-height: 0; margin: 6px 0 0; font-size: .78rem; }
+.view-back-button svg { width: 16px; height: 16px; margin-right: 5px; vertical-align: -3px; fill: none; stroke: currentColor; stroke-width: 2; }
+.tambor-game-section.is-visible { height: 100dvh; min-height: 0; overflow: auto; }
+.tambor-game-section.is-visible .tambor-game-container { min-height: calc(100dvh - 68px); padding-bottom: 18px; }
+.tambor-game-section.is-visible .tambor-demo-heading { margin-bottom: 10px; }
+
+/* El desafío final se mantiene completo dentro del espacio visible. */
+.tambor-game-section.is-visible {
+    height: calc(100dvh - 68px);
+    padding: 8px 0 10px;
+    overflow: visible;
+}
+.tambor-game-section.is-visible .tambor-game-container {
+    display: flex;
+    height: 100%;
+    min-height: 0;
+    flex-direction: column;
+    padding-bottom: 0;
+}
+.tambor-game-section.is-visible .tambor-demo-heading {
+    flex: 0 0 auto;
+    margin-bottom: 6px;
+}
+.tambor-game-section.is-visible .tambor-game-card {
+    display: flex;
+    min-height: 0;
+    height: auto;
+    flex: 1 1 auto;
+    flex-direction: column;
+    padding: 12px 18px;
+}
+.tambor-game-section.is-visible .game-drum-stage {
+    height: clamp(130px, 18vh, 175px);
+    margin-top: 4px;
+}
+.tambor-game-section.is-visible .game-hit-controls { margin: 4px 0 10px; }
+.tambor-game-section.is-visible .game-hit-button { padding: 8px 16px; }
+.tambor-game-section.is-visible .game-reset-button { padding: 8px 18px; }
+.tambor-game-section.is-visible .game-results {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+    margin-top: 10px;
+}
+.tambor-game-section.is-visible .game-result-block { padding: 10px; }
+
+@media (max-width: 700px) {
+    .tambor-game-section { padding-top: 8px; }
+    .game-drum-stage { height: 190px; }
+    .game-drum-visual { width: 260px; }
+    .game-hit-button { min-width: 108px; }
+    .tambor-menu-grid { display: flex; grid-template-columns: none; gap: 14px; overflow-x: auto; padding: 0 4px 12px; scroll-snap-type: x proximity; }
+    .tambor-menu-container { width: calc(100% - 28px); }
+    .tambor-menu-card { flex: 0 0 min(78vw, 300px); min-height: 180px; padding: 18px 16px; scroll-snap-align: start; }
+    .menu-card-title { font-size: 1.55rem; }
+    .menu-card-visual { top: 14%; width: 43%; height: 72%; }
+    body.module3-simulator-only .toolbar-container { height: 54px; }
+    body.module3-simulator-only .toolbar-back { left: 14px; width: 36px; height: 36px; }
+    body.module3-simulator-only .toolbar-menu { left: 58px; width: 36px; height: 36px; }
+    body.module3-simulator-only .module-main { height: 100dvh; min-height: 100dvh; padding-top: 62px; }
+    .tambor-demo-section.is-visible .tambor-demo-container { height: calc(100dvh - 62px); padding: 0 12px 10px; }
+    .tambor-demo-section.is-visible .zapateado-card { min-height: 0; height: auto; padding: 10px 10px 9px; }
+    .tambor-demo-section.is-visible .zapateado-drum { width: min(62vw, 315px); }
+    .tambor-demo-section.is-visible .demo-controls { gap: 5px; }
+    .tambor-demo-section.is-visible .speed-control { width: 100%; margin: 3px 0 0; }
+    .tambor-game-section.is-visible {
+        height: calc(100dvh - 62px);
+        padding: 6px 12px 8px;
+    }
+    .tambor-game-section.is-visible .tambor-game-card { padding: 10px; }
+    .tambor-game-section.is-visible .game-drum-stage { height: 150px; }
+    .tambor-game-section.is-visible .game-results { grid-template-columns: 1fr; }
+}
+body {
+    background-image: url('FondoBeige.png') !important;
+    background-position: center !important;
+    background-size: cover !important;
+    background-repeat: no-repeat !important;
+    background-attachment: fixed !important;
+}
+

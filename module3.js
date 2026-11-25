@@ -20,7 +20,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // ===== Navigation Logic =====
     btnBack.addEventListener('click', () => {
-        window.location.href = 'course.html';
+        window.location.href = 'sonidos.html';
     });
 
     function updateProgress() {

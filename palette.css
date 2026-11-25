@@ -1,0 +1,170 @@
+/* Identidad cromática central de Conozcamos Tabasco */
+:root {
+    --palette-deepest: #051F20 !important;
+    --palette-deep: #0B2B26 !important;
+    --palette-title: #163832 !important;
+    --palette-green: #235347 !important;
+    --palette-mint: #8EB69B !important;
+    --palette-light: #DAF1DE !important;
+    --forest: var(--palette-green) !important;
+    --forest-deep: var(--palette-deepest) !important;
+    --gold: var(--palette-mint) !important;
+    --cream: var(--palette-light) !important;
+    --paper: var(--palette-light) !important;
+    --ink: var(--palette-title) !important;
+    --panel: var(--palette-light) !important;
+    --soft: var(--palette-mint) !important;
+    --muted: var(--palette-title) !important;
+    --brand: var(--palette-green) !important;
+    --line: var(--palette-mint) !important;
+    --accent: var(--palette-mint) !important;
+    --clr-bg: var(--palette-light) !important;
+    --clr-surface: var(--palette-light) !important;
+    --clr-surface-hover: var(--palette-mint) !important;
+    --clr-border: rgba(22, 56, 50, .25) !important;
+    --clr-border-focus: var(--palette-mint) !important;
+    --clr-primary: var(--palette-green) !important;
+    --clr-primary-light: var(--palette-mint) !important;
+    --clr-primary-dark: var(--palette-deepest) !important;
+    --clr-primary-glow: rgba(142, 182, 155, .3) !important;
+    --clr-accent: var(--palette-mint) !important;
+    --clr-error: var(--palette-deep) !important;
+    --clr-warning: var(--palette-mint) !important;
+    --clr-text: var(--palette-title) !important;
+    --clr-text-muted: var(--palette-title) !important;
+    --clr-text-dim: var(--palette-green) !important;
+    --gradient-brand: linear-gradient(135deg, var(--palette-deep), var(--palette-green)) !important;
+    --gradient-btn: linear-gradient(135deg, var(--palette-green), var(--palette-deep)) !important;
+    --gradient-btn-hover: linear-gradient(135deg, var(--palette-mint), var(--palette-green)) !important;
+    --blue: var(--palette-green) !important;
+    --blue-light: var(--palette-mint) !important;
+    --blue-dark: var(--palette-deepest) !important;
+    --blue-bg: var(--palette-light) !important;
+    --blue-glow: rgba(142, 182, 155, .3) !important;
+    --green: var(--palette-green) !important;
+    --green-light: var(--palette-mint) !important;
+    --green-dark: var(--palette-deep) !important;
+    --green-bg: var(--palette-light) !important;
+    --green-glow: rgba(142, 182, 155, .3) !important;
+    --red: var(--palette-deep) !important;
+    --red-light: var(--palette-mint) !important;
+    --red-dark: var(--palette-deepest) !important;
+    --red-bg: var(--palette-light) !important;
+    --red-glow: rgba(11, 43, 38, .25) !important;
+    --amber: var(--palette-mint) !important;
+    --amber-bg: var(--palette-light) !important;
+    --purple: var(--palette-green) !important;
+    --purple-dark: var(--palette-deepest) !important;
+    --purple-bg: var(--palette-light) !important;
+    --white: var(--palette-light) !important;
+    --gray-50: var(--palette-light) !important;
+    --gray-100: var(--palette-mint) !important;
+    --gray-200: var(--palette-mint) !important;
+    --gray-300: var(--palette-mint) !important;
+    --gray-400: var(--palette-title) !important;
+    --gray-500: var(--palette-title) !important;
+    --gray-600: var(--palette-title) !important;
+    --gray-700: var(--palette-title) !important;
+    --gray-800: var(--palette-title) !important;
+    --gray-900: var(--palette-deepest) !important;
+}
+.site-header,
+.toolbar,
+.games-toolbar {
+    background: linear-gradient(135deg, var(--palette-deepest), var(--palette-deep)) !important;
+    color: var(--palette-light) !important;
+}
+button:hover,
+.action:hover,
+.btn:hover,
+.button:hover {
+    background-color: var(--palette-mint) !important;
+    color: var(--palette-deepest) !important;
+}
+button:focus-visible,
+a:focus-visible,
+summary:focus-visible { outline-color: var(--palette-mint) !important; }
+
+body,
+input,
+select,
+textarea { color: var(--palette-title) !important; }
+h1,
+h2,
+h3,
+h4,
+.section-title,
+.module-title { color: var(--palette-title) !important; }
+.module-banner,
+.module1-hero,
+.module2-hero,
+.module3-hero { background: linear-gradient(135deg, var(--palette-deep), var(--palette-green)) !important; }
+.panel,
+.card,
+.info-card,
+.content-card,
+.simulator-container,
+.story-card,
+.heritage-card,
+.compare,
+.modal-content { background-color: var(--palette-light) !important; border-color: var(--palette-mint) !important; color: var(--palette-title) !important; }
+button,
+.btn,
+.action,
+.button { background-color: var(--palette-green) !important; border-color: var(--palette-mint) !important; color: var(--palette-light) !important; }
+button[aria-pressed="true"],
+button[aria-current="true"],
+.active,
+.is-active,
+.selected { background-color: var(--palette-mint) !important; color: var(--palette-deepest) !important; }
+.story-coverflow { background: radial-gradient(ellipse at center, rgba(22, 56, 50, .32) 0%, rgba(22, 56, 50, .27) 58%, rgba(22, 56, 50, 0) 100%) !important; }
+.story-coverflow .story-card,
+.story-coverflow .story-card-copy { background-color: var(--palette-light) !important; color: var(--palette-title) !important; }
+.story-coverflow .story-card { border-color: var(--palette-mint) !important; box-shadow: 0 16px 30px rgba(5, 31, 32, .22) !important; }
+.story-coverflow .story-card img { background: linear-gradient(135deg, var(--palette-deep), var(--palette-green)) !important; }
+.story-coverflow .story-card h3,
+.story-coverflow .story-card p { color: var(--palette-title) !important; }
+.story-coverflow .story-controls button { background-color: var(--palette-green) !important; color: var(--palette-light) !important; }
+.story-coverflow .story-dots button[aria-current="true"] { background-color: var(--palette-mint) !important; }
+.module-banner::before { background: linear-gradient(90deg, rgba(5, 31, 32, .96), rgba(11, 43, 38, .78)), url('FondoRio.png') center/cover !important; }
+.landscape { background-image: linear-gradient(0deg, rgba(5, 31, 32, .94), rgba(5, 31, 32, .02)), url('FondoRio.png') center/cover !important; color: var(--palette-light) !important; }
+video { background-color: var(--palette-deepest) !important; }
+
+/* Texto claro únicamente dentro de superficies oscuras */
+.module-banner h1,
+.module-banner h2,
+.module-banner .intro p,
+.module-banner .muted,
+.module1-hero h1,
+.module1-hero h2,
+.module1-hero p,
+.module2-hero h1,
+.module2-hero h2,
+.module2-hero p,
+.module3-hero h1,
+.module3-hero h2,
+.module3-hero p,
+.landscape h2,
+.landscape p,
+.heritage-card h2,
+.heritage-card p,
+.heritage-card .heritage-copy { color: var(--palette-light) !important; }
+.site-header .page-title,
+.site-header .brand,
+.toolbar .toolbar-title,
+.games-toolbar .toolbar-title,
+.instrument-back,
+.instrument-back .instrument-card-title { color: var(--palette-light) !important; }
+.heritage-card .eyebrow,
+.heritage-card .heritage-credit,
+.instrument-back .eyebrow,
+.instrument-back .flip-hint { color: var(--palette-mint) !important; }
+
+/* Etiquetas solicitadas sobre fondos oscuros */
+.sound-option-content h2,
+.flute-notes-title,
+.flute-note-label,
+.flute-note-card.is-selected .flute-note-label,
+.footer-creator h4,
+.footer-links-col h4,
+.creator-role { color: var(--palette-light) !important; }

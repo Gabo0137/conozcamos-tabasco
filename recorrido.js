@@ -46,16 +46,41 @@
       button.querySelector('.instrument-front').setAttribute('aria-hidden', String(flipped));
       button.querySelector('.instrument-back').setAttribute('aria-hidden', String(!flipped));
     }));
-    const stories = [
-      ['¿Quiénes son?', "Los tamborileros son una tradición musical del pueblo yoko t'an, también llamado chontal de Tabasco, y son parte central de su vida cultural. Su práctica se concentra en la región Biji Yoko t'an, donde vive la mayoría de las comunidades de este grupo étnico."],
-      ['Integrantes', 'El grupo no tiene un número fijo de integrantes. Se describe como un conjunto con una cantidad variable de personas.'],
-      ['Instrumentos', 'La flauta es de carrizo, de viento, y tiene siete orificios. Se conoce como pito o flauta de carrizo, y es el instrumento que lleva la melodía. Los tambores son de dos parches y tienen distintos tamaños.']
-    ];
-    all('[data-story]').forEach(button => button.addEventListener('click', () => {
-      select('[data-story]', button);
-      const story = stories[Number(button.dataset.story)];
-      $('#story-title').textContent = story[0]; $('#story-text').textContent = story[1];
-    }));
+    const storyTrack = $('.story-track');
+    const storyCards = all('[data-story-card]');
+    const storyCount = storyCards.length;
+    let storyIndex = 0;
+    function renderStory(index) {
+      if (!storyCount) return;
+      storyIndex = (index + storyCount) % storyCount;
+      storyCards.forEach((card, i) => {
+        const offset = (i - storyIndex + storyCount) % storyCount;
+        card.classList.toggle('is-active', offset === 0);
+        card.classList.toggle('is-prev', offset === storyCount - 1);
+        card.classList.toggle('is-next', offset === 1);
+        card.classList.toggle('is-hidden', offset > 1 && offset < storyCount - 1);
+        card.setAttribute('aria-hidden', String(offset > 1 && offset < storyCount - 1));
+      });
+      all('[data-story]').forEach(button => {
+        const active = Number(button.dataset.story) === storyIndex;
+        button.setAttribute('aria-current', String(active));
+      });
+    }
+    all('[data-story]').forEach(button => button.addEventListener('click', () => renderStory(Number(button.dataset.story))));
+    storyCards.forEach((card, index) => {
+      card.addEventListener('click', () => renderStory(index));
+      card.addEventListener('keydown', event => { if (event.key === 'Enter' || event.key === ' ') { event.preventDefault(); renderStory(index); } });
+    });
+    $('#story-prev')?.addEventListener('click', () => renderStory(storyIndex - 1));
+    $('#story-next')?.addEventListener('click', () => renderStory(storyIndex + 1));
+    let storyTouchStart = 0;
+    storyTrack?.addEventListener('touchstart', event => { storyTouchStart = event.changedTouches[0].clientX; }, { passive: true });
+    storyTrack?.addEventListener('touchend', event => {
+      const distance = event.changedTouches[0].clientX - storyTouchStart;
+      if (Math.abs(distance) > 45) renderStory(storyIndex + (distance < 0 ? 1 : -1));
+    }, { passive: true });
+    storyTrack?.addEventListener('keydown', event => { if (event.key === 'ArrowLeft') renderStory(storyIndex - 1); if (event.key === 'ArrowRight') renderStory(storyIndex + 1); });
+    renderStory(0);
     all('[data-culture-answer]').forEach(button => button.addEventListener('click', () => {
       const correct = button.dataset.cultureAnswer === 'people';
       $('#culture-feedback').textContent = correct ? 'Así es. Los objetos importan, y la tradición continúa cuando las personas comparten su música y sus saberes.' : 'Los instrumentos son una parte. Piensa también en quienes los elaboran, interpretan y enseñan a otras personas.';
@@ -65,35 +90,80 @@
   }
 
   if (module === 'instrumentos') {
-    let instrument = 0, step = 0;
+    let instrument = 0;
     const instruments = [
-      { name:'Flauta de carrizo', image:'Flauta01.png', details:[['El carrizo','Su cuerpo se elabora con carrizo: un tallo hueco que se transforma para construir el instrumento.'],['Aire y orificios','El aire pone en vibración la columna de aire del interior. Al cubrir y descubrir los orificios, el intérprete cambia los sonidos.'],['Un proceso artesanal','Explora el recorrido visual de elaboración. Es una descripción general; las técnicas pueden variar entre artesanos.']], steps:[['Selección del carrizo','Se selecciona el tallo que dará forma al instrumento.','Seleccion.png'],['Corte del material','Se corta el carrizo para preparar el cuerpo de la flauta.','Corte.jpg'],['Limpieza del interior','Se prepara el interior del tubo para permitir el paso del aire.','Flauta01.png'],['Perforación de orificios','Se realizan los orificios que el intérprete cubrirá y descubrirá.','Hueco.png'],['Prueba del sonido','Se escucha el resultado y se hacen los ajustes necesarios.','Tocar.jpg']] },
-      { name:'Tambor tradicional', image:'Tambor.png', details:[['Madera y piel','Los tambores reúnen un cuerpo de madera y una membrana de piel. Los materiales y acabados pueden variar según el instrumento y su elaboración.'],['Cuerpo, parche y sujeción','El parche vibra al recibir el golpe. El cuerpo y la tensión de la membrana intervienen en el sonido. Observa también cómo está sujeta la piel.'],['Del cuerpo al sonido','Recorre tres momentos generales de su construcción. La imagen muestra el instrumento terminado; no representa cada paso del taller.']], steps:[['Preparar el cuerpo','La madera se trabaja para formar el cuerpo del tambor.','Tambor.png'],['Colocar la membrana','La piel se coloca y se sujeta sobre el cuerpo.','Tambor.png'],['Tensar y escuchar','Se ajusta la tensión de la membrana y se prueba el sonido.','Tambor.png']] }
+      { name:'Flauta de carrizo', image:'Flauta01.png', overviewImage:'Flautis carizo.png', materialImage:'Carrizo Cera.png', partsImage:'Flautis carizo.png', details:[['¿Qué es?','Instrumento de viento con seis agujeros en la parte superior y uno posterior.'],['Materiales','Carrizo: planta de tallo hueco, ligero y resistente, utilizado para fabricar el cuerpo de la flauta. Cera de abeja: material natural y moldeable utilizado en la elaboración de la embocadura.'],['Aire y orificios','El aire pone en vibración la columna de aire del interior. Al cubrir y descubrir los orificios, el intérprete cambia los sonidos.']], detailHtml:[null,'<strong>Carrizo:</strong> planta de tallo hueco, ligero y resistente, utilizado para fabricar el cuerpo de la flauta.<br><br><strong>Cera de abeja:</strong> material natural y moldeable utilizado en la elaboración de la embocadura.',null] },
+      { name:'Tambor tradicional', image:'Tambor.png', materialImage:'material_Tambor.png', partsImage:'tambor grande.png', details:[['Materiales','La estructura usa madera de cedro. El cuero puede ser piel de borrego o de venado; se tensa con cuerdas y se toca con baquetas de palo.'],['Cuerpo, parche y sujeción','El parche vibra al recibir el golpe. El cuerpo y la tensión de la membrana intervienen en el sonido. Observa también cómo está sujeta la piel.']], detailHtml:['<span class="material-entry"><strong>Madera de cedro:</strong> utilizada para fabricar el cuerpo del tambor.</span><span class="material-entry"><strong>Piel de borrego o venado:</strong> utilizada para elaborar los parches que producen el sonido al ser golpeados.</span><span class="material-entry"><strong>Cuerdas:</strong> permiten sujetar y tensar los parches del tambor.</span><span class="material-entry"><strong>Baquetas de madera:</strong> utilizadas para golpear los parches y ejecutar los diferentes ritmos tradicionales.</span>',null] }
     ];
-    const partLabels = ['① El material','② Las partes','③ El proceso'];
-    function renderStep() {
-      const steps = instruments[instrument].steps;
-      $('#process-title').textContent = steps[step][0]; $('#process-text').textContent = steps[step][1];
-      $('#process-image').src = steps[step][2]; $('#process-image').alt = instrument ? 'Tambor terminado, como referencia del proceso' : steps[step][0];
-      $('#process-position').textContent = `${step + 1} de ${steps.length}`;
-      $('#process-prev').disabled = step === 0; $('#process-next').disabled = step === steps.length - 1;
-    }
+    const partLabels = [['① ¿Qué es?','② El material','③ Las partes'],['① El material','② Las partes']];
+    const stage = $('.stage');
+    const instrumentVisual = document.createElement('div');
+    instrumentVisual.className = 'instrument-visual';
+    stage.insertBefore(instrumentVisual, $('#instrument-image'));
+    instrumentVisual.append($('#instrument-image'));
+    const drumHotspots = document.createElement('div');
+    drumHotspots.className = 'drum-parts-hotspots';
+    drumHotspots.hidden = true;
+    drumHotspots.setAttribute('aria-label', 'Partes interactivas del tambor');
+    drumHotspots.innerHTML = '<button type="button" class="drum-hotspot hotspot-body" data-hotspot="body" aria-label="Ver información del cuerpo"></button><button type="button" class="drum-hotspot hotspot-parche" data-hotspot="parche" aria-label="Ver información del parche"></button><button type="button" class="drum-hotspot hotspot-amarre" data-hotspot="amarre" aria-label="Ver información del amarre"></button><button type="button" class="drum-hotspot hotspot-baquetas" data-hotspot="baquetas" aria-label="Ver información de las baquetas"></button>';
+    stage?.insertBefore(drumHotspots, $('.hotspots'));
+    const fluteHotspots = document.createElement('div');
+    fluteHotspots.className = 'flute-parts-hotspots';
+    fluteHotspots.hidden = true;
+    fluteHotspots.setAttribute('aria-label', 'Partes interactivas de la flauta');
+    fluteHotspots.innerHTML = '<button type="button" class="flute-hotspot flute-embocadura" data-hotspot="embocadura" aria-label="Ver información de la embocadura" aria-pressed="false"><span>Embocadura</span></button><button type="button" class="flute-hotspot flute-orificios" data-hotspot="orificios" aria-label="Ver información de los orificios" aria-pressed="false"><span>Orificios</span></button><button type="button" class="flute-hotspot flute-carrizo" data-hotspot="carrizo" aria-label="Ver información del carrizo" aria-pressed="false"><span>Carrizo</span></button><button type="button" class="flute-hotspot flute-boquilla" data-hotspot="boquilla" aria-label="Ver información de la boquilla" aria-pressed="false"><span>Boquilla</span></button>';
+    instrumentVisual.append(fluteHotspots);
+    const hotspotDetails = {
+      body: ['Cuerpo', 'Tronco hueco de madera de cedro que forma la estructura del tambor.'],
+      parche: ['Parche', 'Piel de borrego o de venado tensada para producir el sonido.'],
+      amarre: ['Amarre', 'Cuerdas que sujetan y mantienen tensos los parches.'],
+      baquetas: ['Baquetas', 'Palos de madera usados para golpear el tambor.']
+    };
+    const fluteHotspotDetails = {
+      embocadura: ['Embocadura', 'Abertura donde se sopla para introducir el aire en la flauta y producir la vibración.'],
+      orificios: ['Orificios', 'Agujeros del cuerpo que se tapan y destapan con los dedos para cambiar las notas.'],
+      carrizo: ['Carrizo', 'Tallo hueco, ligero y resistente de una planta parecida a la caña, usado para fabricar la flauta.'],
+      boquilla: ['Boquilla', 'Observa el extremo abierto de la flauta y la forma hueca del carrizo que permite el paso del aire.']
+    };
     function showDetail(part) {
       const detail = instruments[instrument].details[part];
-      $('#part-title').textContent = detail[0]; $('#part-text').textContent = detail[1];
-      $('#process').hidden = part !== 2;
-      all('[data-part]').forEach((b,i) => { b.textContent = partLabels[i]; b.setAttribute('aria-pressed', String(i === part)); });
-      if (part === 2) renderStep();
+      $('#part-title').textContent = detail[0];
+      const detailHtml = instruments[instrument].detailHtml?.[part];
+      if (detailHtml) $('#part-text').innerHTML = detailHtml;
+      else $('#part-text').textContent = detail[1];
+      $('.panel')?.classList.toggle('is-drum-material', instrument === 1 && part === 0);
+      const overviewImage = part === 0 && instruments[instrument].overviewImage ? instruments[instrument].overviewImage : null;
+      const materialPart = instrument === 0 ? 1 : 0;
+      const detailImage = part === materialPart && instruments[instrument].materialImage ? instruments[instrument].materialImage : instruments[instrument].image;
+      const partsImage = ((instrument === 0 && part === 2) || (instrument === 1 && part === 1)) && instruments[instrument].partsImage ? instruments[instrument].partsImage : detailImage;
+      $('#instrument-image').src = partsImage;
+      if (overviewImage) $('#instrument-image').src = overviewImage;
+      $('#instrument-image').alt = part === 0 ? `${instruments[instrument].name}: ${detail[0]}` : instruments[instrument].name;
+      stage?.classList.toggle('is-material', part === 0);
+      stage?.classList.toggle('is-parts', instrument === 1 && part === 1);
+      stage?.classList.toggle('is-flute-parts', instrument === 0 && part === 2);
+      stage?.classList.toggle('is-flute-overview', instrument === 0 && part === 0);
+      stage?.classList.toggle('is-drum', instrument === 1);
+      all('[data-hotspot]').forEach(point => point.setAttribute('aria-pressed', 'false'));
+      drumHotspots.hidden = !(instrument === 1 && part === 1);
+      fluteHotspots.hidden = !(instrument === 0 && part === 2);
+      const labels = partLabels[instrument];
+      all('[data-part]').forEach((b,i) => { b.hidden = i >= labels.length; if (i < labels.length) { b.textContent = labels[i]; b.setAttribute('aria-pressed', String(i === part)); } });
     }
     all('[data-instrument]').forEach(button => button.addEventListener('click', () => {
-      instrument = Number(button.dataset.instrument); step = 0; select('[data-instrument]', button);
+      instrument = Number(button.dataset.instrument); select('[data-instrument]', button);
       $('#instrument-image').src = instruments[instrument].image; $('#instrument-image').alt = instruments[instrument].name;
       showDetail(0);
     }));
     all('[data-part]').forEach(button => button.addEventListener('click', () => showDetail(Number(button.dataset.part))));
-    $('#process-prev').addEventListener('click', () => { if (step > 0) { step--; renderStep(); } });
-    $('#process-next').addEventListener('click', () => { if (step < instruments[instrument].steps.length - 1) { step++; renderStep(); } });
-    $('#compare-open').addEventListener('click', () => $('#compare-dialog').showModal());
+    all('[data-hotspot]').forEach(button => button.addEventListener('click', () => {
+      const detail = hotspotDetails[button.dataset.hotspot] || fluteHotspotDetails[button.dataset.hotspot];
+      if (!detail) return;
+      $('#part-title').textContent = detail[0]; $('#part-text').textContent = detail[1];
+      all('[data-hotspot]').forEach(point => point.setAttribute('aria-pressed', String(point === button)));
+    }));
+    showDetail(0);
+    $('#compare-open')?.addEventListener('click', () => $('#compare-dialog').showModal());
     $('#compare-close').addEventListener('click', () => $('#compare-dialog').close());
     all('[data-material]').forEach(button => button.addEventListener('click', () => {
       const correct = button.dataset.material === 'carrizo';
@@ -103,26 +173,10 @@
   }
 
   if (module === 'sonidos') {
-    const recordings = ['MusicaFlauta.mpeg','SonidoTambor.mpeg'];
-    let mystery = Math.random() < .5 ? 0 : 1, listened = false;
-    const mysteryAudio = $('#mystery-audio');
-    mysteryAudio.src = recordings[mystery];
-    mysteryAudio.addEventListener('playing', () => { listened = true; });
-    all('[data-sound]').forEach(button => button.addEventListener('click', () => {
-      const drum = button.dataset.sound === '1'; select('[data-sound]', button);
-      const media = $('#explore-audio'); media.pause(); media.src = recordings[drum ? 1 : 0];
-      $('#sound-image').src = drum ? 'Tambor.png' : 'Flauta01.png'; $('#sound-image').alt = drum ? 'Tambor tradicional' : 'Flauta de carrizo';
-      $('#listening-guide').textContent = drum ? 'Escucha el comienzo de cada golpe y cómo se apaga su resonancia.' : 'Escucha cómo cambia la altura del sonido a lo largo de la melodía.';
-      $('#audio-error').textContent = '';
+    all('.sound-option-card audio').forEach(audio => audio.addEventListener('play', () => {
+      all('.sound-option-card audio').forEach(other => { if (other !== audio) other.pause(); });
+      discover();
     }));
-    all('[data-sound-answer]').forEach(button => button.addEventListener('click', () => {
-      if (!listened) { $('#sound-feedback').textContent = 'Primero reproduce la grabación misteriosa. Puedes repetirla cuantas veces quieras.'; return; }
-      const correct = Number(button.dataset.soundAnswer) === mystery;
-      $('#sound-feedback').textContent = correct ? `Lo reconociste: ${mystery ? 'tambor' : 'flauta de carrizo'}. Vuelve a escucharlo y relaciona su sonido con el instrumento.` : 'Vuelve a escuchar: ¿percibes golpes o una melodía sostenida por el aire? Puedes comparar con el reproductor de exploración.';
-      $('#sound-feedback').classList.toggle('success', correct); if (correct) discover();
-    }));
-    $('#another-sound').addEventListener('click', () => { mysteryAudio.pause(); mystery = 1 - mystery; listened = false; mysteryAudio.src = recordings[mystery]; $('#sound-feedback').textContent = 'Hay una nueva grabación. Escucha antes de elegir.'; $('#mystery-error').textContent = ''; });
-
   }
 
   if (module === 'descubrimientos') {

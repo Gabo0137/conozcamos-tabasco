@@ -1,3 +1,5 @@
+@import url('palette.css');
+@import url('responsive.css');
 /* ===== Specific Styles for Module 3: Tambor Tradicional ===== */
 
 /* Intro */
@@ -330,3 +332,55 @@
 
 .rdot.filled { background: var(--red); }
 .rdot.error { background: var(--amber); }
+
+/* Vista simplificada: solo el simulador del tambor con el estilo cultural actual. */
+body.module3-simulator-only{
+    min-height:100vh;
+    background:#fcf9f0;
+    color:#123f38;
+}
+body.module3-simulator-only .toolbar{
+    background:#064c45;
+    border-bottom:1px solid #0b665d;
+    box-shadow:0 8px 22px #042f3326;
+}
+body.module3-simulator-only .toolbar-container{
+    position:relative;
+    max-width:1120px;
+    height:78px;
+    justify-content:center;
+}
+body.module3-simulator-only .toolbar-back{
+    position:absolute;
+    left:24px;
+    background:#edb336;
+    color:#063c36;
+    border-radius:999px;
+    font-weight:700;
+}
+body.module3-simulator-only .toolbar-back:hover{background:#f5c658;color:#063c36}
+body.module3-simulator-only .toolbar-module-badge,
+body.module3-simulator-only .toolbar-progress,
+body.module3-simulator-only .toolbar-steps{display:none}
+body.module3-simulator-only .toolbar-title{margin:0;color:#fff9e8;font-size:clamp(1.25rem,2.4vw,1.8rem)}
+body.module3-simulator-only .module-main{padding-top:94px;background:#fcf9f0;min-height:calc(100vh - 78px);height:calc(100vh - 78px);overflow:hidden}
+body.module3-simulator-only .content-section{display:none}
+body.module3-simulator-only #sectionSimulador{display:block;animation:none}
+body.module3-simulator-only #sectionSimulador .section-container{max-width:980px;padding:0 24px 54px}
+body.module3-simulator-only #sectionSimulador .section-intro{text-align:center;margin-bottom:22px}
+body.module3-simulator-only #sectionSimulador .section-intro-badge{display:none}
+body.module3-simulator-only #sectionSimulador .section-intro-title{margin:0 0 8px;color:#074c45;font-size:clamp(1.9rem,3.6vw,2.7rem)}
+body.module3-simulator-only #sectionSimulador .section-intro-desc{max-width:650px;margin:0 auto;color:#536c62;font-size:.98rem}
+body.module3-simulator-only #sectionSimulador .simulator-container{background:#fffef9;border:1px solid #dddcc9;border-radius:24px;padding:20px;box-shadow:0 18px 38px #063c3618}
+body.module3-simulator-only #sectionSimulador .drum-pad-wrapper{max-width:330px;margin-bottom:16px}
+body.module3-simulator-only #sectionSimulador .drum-surface{box-shadow:inset 0 0 50px #00000055,0 16px 32px #063c3630}
+body.module3-simulator-only #sectionSimulador .simulator-feedback{color:#536c62}
+body.module3-simulator-only #sectionSimulador .section-action{display:none}
+@media(max-width:700px){
+    body.module3-simulator-only .toolbar-container{height:70px}
+    body.module3-simulator-only .toolbar-back{left:14px;padding:8px 14px}
+    body.module3-simulator-only .module-main{padding-top:86px;height:auto;min-height:calc(100vh - 70px);overflow:visible}
+    body.module3-simulator-only #sectionSimulador .section-container{padding-left:14px;padding-right:14px}
+    body.module3-simulator-only #sectionSimulador .simulator-container{padding:18px}
+    body.module3-simulator-only #sectionSimulador .drum-pad-wrapper{max-width:min(78vw,320px)}
+}
