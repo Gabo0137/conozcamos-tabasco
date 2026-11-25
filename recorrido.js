@@ -93,9 +93,7 @@
     const mapHost = $('#tabascoMap');
     const municipalityCard = $('#municipalityCard');
     const municipalityImage = $('#municipalityImage');
-    const municipalityPlaceholder = $('#municipalityImagePlaceholder');
     const municipalityTitle = $('#municipalityTitle');
-    const municipalityDescription = $('#municipalityDescription');
     let selectedMunicipality = '27013';
 
     function renderMunicipality(id) {
@@ -110,12 +108,10 @@
       });
       municipalityCard?.classList.add('is-changing');
       municipalityTitle.textContent = municipality.title;
-      municipalityDescription.textContent = municipality.description;
       municipalityImage.alt = `Fotografía pendiente de ${municipality.title}`;
       municipalityImage.hidden = true;
-      municipalityPlaceholder.hidden = false;
-      municipalityImage.onload = () => { municipalityImage.hidden = false; municipalityPlaceholder.hidden = true; municipalityCard?.classList.remove('is-changing'); };
-      municipalityImage.onerror = () => { municipalityImage.hidden = true; municipalityPlaceholder.hidden = false; municipalityCard?.classList.remove('is-changing'); };
+      municipalityImage.onload = () => { municipalityImage.hidden = false; municipalityCard?.classList.remove('is-changing'); };
+      municipalityImage.onerror = () => { municipalityImage.hidden = true; municipalityCard?.classList.remove('is-changing'); };
       municipalityImage.src = municipality.image;
       window.setTimeout(() => municipalityCard?.classList.remove('is-changing'), 280);
     }
@@ -125,8 +121,14 @@
         svg.classList.add('tabasco-map-svg');
         svg.setAttribute('aria-hidden', 'true');
         mapHost.replaceChildren(svg);
-        const viewBox = svg.getAttribute('viewBox').trim().split(/\s+/).map(Number);
-        const [viewBoxX, viewBoxY, viewBoxWidth, viewBoxHeight] = viewBox;
+        const originalViewBox = svg.getAttribute('viewBox').trim().split(/\s+/).map(Number);
+        const [originalX, originalY, originalWidth, originalHeight] = originalViewBox;
+        const mapMargin = Math.min(originalWidth, originalHeight) * 0.045;
+        const viewBoxX = originalX - mapMargin;
+        const viewBoxY = originalY - mapMargin;
+        const viewBoxWidth = originalWidth + mapMargin * 2;
+        const viewBoxHeight = originalHeight + mapMargin * 2;
+        svg.setAttribute('viewBox', `${viewBoxX} ${viewBoxY} ${viewBoxWidth} ${viewBoxHeight}`);
         Object.entries(municipalityData).forEach(([id, municipality]) => {
           const path = svg.getElementById(id);
           if (!path) return;
