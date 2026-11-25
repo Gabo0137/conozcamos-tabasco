@@ -95,7 +95,6 @@
     const municipalityImage = $('#municipalityImage');
     const municipalityPlaceholder = $('#municipalityImagePlaceholder');
     const municipalityTitle = $('#municipalityTitle');
-    const municipalitySubtitle = $('#municipalitySubtitle');
     const municipalityDescription = $('#municipalityDescription');
     let selectedMunicipality = '27013';
 
@@ -111,7 +110,6 @@
       });
       municipalityCard?.classList.add('is-changing');
       municipalityTitle.textContent = municipality.title;
-      municipalitySubtitle.textContent = municipality.subtitle;
       municipalityDescription.textContent = municipality.description;
       municipalityImage.alt = `Fotografía pendiente de ${municipality.title}`;
       municipalityImage.hidden = true;
