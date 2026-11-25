@@ -49,9 +49,127 @@
     const storyTrack = $('.story-track');
     const storyCards = all('[data-story-card]');
     const storyCount = storyCards.length;
+    const storyQuestions = [
+      { question:'¿Qué instrumentos utilizan los tamborileros?', options:['Guitarra y violín.','Flauta de carrizo y tambores.','Trompeta y maracas.'], correct:1, feedback:['La guitarra y el violín son instrumentos de cuerda. Recuerda que los tamborileros utilizan instrumentos de viento y percusión.','¡Correcto! Has identificado sus instrumentos tradicionales.','Estos instrumentos no corresponden a los mencionados en la tarjeta. Recuerda la agrupación musical que acabas de conocer.'] },
+      { question:'¿Con qué pueblo originario se relacionan los antecedentes históricos de los tamborileros?', options:['Pueblo mexica.','Pueblo purépecha.',"Pueblo yokot'an (chontal de Tabasco)."], correct:2, feedback:['Los antecedentes de esta tradición se relacionan con un pueblo originario de Tabasco.','Recuerda que esta tradición tiene raíces en las comunidades indígenas tabasqueñas.','¡Correcto! Esta tradición tiene antecedentes vinculados con el pueblo yokot\'an.'] },
+      { question:'¿Quiénes integran una agrupación tradicional de tamborileros?', options:['Flautista y tamborileros.','Guitarristas y cantantes.','Violinistas y trompetistas.'], correct:0, feedback:['¡Correcto! Has identificado a los integrantes de esta agrupación musical.','Recuerda que la agrupación se conforma por músicos que interpretan instrumentos de viento y percusión.','Piensa en los músicos que interpretan los instrumentos tradicionales de los tamborileros.'] },
+      { question:'¿Qué ritmos forman parte del repertorio tradicional de los tamborileros?', options:['Rock y jazz.','Zapateados, sones y valseados.','Salsa y merengue.'], correct:1, feedback:['Estos géneros no corresponden al repertorio tradicional presentado en la tarjeta.','¡Correcto! Has reconocido los ritmos de esta tradición musical.','Recuerda los ritmos tradicionales asociados con las celebraciones y danzas tabasqueñas.'] },
+      { question:'¿Qué elemento forma parte de la vestimenta tradicional de los tamborileros?', options:['Corbata negra.','Gorra deportiva.','Paliacate rojo.'], correct:2, feedback:['Recuerda los accesorios tradicionales que acompañan la vestimenta de manta blanca.','Este accesorio no corresponde a la vestimenta tradicional presentada.','¡Correcto! El paliacate rojo forma parte de su vestimenta tradicional.'] }
+    ];
+    const storyEvaluation = storyQuestions.map(() => ({ selectedAnswers:[], correctAnswers:0, incorrectAnswers:0, totalAttempts:0, readAgain:0, responseTimes:[], completed:false, state:'pendiente', startedAt:null, attemptStartedAt:null }));
+    window.tamborilerosEvaluation = storyEvaluation;
     let storyIndex = 0;
+    let questionPending = false;
+
+    function setStoryNavigationDisabled(disabled) {
+      all('#story-prev,#story-next,[data-story]').forEach(control => { control.disabled = disabled; control.setAttribute('aria-disabled', String(disabled)); });
+      storyTrack?.classList.toggle('question-pending', disabled);
+    }
+
+    function buildQuestionFace(card, index) {
+      const front = document.createElement('div');
+      front.className = 'story-card-face story-card-front';
+      while (card.firstChild) front.append(card.firstChild);
+      const flipIcon = document.createElement('span');
+      flipIcon.className = 'story-flip-icon';
+      flipIcon.setAttribute('aria-hidden', 'true');
+      flipIcon.textContent = '↻';
+      front.append(flipIcon);
+      const back = document.createElement('div');
+      back.className = 'story-card-face story-card-back';
+      const question = storyQuestions[index];
+      back.innerHTML = `<span class="story-quiz-kicker">Refuerza lo aprendido</span><p class="story-quiz-question">${question.question}</p><div class="story-quiz-options" role="group" aria-label="Opciones de respuesta"></div><p class="story-quiz-attempt" aria-live="polite"></p><p class="story-quiz-feedback" aria-live="polite"></p><button type="button" class="story-quiz-action" hidden></button>`;
+      const options = back.querySelector('.story-quiz-options');
+      question.options.forEach((option, optionIndex) => {
+        const button = document.createElement('button');
+        button.type = 'button';
+        button.className = 'story-quiz-option';
+        button.dataset.option = String(optionIndex);
+        button.textContent = `${String.fromCharCode(65 + optionIndex)}. ${option}`;
+        options.append(button);
+      });
+      const inner = document.createElement('div');
+      inner.className = 'story-card-inner';
+      inner.append(front, back);
+      card.append(inner);
+      card.setAttribute('aria-label', `${card.getAttribute('aria-label')}. Haz clic en la tarjeta central para reforzar lo aprendido.`);
+    }
+
+    function updateQuizFace(card, index) {
+      const record = storyEvaluation[index];
+      const attempt = record.totalAttempts + 1;
+      card.querySelector('.story-quiz-attempt').textContent = `Intento ${Math.min(attempt, 2)} de 2`;
+      card.querySelector('.story-quiz-feedback').textContent = '';
+      card.querySelector('.story-quiz-action').hidden = true;
+      card.querySelectorAll('.story-quiz-option').forEach(button => { button.disabled = false; button.classList.remove('is-correct','is-incorrect'); });
+    }
+
+    function flipCard(index) {
+      if (index !== storyIndex || questionPending) return;
+      const card = storyCards[index];
+      const record = storyEvaluation[index];
+      record.startedAt ??= Date.now();
+      record.attemptStartedAt = Date.now();
+      record.totalAttempts = 0;
+      updateQuizFace(card, index);
+      card.classList.add('is-flipped');
+      questionPending = true;
+      setStoryNavigationDisabled(true);
+    }
+
+    function finishQuiz(card, index, passed) {
+      const record = storyEvaluation[index];
+      card.querySelectorAll('.story-quiz-option').forEach(button => { button.disabled = true; });
+      const action = card.querySelector('.story-quiz-action');
+      action.hidden = false;
+      action.textContent = passed ? 'Volver a la información' : (record.totalAttempts === 1 ? 'Intentar nuevamente' : 'Volver a leer');
+      action.dataset.action = passed ? 'return' : (record.totalAttempts === 1 ? 'retry' : 'review');
+    }
+
+    function answerQuiz(index, optionIndex) {
+      const card = storyCards[index];
+      const record = storyEvaluation[index];
+      const question = storyQuestions[index];
+      if (!questionPending || index !== storyIndex || record.totalAttempts >= 2) return;
+      record.totalAttempts += 1;
+      record.selectedAnswers.push(optionIndex);
+      record.responseTimes.push(Date.now() - record.attemptStartedAt);
+      const correct = optionIndex === question.correct;
+      const option = card.querySelector(`[data-option="${optionIndex}"]`);
+      option.classList.add(correct ? 'is-correct' : 'is-incorrect');
+      card.querySelectorAll('.story-quiz-option').forEach(button => { button.disabled = true; });
+      card.querySelector('.story-quiz-feedback').textContent = question.feedback[optionIndex];
+      if (correct) {
+        record.correctAnswers += 1; record.completed = true; record.state = 'completada';
+        card.classList.add('is-completed');
+        finishQuiz(card, index, true);
+      } else {
+        record.incorrectAnswers += 1;
+        finishQuiz(card, index, false);
+      }
+    }
+
+    function returnToFront(index, action) {
+      const card = storyCards[index];
+      const record = storyEvaluation[index];
+      if (action === 'retry') { updateQuizFace(card, index); record.attemptStartedAt = Date.now(); return; }
+      if (action === 'review') record.readAgain += 1;
+      card.classList.remove('is-flipped');
+      questionPending = false;
+      setStoryNavigationDisabled(false);
+      if (action === 'return' || action === 'review') { record.totalAttempts = 0; record.attemptStartedAt = null; }
+    }
+
+    storyCards.forEach((card, index) => {
+      buildQuestionFace(card, index);
+      card.querySelectorAll('.story-quiz-option').forEach(button => button.addEventListener('click', event => { event.stopPropagation(); answerQuiz(index, Number(button.dataset.option)); }));
+      card.querySelector('.story-quiz-action').addEventListener('click', event => { event.stopPropagation(); returnToFront(index, card.querySelector('.story-quiz-action').dataset.action); });
+      card.addEventListener('click', () => { if (index === storyIndex && !card.classList.contains('is-flipped')) flipCard(index); else if (index !== storyIndex && !questionPending) renderStory(index); });
+      card.addEventListener('keydown', event => { if ((event.key === 'Enter' || event.key === ' ') && index === storyIndex && !questionPending) { event.preventDefault(); flipCard(index); } });
+    });
+
     function renderStory(index) {
-      if (!storyCount) return;
+      if (!storyCount || questionPending) return;
       storyIndex = (index + storyCount) % storyCount;
       storyCards.forEach((card, i) => {
         const offset = (i - storyIndex + storyCount) % storyCount;
@@ -61,25 +179,15 @@
         card.classList.toggle('is-hidden', offset > 1 && offset < storyCount - 1);
         card.setAttribute('aria-hidden', String(offset > 1 && offset < storyCount - 1));
       });
-      all('[data-story]').forEach(button => {
-        const active = Number(button.dataset.story) === storyIndex;
-        button.setAttribute('aria-current', String(active));
-      });
+      all('[data-story]').forEach(button => button.setAttribute('aria-current', String(Number(button.dataset.story) === storyIndex)));
     }
     all('[data-story]').forEach(button => button.addEventListener('click', () => renderStory(Number(button.dataset.story))));
-    storyCards.forEach((card, index) => {
-      card.addEventListener('click', () => renderStory(index));
-      card.addEventListener('keydown', event => { if (event.key === 'Enter' || event.key === ' ') { event.preventDefault(); renderStory(index); } });
-    });
     $('#story-prev')?.addEventListener('click', () => renderStory(storyIndex - 1));
     $('#story-next')?.addEventListener('click', () => renderStory(storyIndex + 1));
     let storyTouchStart = 0;
-    storyTrack?.addEventListener('touchstart', event => { storyTouchStart = event.changedTouches[0].clientX; }, { passive: true });
-    storyTrack?.addEventListener('touchend', event => {
-      const distance = event.changedTouches[0].clientX - storyTouchStart;
-      if (Math.abs(distance) > 45) renderStory(storyIndex + (distance < 0 ? 1 : -1));
-    }, { passive: true });
-    storyTrack?.addEventListener('keydown', event => { if (event.key === 'ArrowLeft') renderStory(storyIndex - 1); if (event.key === 'ArrowRight') renderStory(storyIndex + 1); });
+    storyTrack?.addEventListener('touchstart', event => { if (!questionPending) storyTouchStart = event.changedTouches[0].clientX; }, { passive: true });
+    storyTrack?.addEventListener('touchend', event => { if (!questionPending) { const distance = event.changedTouches[0].clientX - storyTouchStart; if (Math.abs(distance) > 45) renderStory(storyIndex + (distance < 0 ? 1 : -1)); } }, { passive: true });
+    storyTrack?.addEventListener('keydown', event => { if (!questionPending && event.key === 'ArrowLeft') renderStory(storyIndex - 1); if (!questionPending && event.key === 'ArrowRight') renderStory(storyIndex + 1); });
     renderStory(0);
 
     const municipalityData = {
