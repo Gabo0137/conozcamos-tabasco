@@ -81,6 +81,108 @@
     }, { passive: true });
     storyTrack?.addEventListener('keydown', event => { if (event.key === 'ArrowLeft') renderStory(storyIndex - 1); if (event.key === 'ArrowRight') renderStory(storyIndex + 1); });
     renderStory(0);
+
+    const municipalityData = {
+      '27013': { title:'Nacajuca', subtitle:'Una tradición entre generaciones.', description:'En comunidades como Guaytalpa, la música de los tamborileros se transmite a niños y jóvenes mediante la enseñanza y la práctica musical.', image:'assets/municipios/nacajuca.webp' },
+      '27003': { title:'Centla', subtitle:'Música y tradición comunitaria.', description:'La música tradicional de los tamborileros está vinculada con las prácticas culturales y ceremoniales de las comunidades yokot\'an.', image:'assets/municipios/centla.webp' },
+      '27010': { title:'Jalpa de Méndez', subtitle:'Una expresión cultural viva.', description:'Los tamborileros forman parte de las expresiones culturales del municipio y contribuyen a mantener viva la tradición musical tabasqueña.', image:'assets/municipios/jalpa-de-mendez.webp' },
+      '27004': { title:'Centro', subtitle:'Difusión de nuestra identidad.', description:'La música de los tamborileros forma parte de las manifestaciones culturales que se difunden mediante celebraciones y actividades artísticas.', image:'assets/municipios/centro.webp' },
+      '27012': { title:'Macuspana', subtitle:'Raíces musicales.', description:'Forma parte del territorio con presencia histórica del pueblo yokot\'an, al que se vincula la tradición musical de los tamborileros.', image:'assets/municipios/macuspana.webp' },
+      '27011': { title:'Jonuta', subtitle:'Herencia cultural.', description:'La presencia histórica del pueblo yokot\'an vincula a este municipio con las raíces culturales de la música tradicional tabasqueña.', image:'assets/municipios/jonuta.webp' }
+    };
+    const mapHost = $('#tabascoMap');
+    const municipalityCard = $('#municipalityCard');
+    const municipalityImage = $('#municipalityImage');
+    const municipalityPlaceholder = $('#municipalityImagePlaceholder');
+    const municipalityTitle = $('#municipalityTitle');
+    const municipalitySubtitle = $('#municipalitySubtitle');
+    const municipalityDescription = $('#municipalityDescription');
+    let selectedMunicipality = '27013';
+
+    function renderMunicipality(id) {
+      const municipality = municipalityData[id];
+      if (!municipality) return;
+      selectedMunicipality = id;
+      all('#tabascoMap svg path').forEach(path => path.classList.toggle('is-selected', path.id === id));
+      all('.tabasco-map-marker').forEach(marker => {
+        const selected = marker.dataset.municipality === id;
+        marker.classList.toggle('is-selected', selected);
+        marker.setAttribute('aria-pressed', String(selected));
+      });
+      municipalityCard?.classList.add('is-changing');
+      municipalityTitle.textContent = municipality.title;
+      municipalitySubtitle.textContent = municipality.subtitle;
+      municipalityDescription.textContent = municipality.description;
+      municipalityImage.alt = `Fotografía pendiente de ${municipality.title}`;
+      municipalityImage.hidden = true;
+      municipalityPlaceholder.hidden = false;
+      municipalityImage.onload = () => { municipalityImage.hidden = false; municipalityPlaceholder.hidden = true; municipalityCard?.classList.remove('is-changing'); };
+      municipalityImage.onerror = () => { municipalityImage.hidden = true; municipalityPlaceholder.hidden = false; municipalityCard?.classList.remove('is-changing'); };
+      municipalityImage.src = municipality.image;
+      window.setTimeout(() => municipalityCard?.classList.remove('is-changing'), 280);
+    }
+
+    function activateTabascoMap(svg) {
+        if (!svg || svg.tagName.toLowerCase() !== 'svg') throw new Error('SVG inválido');
+        svg.classList.add('tabasco-map-svg');
+        svg.setAttribute('aria-hidden', 'true');
+        mapHost.replaceChildren(svg);
+        const viewBox = svg.getAttribute('viewBox').trim().split(/\s+/).map(Number);
+        const [viewBoxX, viewBoxY, viewBoxWidth, viewBoxHeight] = viewBox;
+        Object.entries(municipalityData).forEach(([id, municipality]) => {
+          const path = svg.getElementById(id);
+          if (!path) return;
+          const bounds = path.getBBox();
+          const marker = document.createElement('button');
+          marker.type = 'button';
+          marker.className = 'tabasco-map-marker';
+          marker.dataset.municipality = id;
+          marker.setAttribute('aria-label', municipality.title);
+          marker.setAttribute('aria-pressed', 'false');
+          marker.addEventListener('click', () => renderMunicipality(id));
+          marker.style.left = `${((bounds.x + bounds.width / 2 - viewBoxX) / viewBoxWidth) * 100}%`;
+          marker.style.top = `${((bounds.y + bounds.height / 2 - viewBoxY) / viewBoxHeight) * 100}%`;
+          mapHost.append(marker);
+          path.addEventListener('click', () => renderMunicipality(id));
+          path.setAttribute('tabindex', '0');
+          path.setAttribute('aria-label', municipality.title);
+        });
+        renderMunicipality(selectedMunicipality);
+    }
+
+    async function loadTabascoMap() {
+      if (!mapHost) return;
+      try {
+        const response = await fetch('tabasco-municipios.svg');
+        if (!response.ok) throw new Error(`HTTP ${response.status}`);
+        const svgText = await response.text();
+        const template = document.createElement('template');
+        template.innerHTML = svgText;
+        activateTabascoMap(template.content.firstElementChild);
+      } catch (error) {
+        console.error('No se pudo cargar el mapa municipal de Tabasco', error);
+        if (window.location.protocol === 'file:') {
+          const object = document.createElement('object');
+          object.className = 'tabasco-map-object';
+          object.type = 'image/svg+xml';
+          object.data = 'tabasco-municipios.svg';
+          object.setAttribute('aria-label', 'Mapa vectorial de los municipios de Tabasco');
+          object.addEventListener('load', () => {
+            try { activateTabascoMap(object.contentDocument.documentElement); }
+            catch (fallbackError) { console.error('No se pudo activar el mapa local', fallbackError); }
+          }, { once: true });
+          mapHost.replaceChildren(object);
+          return;
+        }
+        const message = document.createElement('p');
+        message.className = 'tabasco-map-loading';
+        message.textContent = 'No se pudo cargar el mapa. Las tarjetas están preparadas para futuras fotografías municipales.';
+        mapHost.replaceChildren(message);
+        renderMunicipality(selectedMunicipality);
+      }
+    }
+    loadTabascoMap();
+
     all('[data-culture-answer]').forEach(button => button.addEventListener('click', () => {
       const correct = button.dataset.cultureAnswer === 'people';
       $('#culture-feedback').textContent = correct ? 'Así es. Los objetos importan, y la tradición continúa cuando las personas comparten su música y sus saberes.' : 'Los instrumentos son una parte. Piensa también en quienes los elaboran, interpretan y enseñan a otras personas.';

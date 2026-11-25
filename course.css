@@ -587,6 +587,60 @@ button {
     cursor: pointer;
 }
 
+/* Modal visual de bienvenida. El canvas sigue siendo el original: así no se duplica
+   el avatar ni se altera su animación, únicamente cambia su presentación. */
+.welcome-avatar-backdrop {
+    position: fixed;
+    inset: 0;
+    z-index: 1100;
+    background: rgba(0, 0, 0, 0.42);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.8s ease;
+}
+
+body.welcome-avatar-active .welcome-avatar-backdrop {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+body.welcome-avatar-active .hero-avatar-container {
+    position: fixed;
+    z-index: 1101;
+    overflow: visible;
+    max-width: none;
+    cursor: default;
+    animation: none;
+    transition: left 0.95s cubic-bezier(.2,.75,.25,1),
+        top 0.95s cubic-bezier(.2,.75,.25,1),
+        width 0.95s cubic-bezier(.2,.75,.25,1),
+        height 0.95s cubic-bezier(.2,.75,.25,1),
+        transform 0.95s cubic-bezier(.2,.75,.25,1);
+}
+
+body.welcome-avatar-active .hero-avatar-container::before {
+    display: none;
+}
+
+body.welcome-avatar-active #heroAvatarCanvas {
+    width: 100%;
+    height: 100%;
+    max-width: none;
+    margin: 0;
+}
+
+@media (max-width: 700px) {
+    body.welcome-avatar-active .hero-avatar-container {
+        width: min(76vw, 520px);
+        height: min(78vh, 620px);
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .welcome-avatar-backdrop,
+    body.welcome-avatar-active .hero-avatar-container { transition: none; }
+}
+
 .hero-actions-single { justify-content: flex-start; }
 
 #heroAvatarCanvas {
