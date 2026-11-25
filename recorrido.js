@@ -49,6 +49,10 @@
     const storyTrack = $('.story-track');
     const storyCards = all('[data-story-card]');
     const storyCount = storyCards.length;
+    const storyInstruction = document.createElement('p');
+    storyInstruction.className = 'story-instruction';
+    storyInstruction.textContent = 'Lee la información de cada tarjeta, voltéala y responde correctamente la pregunta para avanzar al siguiente nivel';
+    storyTrack?.parentElement?.before(storyInstruction);
     const storyQuestions = [
       { question:'¿Qué instrumentos utilizan los tamborileros?', options:['Guitarra y violín.','Flauta de carrizo y tambores.','Trompeta y maracas.'], correct:1, feedback:['La guitarra y el violín son instrumentos de cuerda. Recuerda que los tamborileros utilizan instrumentos de viento y percusión.','¡Correcto! Has identificado sus instrumentos tradicionales.','Estos instrumentos no corresponden a los mencionados en la tarjeta. Recuerda la agrupación musical que acabas de conocer.'] },
       { question:'¿Con qué pueblo originario se relacionan los antecedentes históricos de los tamborileros?', options:['Pueblo mexica.','Pueblo purépecha.',"Pueblo yokot'an (chontal de Tabasco)."], correct:2, feedback:['Los antecedentes de esta tradición se relacionan con un pueblo originario de Tabasco.','Recuerda que esta tradición tiene raíces en las comunidades indígenas tabasqueñas.','¡Correcto! Esta tradición tiene antecedentes vinculados con el pueblo yokot\'an.'] },
