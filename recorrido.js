@@ -101,7 +101,11 @@
       card.querySelector('.story-quiz-attempt').textContent = `Intento ${Math.min(attempt, 2)} de 2`;
       card.querySelector('.story-quiz-feedback').textContent = '';
       card.querySelector('.story-quiz-action').hidden = true;
-      card.querySelectorAll('.story-quiz-option').forEach(button => { button.disabled = false; button.classList.remove('is-correct','is-incorrect'); });
+      card.querySelectorAll('.story-quiz-option').forEach((button, optionIndex) => {
+        button.disabled = false;
+        button.classList.remove('is-correct','is-incorrect');
+        button.textContent = `${String.fromCharCode(65 + optionIndex)}. ${storyQuestions[index].options[optionIndex]}`;
+      });
     }
 
     function flipCard(index) {
@@ -137,8 +141,10 @@
       const correct = optionIndex === question.correct;
       const option = card.querySelector(`[data-option="${optionIndex}"]`);
       option.classList.add(correct ? 'is-correct' : 'is-incorrect');
+      option.insertAdjacentHTML('beforeend', `<span class="story-quiz-result-icon" aria-hidden="true">${correct ? '✓' : '✕'}</span>`);
       card.querySelectorAll('.story-quiz-option').forEach(button => { button.disabled = true; });
-      card.querySelector('.story-quiz-feedback').textContent = question.feedback[optionIndex];
+      const feedback = card.querySelector('.story-quiz-feedback');
+      feedback.innerHTML = `<strong>${correct ? '¡Respuesta correcta!' : 'Respuesta incorrecta'}</strong><span>${question.feedback[optionIndex].replace(/^¡Correcto!\s*/, '')}</span>`;
       if (correct) {
         record.correctAnswers += 1; record.completed = true; record.state = 'completada';
         card.classList.add('is-completed');
