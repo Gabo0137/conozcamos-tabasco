@@ -360,6 +360,107 @@
     }
     loadTabascoMap();
 
+    const reinforcementActivity = $('#reinforcementActivity');
+    const reinforcementProgress = $('#reinforcementProgress');
+    const reinforcementProgressFill = $('#reinforcementProgressFill');
+    if (reinforcementActivity) {
+      const reinforcementData = [
+        { type:'multi-image', title:'Identifica los instrumentos', instruction:'Selecciona los dos instrumentos que utilizan tradicionalmente los tamborileros.', correct:['flauta','tambor'], feedbackCorrect:'¡Excelente! La flauta de carrizo interpreta la melodía y los tambores acompañan con sus ritmos.', feedbackIncorrect:'Recuerda que los tamborileros utilizan instrumentos de viento y percusión.', options:[{id:'flauta',label:'Flauta de carrizo',image:'Flauta.png',alt:'Flauta de carrizo'},{id:'guitarra',label:'Guitarra',image:'assets/evaluacion/guitarra.webp',alt:'Guitarra'},{id:'violin',label:'Violín',image:'assets/evaluacion/violin.webp',alt:'Violín'},{id:'tambor',label:'Tambor tradicional',image:'Tambor.png',alt:'Tambor tradicional'}] },
+        { type:'image-single', title:'Reconoce la vestimenta tradicional', instruction:'Selecciona la imagen que representa la vestimenta tradicional de los tamborileros de Tabasco.', correct:['B'], feedbackCorrect:'¡Correcto! Su vestimenta tradicional incluye prendas de manta blanca, paliacate rojo, sombrero chontal y huaraches.', feedbackIncorrect:'Recuerda las prendas blancas y los accesorios que caracterizan a los tamborileros tabasqueños.', options:[{id:'A',image:'assets/evaluacion/vestimenta-charro.webp',alt:'Vestimenta de charro'},{id:'B',image:'Tocando tambor.png',alt:'Vestimenta del tamborilero tabasqueño'},{id:'C',image:'assets/evaluacion/vestimenta-mariachi.webp',alt:'Vestimenta de mariachi'}] },
+        { type:'multi-text', title:'Reconoce los municipios', instruction:'Selecciona los tres municipios que conociste durante la exploración del mapa.', correct:['Nacajuca','Centla','Macuspana'], feedbackCorrect:'¡Excelente! Has reconocido tres de los municipios presentados durante el recorrido.', feedbackIncorrect:'Algunos de los municipios seleccionados no estaban destacados en el mapa. Recuerda los lugares que exploraste e inténtalo nuevamente.', options:['Nacajuca','Centla','Cárdenas','Balancán','Macuspana','Tenosique'] },
+        { type:'single-text', title:'Nuestro patrimonio cultural', instruction:'¿Qué reconocimiento recibió la música de los tamborileros de Tabasco?', correct:['A'], feedbackCorrect:'¡Correcto! Este reconocimiento contribuye a fortalecer la identidad y las raíces culturales de Tabasco.', feedbackIncorrect:'Recuerda que la música es una expresión cultural que se transmite de generación en generación.', options:[{id:'A',label:'Patrimonio Cultural Intangible del Estado de Tabasco'},{id:'B',label:'Patrimonio Natural del Estado de Tabasco'},{id:'C',label:'Patrimonio Cultural Tangible del Estado de Tabasco'}] }
+      ];
+      const reinforcementRecords = reinforcementData.map(() => ({ firstAttemptCorrect:false, incorrectAnswers:0, attempts:0, responseTime:0, completed:false, startedAt:null }));
+      window.tamborilerosReinforcementEvaluation = reinforcementRecords;
+      let reinforcementIndex = 0;
+
+      const shuffle = items => [...items].sort(() => Math.random() - 0.5);
+      const getOptions = activity => activity.options.map(option => typeof option === 'string' ? { id:option, label:option } : option);
+      const optionMarkup = (activity, option) => {
+        if (activity.type === 'multi-image' || activity.type === 'image-single') return `<button type="button" class="reinforcement-option reinforcement-image-option" data-value="${option.id}"><span class="reinforcement-image-wrap"><img src="${option.image}" alt="${option.alt}" data-fallback="Imagen pendiente"></span>${activity.type === 'image-single' ? `<span class="reinforcement-option-letter">${option.id}</span>` : `<span class="reinforcement-option-name">${option.label}</span>`}</button>`;
+        return `<button type="button" class="reinforcement-option reinforcement-text-option" data-value="${option.id}">${activity.type === 'single-text' ? `${option.id}. ${option.label}` : option.label}</button>`;
+      };
+
+      function updateReinforcementControls() {
+        const activity = reinforcementData[reinforcementIndex];
+        const count = reinforcementActivity.querySelectorAll('.reinforcement-option.is-selected').length;
+        const required = activity.type === 'multi-image' ? 2 : activity.type === 'multi-text' ? 3 : 1;
+        const counter = reinforcementActivity.querySelector('.reinforcement-selection-count');
+        const check = reinforcementActivity.querySelector('[data-reinforcement-check]');
+        if (counter) counter.textContent = activity.type === 'multi-image' ? `${count} de 2 instrumentos seleccionados` : activity.type === 'multi-text' ? `${count} de 3 municipios seleccionados` : '';
+        if (check) check.disabled = count !== required;
+      }
+
+      function showCompletion() {
+        reinforcementProgress.textContent = 'Evaluación completada';
+        reinforcementProgressFill.style.width = '100%';
+        reinforcementActivity.innerHTML = '<div class="reinforcement-complete"><div class="reinforcement-complete-icon" aria-hidden="true">✓</div><h3>¡Excelente! Has completado el desafío.</h3><p>Ahora conoces los instrumentos, la vestimenta, algunos de los municipios y la importancia cultural de los tamborileros de Tabasco.</p></div>';
+        discover();
+      }
+
+      function renderReinforcement() {
+        if (reinforcementIndex >= reinforcementData.length) { showCompletion(); return; }
+        const activity = reinforcementData[reinforcementIndex];
+        const record = reinforcementRecords[reinforcementIndex];
+        record.startedAt ??= Date.now();
+        const options = shuffle(getOptions(activity));
+        const isMulti = activity.type === 'multi-image' || activity.type === 'multi-text';
+        reinforcementProgress.textContent = `Actividad ${reinforcementIndex + 1} de ${reinforcementData.length}`;
+        reinforcementProgressFill.style.width = `${(reinforcementIndex / reinforcementData.length) * 100}%`;
+        reinforcementActivity.classList.remove('is-changing');
+        reinforcementActivity.innerHTML = `<div class="reinforcement-card"><div class="reinforcement-card-top"><span>Actividad ${reinforcementIndex + 1}</span><span class="reinforcement-card-tag">${isMulti ? 'Selección múltiple' : 'Selección única'}</span></div><h3>${activity.title}</h3><p class="reinforcement-instruction">${activity.instruction}</p><div class="reinforcement-options ${activity.type}" role="group" aria-label="Opciones de la actividad">${options.map(option => optionMarkup(activity, option)).join('')}</div><p class="reinforcement-selection-count" aria-live="polite"></p><p class="reinforcement-feedback" aria-live="polite"></p><div class="reinforcement-actions"><button type="button" class="reinforcement-check" data-reinforcement-check disabled>Comprobar</button><button type="button" class="reinforcement-next" data-reinforcement-next hidden>Siguiente</button></div></div>`;
+        reinforcementActivity.querySelectorAll('img[data-fallback]').forEach(image => image.addEventListener('error', () => { image.classList.add('is-missing'); image.parentElement.dataset.fallback = image.dataset.fallback; }));
+        reinforcementActivity.querySelectorAll('.reinforcement-option').forEach(option => option.addEventListener('click', () => {
+          if (option.disabled) return;
+          if (isMulti) {
+            const max = activity.type === 'multi-image' ? 2 : 3;
+            if (!option.classList.contains('is-selected') && reinforcementActivity.querySelectorAll('.reinforcement-option.is-selected').length >= max) return;
+            option.classList.toggle('is-selected');
+          } else {
+            reinforcementActivity.querySelectorAll('.reinforcement-option').forEach(item => item.classList.remove('is-selected'));
+            option.classList.add('is-selected');
+          }
+          updateReinforcementControls();
+        }));
+        reinforcementActivity.querySelector('[data-reinforcement-check]').addEventListener('click', checkReinforcement);
+      }
+
+      function checkReinforcement() {
+        const activity = reinforcementData[reinforcementIndex];
+        const record = reinforcementRecords[reinforcementIndex];
+        const check = reinforcementActivity.querySelector('[data-reinforcement-check]');
+        if (check.dataset.mode === 'retry') { record.startedAt = Date.now(); renderReinforcement(); return; }
+        const selected = [...reinforcementActivity.querySelectorAll('.reinforcement-option.is-selected')].map(option => option.dataset.value);
+        record.attempts += 1;
+        record.responseTime += Date.now() - record.startedAt;
+        const correct = selected.length === activity.correct.length && selected.every(value => activity.correct.includes(value));
+        reinforcementActivity.querySelectorAll('.reinforcement-option').forEach(option => {
+          const isCorrectOption = activity.correct.includes(option.dataset.value);
+          option.disabled = true;
+          option.classList.toggle('is-correct', isCorrectOption);
+          option.classList.toggle('is-incorrect', selected.includes(option.dataset.value) && !isCorrectOption);
+        });
+        const feedback = reinforcementActivity.querySelector('.reinforcement-feedback');
+        feedback.className = `reinforcement-feedback ${correct ? 'is-correct' : 'is-incorrect'}`;
+        feedback.innerHTML = `<strong>${correct ? '¡Respuesta correcta!' : 'Respuesta incorrecta'}</strong><span>${correct ? activity.feedbackCorrect : activity.feedbackIncorrect}</span>`;
+        if (correct) {
+          record.firstAttemptCorrect = record.attempts === 1;
+          record.completed = true;
+          reinforcementProgressFill.style.width = `${((reinforcementIndex + 1) / reinforcementData.length) * 100}%`;
+          check.hidden = true;
+          const next = reinforcementActivity.querySelector('[data-reinforcement-next]');
+          next.hidden = false;
+          next.addEventListener('click', () => { reinforcementIndex += 1; reinforcementActivity.classList.add('is-changing'); window.setTimeout(renderReinforcement, 180); });
+        } else {
+          record.incorrectAnswers += 1;
+          check.dataset.mode = 'retry';
+          check.textContent = 'Intentar nuevamente';
+          check.disabled = false;
+        }
+      }
+      renderReinforcement();
+    }
+
     all('[data-culture-answer]').forEach(button => button.addEventListener('click', () => {
       const correct = button.dataset.cultureAnswer === 'people';
       $('#culture-feedback').textContent = correct ? 'Así es. Los objetos importan, y la tradición continúa cuando las personas comparten su música y sus saberes.' : 'Los instrumentos son una parte. Piensa también en quienes los elaboran, interpretan y enseñan a otras personas.';
