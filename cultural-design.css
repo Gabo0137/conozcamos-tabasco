@@ -414,3 +414,12 @@ body[data-module]{padding-top:80px}
  .journey-stage[data-journey-stage="0"] .story-card{height:calc(clamp(260px,calc(100svh - 280px),360px) - 30px)}
  .journey-stage[data-journey-stage="0"] .story-coverflow .story-card img{height:45%;flex-basis:45%}
 }
+/* La cara posterior comparte exactamente la altura de la tarjeta y distribuye su contenido sin desbordarlo. */
+.story-card-back{box-sizing:border-box;justify-content:flex-start;gap:4px;padding:10px 12px;min-height:0}
+.story-quiz-question{min-height:0!important;padding:5px 8px;line-height:1.15!important}
+.story-quiz-options{gap:4px;min-height:0}
+.story-quiz-option,.story-quiz-action{min-height:28px;padding:5px 8px;font-size:11px;line-height:1.1}
+.story-quiz-attempt{min-height:12px;font-size:10px!important;line-height:1!important}
+.story-quiz-feedback{flex:0 1 auto;min-height:0!important;font-size:10px!important;line-height:1.1!important}
+.story-quiz-feedback strong{margin-bottom:1px;font-size:11px!important}
+.story-quiz-action{flex:0 0 auto;min-height:30px}
