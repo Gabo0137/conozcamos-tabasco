@@ -223,22 +223,45 @@
       markers.forEach(marker => {
         const isSelected = marker === selectedMarker;
         marker.style.zIndex = isSelected ? '20' : '3';
-        marker.classList.toggle('is-label-lifted', false);
-        marker.style.removeProperty('--label-lift');
+        const label = marker.querySelector('.tabasco-map-marker-label');
+        if (!label) return;
+        label.dataset.position = 'top';
+        label.style.removeProperty('--label-shift-x');
+        label.style.removeProperty('--label-shift-y');
       });
       if (!selectedMarker || markers.length < 2) return;
 
-      const selectedRect = selectedMarker.getBoundingClientRect();
-      let nearestDistance = Infinity;
-      markers.forEach(marker => {
-        if (marker === selectedMarker) return;
-        const rect = marker.getBoundingClientRect();
-        nearestDistance = Math.min(nearestDistance, Math.hypot(rect.left - selectedRect.left, rect.top - selectedRect.top));
-      });
-      if (nearestDistance < 72) {
-        const labelLift = Math.min(34, Math.max(10, 72 - nearestDistance));
-        selectedMarker.classList.add('is-label-lifted');
-        selectedMarker.style.setProperty('--label-lift', `${labelLift}px`);
+      const hostRect = mapHost.getBoundingClientRect();
+      const markerRect = selectedMarker.getBoundingClientRect();
+      const label = selectedMarker.querySelector('.tabasco-map-marker-label');
+      if (!label) return;
+      const labelRect = label.getBoundingClientRect();
+      const gap = 10;
+      const spaces = {
+        top: markerRect.top - hostRect.top,
+        bottom: hostRect.bottom - markerRect.bottom,
+        right: hostRect.right - markerRect.right,
+        left: markerRect.left - hostRect.left
+      };
+      const fits = {
+        top: spaces.top >= labelRect.height + gap,
+        bottom: spaces.bottom >= labelRect.height + gap,
+        right: spaces.right >= labelRect.width + gap,
+        left: spaces.left >= labelRect.width + gap
+      };
+      const position = ['top', 'bottom', 'right', 'left'].find(side => fits[side]) || Object.keys(spaces).sort((a, b) => spaces[b] - spaces[a])[0];
+      label.dataset.position = position;
+
+      if (position === 'top' || position === 'bottom') {
+        const markerCenter = markerRect.left + markerRect.width / 2;
+        const desiredLeft = markerCenter - labelRect.width / 2;
+        const clampedLeft = Math.min(hostRect.right - labelRect.width - 4, Math.max(hostRect.left + 4, desiredLeft));
+        label.style.setProperty('--label-shift-x', `${clampedLeft - desiredLeft}px`);
+      } else {
+        const markerCenter = markerRect.top + markerRect.height / 2;
+        const desiredTop = markerCenter - labelRect.height / 2;
+        const clampedTop = Math.min(hostRect.bottom - labelRect.height - 4, Math.max(hostRect.top + 4, desiredTop));
+        label.style.setProperty('--label-shift-y', `${clampedTop - desiredTop}px`);
       }
     }
 
@@ -287,6 +310,11 @@
           marker.dataset.municipality = id;
           marker.setAttribute('aria-label', municipality.title);
           marker.setAttribute('aria-pressed', 'false');
+          const label = document.createElement('span');
+          label.className = 'tabasco-map-marker-label';
+          label.textContent = municipality.title;
+          label.dataset.position = 'top';
+          marker.append(label);
           marker.addEventListener('click', () => renderMunicipality(id));
           marker.style.left = `${((bounds.x + bounds.width / 2 - viewBoxX) / viewBoxWidth) * 100}%`;
           marker.style.top = `${((bounds.y + bounds.height / 2 - viewBoxY) / viewBoxHeight) * 100}%`;
