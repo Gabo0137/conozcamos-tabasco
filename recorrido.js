@@ -83,7 +83,7 @@
       journeyState.current = index;
       updateJourneyProgress();
       window.scrollTo({ top:0, behavior:'smooth' });
-      if (index === 1) window.requestAnimationFrame(() => { window.dispatchEvent(new Event('resize')); updateMunicipalityMarkerLabels(); });
+      if (index === 1) window.requestAnimationFrame(() => { window.dispatchEvent(new Event('resize')); refreshTabascoMapMarkerPositions(); });
     }
 
     journeySteps.forEach(button => button.addEventListener('click', () => showJourneyStage(Number(button.dataset.journeyTarget))));
@@ -272,6 +272,7 @@
     const municipalityTitle = $('#municipalityTitle');
     const municipalityDescription = $('#municipalityDescription');
     let selectedMunicipality = '27013';
+    let mapLayout = null;
 
     function updateMunicipalityMarkerLabels() {
       const markers = all('.tabasco-map-marker');
@@ -332,7 +333,10 @@
       all('#tabascoMap svg path').forEach(path => path.classList.toggle('is-selected', path.id === id));
       all('.tabasco-map-marker').forEach(marker => {
         const selected = marker.dataset.municipality === id;
+        const visited = journeyState.mapVisited.has(marker.dataset.municipality);
         marker.classList.toggle('is-selected', selected);
+        marker.classList.toggle('is-visited', visited);
+        marker.dataset.visited = String(visited);
         marker.setAttribute('aria-pressed', String(selected));
       });
       window.requestAnimationFrame(updateMunicipalityMarkerLabels);
@@ -347,6 +351,20 @@
       window.setTimeout(() => municipalityCard?.classList.remove('is-changing'), 280);
     }
 
+    function refreshTabascoMapMarkerPositions() {
+      const svg = mapHost?.querySelector('svg');
+      if (!svg || !mapLayout) return;
+      Object.keys(municipalityData).forEach(id => {
+        const path = svg.getElementById(id);
+        const marker = mapHost.querySelector(`[data-municipality="${id}"]`);
+        if (!path || !marker) return;
+        const bounds = path.getBBox();
+        marker.style.left = `${((bounds.x + bounds.width / 2 - mapLayout.viewBoxX) / mapLayout.viewBoxWidth) * 100}%`;
+        marker.style.top = `${((bounds.y + bounds.height / 2 - mapLayout.viewBoxY) / mapLayout.viewBoxHeight) * 100}%`;
+      });
+      updateMunicipalityMarkerLabels();
+    }
+
     function activateTabascoMap(svg) {
         if (!svg || svg.tagName.toLowerCase() !== 'svg') throw new Error('SVG inválido');
         svg.classList.add('tabasco-map-svg');
@@ -359,6 +377,7 @@
         const viewBoxY = originalY - mapMargin;
         const viewBoxWidth = originalWidth + mapMargin * 2;
         const viewBoxHeight = originalHeight + mapMargin * 2;
+        mapLayout = { viewBoxX, viewBoxY, viewBoxWidth, viewBoxHeight };
         svg.setAttribute('viewBox', `${viewBoxX} ${viewBoxY} ${viewBoxWidth} ${viewBoxHeight}`);
         Object.entries(municipalityData).forEach(([id, municipality]) => {
           const path = svg.getElementById(id);
@@ -384,6 +403,7 @@
           path.setAttribute('aria-label', municipality.title);
         });
         renderMunicipality(selectedMunicipality);
+        refreshTabascoMapMarkerPositions();
         window.addEventListener('resize', updateMunicipalityMarkerLabels, { passive: true });
     }
 

@@ -354,3 +354,49 @@ body[data-module]{padding-top:80px}
 .journey-stage[data-journey-stage="0"] .journey-next{grid-column:1;grid-row:1;justify-self:start}
 .journey-stage[data-journey-stage="4"] .journey-stage-toolbar{margin-bottom:0}
 @media(max-width:760px){.learning-journey-nav{top:76px;margin-bottom:16px;padding-inline:10px}.learning-journey-steps{gap:4px}.learning-journey-steps button{min-height:54px;flex-direction:column;gap:3px;padding:5px 3px;font-size:10px}.learning-journey-icon{flex-basis:22px;width:22px;height:22px}.journey-stage{min-height:calc(100svh - 170px)}.journey-stage-toolbar{grid-template-columns:1fr auto 1fr;gap:6px}.journey-stage-label{font-size:10px}.journey-prev,.journey-next{padding:8px 10px;font-size:12px}}
+.journey-stage{display:flex;flex-direction:column;min-height:calc(100svh - 205px)}
+.journey-stage>.journey-stage-toolbar{order:3;display:flex;align-items:center;justify-content:space-between;min-height:52px;margin:24px 0 0;padding-top:14px;border-top:1px solid #b5d3bd55}
+.journey-stage>.journey-stage-toolbar .journey-prev{margin-right:auto}
+.journey-stage>.journey-stage-toolbar .journey-next{margin-left:auto}
+.journey-stage>.story-carousel,.journey-stage>.tradition-map-section,.journey-stage>.heritage-card,.journey-stage>.extra,.journey-stage>.reinforcement-section{order:2}
+.journey-stage[data-journey-stage="0"]>.story-carousel{flex:1;min-height:0}
+.journey-stage[data-journey-stage="1"]>.tradition-map-section{flex:1;min-height:0;width:min(100%,980px);margin:0 auto}
+.journey-stage[data-journey-stage="2"]>.heritage-card{margin-top:0;margin-bottom:0}
+.journey-stage[data-journey-stage="3"]>.extra{display:flex;flex:1;min-height:0;margin-top:0;margin-bottom:0;flex-direction:column;justify-content:center}
+.journey-stage[data-journey-stage="4"]>.reinforcement-section{flex:1;min-height:0;margin-top:0;margin-bottom:0}
+@media(min-width:761px){.journey-stage[data-journey-stage="1"] .tradition-map-grid{grid-template-rows:minmax(260px,min(400px,calc(100svh - 390px)))}.journey-stage[data-journey-stage="1"] .tabasco-map-viewport,.journey-stage[data-journey-stage="1"] .municipality-card{height:100%}}
+@media(max-width:760px){.journey-stage{min-height:calc(100svh - 170px)}.journey-stage>.journey-stage-toolbar{margin-top:16px;padding-top:10px}.journey-stage[data-journey-stage="1"]>.tradition-map-section{width:100%}.journey-stage[data-journey-stage="3"]>.extra{justify-content:flex-start}}
+@media(max-width:760px){
+ .journey-stage[data-journey-stage="0"] .story-track{height:clamp(260px,calc(100svh - 280px),420px)}
+ .journey-stage[data-journey-stage="0"] .story-card{height:calc(clamp(260px,calc(100svh - 280px),420px) - 30px)}
+ .journey-stage[data-journey-stage="0"] .story-coverflow .story-card img{height:45%;flex-basis:45%}
+ .journey-stage[data-journey-stage="1"] .tradition-map-section{padding:16px 10px 12px}
+ .journey-stage[data-journey-stage="1"] .tradition-map-heading{margin-bottom:8px}
+ .journey-stage[data-journey-stage="1"] .tradition-map-heading h2{font-size:22px}
+ .journey-stage[data-journey-stage="3"] .youtube-frame{width:min(560px,calc(100svh - 330px),100%)}
+}
+@media(min-width:540px) and (max-width:760px){
+ .journey-stage[data-journey-stage="1"] .tradition-map-grid{grid-template-columns:repeat(2,minmax(0,1fr));grid-template-rows:1fr;gap:10px;height:100%}
+ .journey-stage[data-journey-stage="1"] .tabasco-map-viewport,.journey-stage[data-journey-stage="1"] .municipality-card{height:100%}
+ .journey-stage[data-journey-stage="1"] .municipality-card{grid-template-rows:68% 32%}
+ .journey-stage[data-journey-stage="1"] .municipality-card-copy{padding:9px}
+ .journey-stage[data-journey-stage="1"] .municipality-card-copy h3{font-size:19px}
+ .journey-stage[data-journey-stage="1"] .municipality-card-copy>p:last-child{font-size:11px}
+}
+@media(max-width:539px){
+ .journey-stage[data-journey-stage="1"] .tradition-map-grid{gap:8px}
+ .journey-stage[data-journey-stage="1"] .tabasco-map-viewport{height:clamp(170px,calc(100svh - 390px),260px)}
+ .journey-stage[data-journey-stage="1"] .municipality-card{height:clamp(125px,calc(100svh - 430px),190px);grid-template-rows:1fr 1fr}
+ .journey-stage[data-journey-stage="1"] .municipality-card-copy{padding:8px}
+ .journey-stage[data-journey-stage="1"] .municipality-card-copy h3{font-size:17px}
+ .journey-stage[data-journey-stage="1"] .municipality-card-copy>p:last-child{font-size:11px;line-height:1.2}
+}
+@media(max-width:760px) and (max-height:700px){
+ .journey-stage[data-journey-stage="0"] .story-coverflow{margin:0;padding:0 0 24px}
+ .journey-stage[data-journey-stage="0"] .story-instruction{margin-bottom:6px;font-size:12px;line-height:1.2}
+ .journey-stage>.journey-stage-toolbar{margin-top:8px;padding-top:8px;min-height:46px}
+ .journey-stage[data-journey-stage="2"]>.heritage-card{padding:18px}
+ .journey-stage[data-journey-stage="3"] .encuentro-section>h2{font-size:22px}
+ .journey-stage[data-journey-stage="3"] .encuentro-section>.muted{margin-bottom:10px}
+ .journey-stage[data-journey-stage="4"]>.reinforcement-section{padding:18px 14px}
+}

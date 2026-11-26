@@ -6,6 +6,7 @@
 @media(min-width:761px){.tradition-map-section{width:min(100%,980px);margin-inline:auto;padding-inline:clamp(14px,2vw,24px)}.tradition-map-grid{grid-template-rows:minmax(320px,min(400px,calc(100svh - 300px)));gap:14px}.tabasco-map-viewport,.municipality-card{height:100%}.municipality-card-copy{padding:14px 16px}}
 @media(max-width:760px){.tradition-map-section{margin-top:30px;padding:27px 14px 24px;border-radius:22px}.tradition-map-grid{grid-template-columns:1fr;gap:18px}.tabasco-map-viewport{height:320px}.tabasco-map-viewport svg,.tabasco-map-object{min-height:0}.tabasco-map-object{height:320px}.tabasco-map-loading{height:100%}.tabasco-map-marker{width:19px;height:19px;min-height:19px;border-width:2px}.tabasco-map-marker-label{font-size:11px}.municipality-card{height:440px;min-height:0;grid-template-rows:70% 30%}.municipality-card-copy{padding:16px}}
 @media(prefers-reduced-motion:reduce){.tabasco-map-viewport svg path,.tabasco-map-marker,.tabasco-map-marker-label,.municipality-card-media img,.municipality-card-copy{transition:none}}
+.tabasco-map-marker.is-visited:not(.is-selected){background:#16A34A;color:#fff;box-shadow:0 0 0 4px #16A34A55,0 3px 11px #0008}
 /* Ajustes de escala y tarjeta del mapa */
 .municipality-card{grid-template-rows:82% 18%;}
 .municipality-card-copy{display:grid;place-items:center;padding:8px 16px;overflow:hidden;}
