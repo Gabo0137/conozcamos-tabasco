@@ -457,3 +457,39 @@ body[data-module]{padding-top:80px}
 .reinforcement-section.is-complete .reinforcement-complete{padding:22px 18px}
 .reinforcement-section.is-complete .reinforcement-complete h3{line-height:1.2}
 .reinforcement-section.is-complete .reinforcement-complete p{line-height:1.2}
+.instrument-evaluation-section{margin:34px 0 28px}
+.instrument-evaluation-launch{width:min(100%,960px);margin:0 auto;padding:22px clamp(18px,4vw,42px);border:1px solid #b5d3bd55;border-top:3px solid var(--gold);border-radius:24px;background:linear-gradient(145deg,rgba(22,63,49,.97),rgba(11,48,46,.97));color:var(--cream);text-align:center;box-shadow:0 18px 38px #063c3630}
+.instrument-evaluation-launch h2{margin:0 0 8px;color:#DAF1DE}
+.instrument-evaluation-launch p{margin:0 auto 14px;line-height:1.2;color:#dce9df}
+.instrument-evaluation-start{background:var(--gold);color:var(--forest-deep);font-weight:800}
+.instrument-evaluation-shell{width:min(100%,960px);margin:0 auto;padding:14px clamp(14px,3vw,30px) 16px}
+.instrument-evaluation-shell .reinforcement-heading>p:last-child{margin-bottom:8px;line-height:1.2}
+.instrument-evaluation-shell .reinforcement-progress{margin-bottom:8px}
+.instrument-evaluation-card{max-width:780px;padding:16px}
+.instrument-evaluation-card h3,.instrument-evaluation-card .reinforcement-instruction,.instrument-evaluation-card .reinforcement-feedback{line-height:1.2}
+.instrument-evaluation-card .reinforcement-instruction{margin-bottom:10px}
+.instrument-evaluation-card .reinforcement-feedback{min-height:38px;margin-top:5px;gap:2px}
+.instrument-evaluation-card .reinforcement-actions{margin-top:7px}
+.instrument-evaluation-section .reinforcement-image-wrap{background:linear-gradient(145deg,#2f6b5c,#1f4f46)}
+.instrument-evaluation-materials{gap:9px}
+.instrument-evaluation-materials .reinforcement-image-wrap,.instrument-evaluation-materials .reinforcement-image-wrap img{height:105px;min-height:105px}
+.instrument-evaluation-materials .reinforcement-option-name{padding:7px 8px;line-height:1.2}
+.instrument-classification-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.instrument-classification-row{padding:10px;border:1px solid #d7decf;border-radius:14px;background:#f7f3e6}
+.instrument-classification-heading{display:flex;align-items:center;gap:10px;margin-bottom:8px;color:var(--forest-deep);font-size:14px;line-height:1.2}
+.instrument-classification-heading img{width:72px;height:60px;object-fit:contain;border-radius:8px;background:#2f6b5c}
+.instrument-classification-options{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px}
+.instrument-classification-options .reinforcement-text-option{min-height:40px;padding:8px 4px;font-size:12px;text-align:center;align-items:center}
+.instrument-true-false-list{display:grid;gap:8px}
+.instrument-true-false-row{display:grid;grid-template-columns:1fr auto;align-items:center;gap:10px;padding:8px 10px;border:1px solid #d7decf;border-radius:12px;background:#f7f3e6;color:var(--forest-deep)}
+.instrument-true-false-row p{margin:0;line-height:1.2;font-size:14px}
+.instrument-true-false-row>div{display:flex;gap:5px}
+.instrument-true-false-row .reinforcement-text-option{min-height:36px;padding:7px 9px;font-size:12px}
+.instrument-fill-layout{display:grid;grid-template-columns:150px 1fr;align-items:center;gap:12px}
+.instrument-fill-layout>.reinforcement-image-wrap{display:grid;min-height:120px;height:120px;border-radius:12px}
+.instrument-fill-layout>.reinforcement-image-wrap img{width:100%;height:120px;object-fit:contain;padding:6px}
+.instrument-fill-sentence{grid-column:2;margin:0;line-height:1.2;color:var(--forest-deep);font-size:17px;font-weight:700}
+.instrument-fill-blank{display:inline-block;min-width:75px;border-bottom:2px solid var(--forest);color:var(--forest);text-align:center}
+.instrument-fill-options{grid-column:2;display:flex;gap:7px;flex-wrap:wrap}
+.instrument-fill-options .reinforcement-text-option{min-height:38px;padding:7px 12px;font-size:13px}
+@media(max-width:760px){.instrument-evaluation-section{margin-top:24px}.instrument-evaluation-shell{padding-inline:10px}.instrument-evaluation-card{padding:12px}.instrument-classification-grid{grid-template-columns:1fr}.instrument-true-false-row{grid-template-columns:1fr}.instrument-true-false-row>div{justify-content:stretch}.instrument-true-false-row .reinforcement-text-option{flex:1}.instrument-fill-layout{grid-template-columns:100px 1fr}.instrument-fill-layout>.reinforcement-image-wrap,.instrument-fill-layout>.reinforcement-image-wrap img{height:95px;min-height:95px}.instrument-fill-sentence{font-size:14px}.instrument-fill-options{grid-column:1 / -1}}

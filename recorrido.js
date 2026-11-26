@@ -662,6 +662,125 @@
       $('#material-feedback').textContent = correct ? '¡Conexión encontrada! El carrizo forma el cuerpo de la flauta; la madera y la piel se relacionan con el tambor.' : 'Observa el cuerpo de la flauta. Es un tallo hueco; vuelve a explorar la ficha del material.';
       $('#material-feedback').classList.toggle('success', correct); if (correct) discover();
     }));
+
+    const instrumentEvaluationLaunch = $('#instrumentEvaluationLaunch');
+    const instrumentEvaluationPanel = $('#instrumentEvaluationPanel');
+    const instrumentEvaluationActivity = $('#instrumentEvaluationActivity');
+    const instrumentEvaluationProgress = $('#instrumentEvaluationProgress');
+    const instrumentEvaluationProgressFill = $('#instrumentEvaluationProgressFill');
+    const instrumentLearningContent = $('#instrument-learning-content');
+    const startInstrumentEvaluation = $('#startInstrumentEvaluation');
+    if (instrumentEvaluationActivity && instrumentEvaluationPanel && startInstrumentEvaluation) {
+      const evaluationData = [
+        { type:'materials', title:'Identifica los materiales', instruction:'Selecciona los dos materiales utilizados para elaborar la flauta de carrizo.', correct:['carrizo','cera'], feedbackCorrect:'La flauta se elabora con carrizo y cera de abeja.', options:[{id:'carrizo',label:'Carrizo',image:'Carrizo Cera.png',alt:'Carrizo'},{id:'piel',label:'Piel',image:'material_Tambor.png',alt:'Piel'},{id:'cera',label:'Cera de abeja',image:'Carrizo Cera.png',alt:'Cera de abeja'},{id:'madera',label:'Madera de cedro',image:'material_Tambor.png',alt:'Madera de cedro'}] },
+        { type:'classify', title:'Clasifica los instrumentos', instruction:'Identifica a qué familia musical pertenece cada instrumento.', feedbackCorrect:'La flauta pertenece a la familia de viento y el tambor a la familia de percusión.', items:[{id:'flauta',label:'Flauta de carrizo',image:'Flautis carizo.png',correct:'viento'},{id:'tambor',label:'Tambor tradicional',image:'Tambor.png',correct:'percusion'}], options:[{id:'viento',label:'Viento'},{id:'percusion',label:'Percusión'},{id:'cuerda',label:'Cuerda'}] },
+        { type:'true-false', title:'Verdadero o falso', instruction:'Indica si las siguientes afirmaciones son verdaderas o falsas.', feedbackCorrect:'Has identificado correctamente las características de la flauta y el tambor.', items:[{id:'aire',text:'La flauta de carrizo produce sonido mediante el aire.',correct:'verdadero'},{id:'metal',text:'El tambor tradicional se fabrica principalmente con metal.',correct:'falso'},{id:'notas',text:'Al cubrir o descubrir los orificios de la flauta cambian las notas.',correct:'verdadero'}], options:[{id:'verdadero',label:'Verdadero'},{id:'falso',label:'Falso'}] },
+        { type:'fill', title:'Completa la frase', instruction:'Selecciona la palabra que completa correctamente la frase.', correct:'parche', feedbackCorrect:'El parche vibra al ser golpeado por las baquetas y produce el sonido.', image:'Tambor.png', imageAlt:'Tambor tradicional', sentence:'Los golpes de las baquetas hacen vibrar el', options:[{id:'cuerpo',label:'Cuerpo'},{id:'parche',label:'Parche'},{id:'amarre',label:'Amarre'}] }
+      ];
+      let evaluationIndex = 0;
+      let evaluationCompleted = false;
+      const shuffleEvaluation = items => [...items].sort(() => Math.random() - 0.5);
+      const optionButton = option => `<button type="button" class="reinforcement-option reinforcement-image-option" data-value="${option.id}"><span class="reinforcement-image-wrap"><img src="${option.image}" alt="${option.alt}"></span><span class="reinforcement-option-name">${option.label}</span></button>`;
+      const textButton = option => `<button type="button" class="reinforcement-option reinforcement-text-option" data-value="${option.id}">${option.label}</button>`;
+
+      function updateInstrumentEvaluationControls() {
+        const activity = evaluationData[evaluationIndex];
+        let ready = false;
+        if (activity.type === 'materials') ready = instrumentEvaluationActivity.querySelectorAll('.reinforcement-option.is-selected').length === 2;
+        if (activity.type === 'classify' || activity.type === 'true-false') ready = [...instrumentEvaluationActivity.querySelectorAll('[data-answer-group]')].every(group => group.querySelector('.is-selected'));
+        if (activity.type === 'fill') ready = Boolean(instrumentEvaluationActivity.querySelector('.reinforcement-option.is-selected'));
+        const check = instrumentEvaluationActivity.querySelector('[data-instrument-evaluation-check]');
+        if (check) check.disabled = !ready;
+      }
+
+      function renderInstrumentEvaluation() {
+        const activity = evaluationData[evaluationIndex];
+        instrumentEvaluationProgress.textContent = `Actividad ${evaluationIndex + 1} de ${evaluationData.length}`;
+        instrumentEvaluationProgressFill.style.width = `${(evaluationIndex / evaluationData.length) * 100}%`;
+        let body = '';
+        if (activity.type === 'materials') body = `<div class="reinforcement-options multi-image instrument-evaluation-materials">${shuffleEvaluation(activity.options).map(optionButton).join('')}</div><p class="reinforcement-selection-count" aria-live="polite">Selecciona 2 materiales.</p>`;
+        if (activity.type === 'classify') body = `<div class="instrument-classification-grid">${activity.items.map(item => `<div class="instrument-classification-row" data-answer-group="${item.id}"><div class="instrument-classification-heading"><img src="${item.image}" alt="${item.label}"><strong>${item.label}</strong></div><div class="instrument-classification-options">${shuffleEvaluation(activity.options).map(textButton).join('')}</div></div>`).join('')}</div>`;
+        if (activity.type === 'true-false') body = `<div class="instrument-true-false-list">${activity.items.map(item => `<div class="instrument-true-false-row" data-answer-group="${item.id}"><p>${item.text}</p><div>${shuffleEvaluation(activity.options).map(textButton).join('')}</div></div>`).join('')}</div>`;
+        if (activity.type === 'fill') body = `<div class="instrument-fill-layout"><span class="reinforcement-image-wrap"><img src="${activity.image}" alt="${activity.imageAlt}"></span><p class="instrument-fill-sentence">${activity.sentence} <span class="instrument-fill-blank" data-answer-slot aria-live="polite">________</span> del tambor.</p><div class="instrument-fill-options">${shuffleEvaluation(activity.options).map(textButton).join('')}</div></div>`;
+        instrumentEvaluationActivity.innerHTML = `<div class="reinforcement-card instrument-evaluation-card"><div class="reinforcement-card-top"><span>Actividad ${evaluationIndex + 1}</span><span class="reinforcement-card-tag">Evaluación</span></div><h3>${activity.title}</h3><p class="reinforcement-instruction">${activity.instruction}</p>${body}<p class="reinforcement-feedback" aria-live="polite"></p><div class="reinforcement-actions"><button type="button" class="reinforcement-check" data-instrument-evaluation-check disabled>Comprobar</button><button type="button" class="reinforcement-next" data-instrument-evaluation-next hidden>Siguiente</button></div></div>`;
+        instrumentEvaluationActivity.querySelectorAll('.reinforcement-option').forEach(option => option.addEventListener('click', () => {
+          if (option.disabled) return;
+          const group = option.closest('[data-answer-group]');
+          if (activity.type === 'materials') {
+            if (!option.classList.contains('is-selected') && instrumentEvaluationActivity.querySelectorAll('.reinforcement-option.is-selected').length >= 2) return;
+            option.classList.toggle('is-selected');
+          } else {
+            group?.querySelectorAll('.reinforcement-option').forEach(item => item.classList.remove('is-selected'));
+            option.classList.add('is-selected');
+            const slot = instrumentEvaluationActivity.querySelector('[data-answer-slot]');
+            if (slot && activity.type === 'fill') slot.textContent = option.textContent.trim();
+          }
+          updateInstrumentEvaluationControls();
+        }));
+        instrumentEvaluationActivity.querySelector('[data-instrument-evaluation-check]').addEventListener('click', checkInstrumentEvaluation);
+      }
+
+      function showInstrumentEvaluationCompletion() {
+        evaluationCompleted = true;
+        instrumentEvaluationProgress.textContent = 'Evaluación completada';
+        instrumentEvaluationProgressFill.style.width = '100%';
+        instrumentEvaluationActivity.innerHTML = '<div class="reinforcement-complete"><div class="reinforcement-complete-icon" aria-hidden="true">✓</div><h3>¡Excelente! Has completado la evaluación.</h3><p>Ahora conoces los materiales, las características y el funcionamiento de los instrumentos tradicionales de los tamborileros de Tabasco.</p><button type="button" class="reinforcement-retry" data-instrument-evaluation-retry>Reintentar evaluación</button></div>';
+        instrumentLearningContent.hidden = false;
+        instrumentEvaluationActivity.querySelector('[data-instrument-evaluation-retry]').addEventListener('click', () => {
+          evaluationCompleted = false;
+          evaluationIndex = 0;
+          instrumentLearningContent.hidden = true;
+          instrumentEvaluationActivity.classList.add('is-changing');
+          window.setTimeout(renderInstrumentEvaluation, 180);
+        });
+      }
+
+      function checkInstrumentEvaluation() {
+        const activity = evaluationData[evaluationIndex];
+        const check = instrumentEvaluationActivity.querySelector('[data-instrument-evaluation-check]');
+        if (check.dataset.mode === 'retry') { check.dataset.mode = ''; renderInstrumentEvaluation(); return; }
+        const selected = [...instrumentEvaluationActivity.querySelectorAll('.reinforcement-option.is-selected')];
+        let correct = false;
+        if (activity.type === 'materials') correct = selected.length === 2 && selected.every(option => activity.correct.includes(option.dataset.value));
+        if (activity.type === 'classify') correct = activity.items.every(item => instrumentEvaluationActivity.querySelector(`[data-answer-group="${item.id}"] .is-selected`)?.dataset.value === item.correct);
+        if (activity.type === 'true-false') correct = activity.items.every(item => instrumentEvaluationActivity.querySelector(`[data-answer-group="${item.id}"] .is-selected`)?.dataset.value === item.correct);
+        if (activity.type === 'fill') correct = selected[0]?.dataset.value === activity.correct;
+        instrumentEvaluationActivity.querySelectorAll('.reinforcement-option').forEach(option => {
+          option.disabled = true;
+          const group = option.closest('[data-answer-group]');
+          let isCorrectOption = false;
+          if (activity.type === 'materials') isCorrectOption = activity.correct.includes(option.dataset.value);
+          if (activity.type === 'classify') isCorrectOption = activity.items.find(item => item.id === group?.dataset.answerGroup)?.correct === option.dataset.value;
+          if (activity.type === 'true-false') isCorrectOption = activity.items.find(item => item.id === group?.dataset.answerGroup)?.correct === option.dataset.value;
+          if (activity.type === 'fill') isCorrectOption = option.dataset.value === activity.correct;
+          option.classList.toggle('is-correct', isCorrectOption);
+          option.classList.toggle('is-incorrect', option.classList.contains('is-selected') && !isCorrectOption);
+        });
+        const feedback = instrumentEvaluationActivity.querySelector('.reinforcement-feedback');
+        feedback.className = `reinforcement-feedback ${correct ? 'is-correct' : 'is-incorrect'}`;
+        feedback.innerHTML = `<strong>${correct ? '¡Respuesta correcta!' : 'Respuesta incorrecta'}</strong><span>${correct ? activity.feedbackCorrect : 'Revisa las opciones e inténtalo nuevamente.'}</span>`;
+        if (correct) {
+          check.hidden = true;
+          const next = instrumentEvaluationActivity.querySelector('[data-instrument-evaluation-next]');
+          next.hidden = false;
+          next.addEventListener('click', () => { evaluationIndex += 1; if (evaluationIndex >= evaluationData.length) showInstrumentEvaluationCompletion(); else { instrumentEvaluationActivity.classList.add('is-changing'); window.setTimeout(renderInstrumentEvaluation, 180); } });
+        } else {
+          check.textContent = 'Intentar nuevamente';
+          check.disabled = false;
+          check.dataset.mode = 'retry';
+        }
+      }
+
+      startInstrumentEvaluation.addEventListener('click', () => {
+        instrumentLearningContent.hidden = true;
+        instrumentEvaluationLaunch.hidden = true;
+        instrumentEvaluationPanel.hidden = false;
+        evaluationIndex = 0;
+        evaluationCompleted = false;
+        renderInstrumentEvaluation();
+        instrumentEvaluationPanel.scrollIntoView({ behavior:'smooth', block:'start' });
+      });
+    }
   }
 
   if (module === 'sonidos') {
