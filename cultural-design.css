@@ -434,3 +434,22 @@ body[data-module]{padding-top:80px}
 .journey-stage[data-journey-stage="4"] .reinforcement-progress{margin-bottom:10px}
 .journey-stage[data-journey-stage="4"] .reinforcement-card{padding:18px}
 @media(max-width:760px){.journey-stage[data-journey-stage="4"]>.reinforcement-section{padding:10px 12px 14px}.journey-stage[data-journey-stage="4"] .reinforcement-card{padding:14px}}
+.reinforcement-options.image-single .reinforcement-image-wrap{background:linear-gradient(145deg,#2f6b5c,#1f4f46)}
+.journey-stage{position:relative}
+.journey-stage>.journey-stage-toolbar{position:absolute;z-index:10;inset:0;display:block;order:0;min-height:0;margin:0;padding:0;border:0;pointer-events:none}
+.journey-stage>.journey-stage-toolbar .journey-prev,.journey-stage>.journey-stage-toolbar .journey-next{position:absolute;top:50%;z-index:11;display:inline-flex;width:40px;height:40px;min-width:40px;min-height:40px;margin:0;padding:0;border-radius:50%;align-items:center;justify-content:center;transform:translateY(-50%);pointer-events:auto}
+.journey-stage>.journey-stage-toolbar .journey-prev{left:-24px}
+.journey-stage>.journey-stage-toolbar .journey-next{right:-24px}
+.journey-stage[data-journey-stage="0"]>.journey-stage-toolbar:has(.journey-next[hidden]){display:none}
+.journey-stage[data-journey-stage="4"] .reinforcement-instruction,.journey-stage[data-journey-stage="4"] .reinforcement-feedback,.journey-stage[data-journey-stage="4"] .reinforcement-card p{line-height:1.2}
+.journey-stage[data-journey-stage="4"] .reinforcement-card-top{margin-bottom:6px}
+.journey-stage[data-journey-stage="4"] .reinforcement-instruction{margin-bottom:10px}
+.journey-stage[data-journey-stage="4"] .reinforcement-selection-count{margin-top:8px;line-height:1.2}
+.journey-stage[data-journey-stage="4"] .reinforcement-feedback{margin-top:4px;gap:2px}
+.journey-stage[data-journey-stage="4"] .reinforcement-actions{margin-top:8px}
+@media(max-width:760px){
+ .journey-stage>.journey-stage-toolbar .journey-prev{left:2px}
+ .journey-stage>.journey-stage-toolbar .journey-next{right:2px}
+ .journey-stage[data-journey-stage="0"] .story-controls #story-prev{left:50px}
+ .journey-stage[data-journey-stage="0"] .story-controls #story-next{right:50px}
+}
