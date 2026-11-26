@@ -201,14 +201,14 @@
     renderStory(0);
 
     const municipalityData = {
-      '27013': { title:'Nacajuca', description:'En comunidades yokot’an como Tucta, los tamborileros acompañan la Danza del Baila Viejo, fiestas patronales, ofrendas de siembra y celebraciones religiosas.', image:'assets/municipios/nacajuca.webp' },
-      '27003': { title:'Centla', description:'Forma parte de la región yokot’an, donde la tradición musical de los tamborileros se transmite de generación en generación.', image:'assets/municipios/centla.webp' },
-      '27004': { title:'Centro', description:'La música de los tamborileros forma parte de la vida cultural del municipio y se relaciona con danzas como la del Caballito y diversas celebraciones comunitarias.', image:'assets/municipios/centro.webp' },
-      '27012': { title:'Macuspana', description:'Cuenta con agrupaciones como el Semillero Creativo «Talla Brava», que contribuyen a la continuidad de esta tradición musical.', image:'assets/municipios/macuspana.webp' },
-      '27010': { title:'Jalpa de Méndez', description:'Forma parte de la región yokot’an, donde la tradición de los tamborileros se conserva en las comunidades y familias.', image:'assets/municipios/jalpa-de-mendez.webp' },
-      '27011': { title:'Jonuta', description:'Cuenta con población yokot’an y presencia tradicional de agrupaciones de tamborileros.', image:'assets/municipios/jonuta.webp' },
-      '27005': { title:'Comalcalco', description:'Cuenta con agrupaciones de tamborileros reconocidas en el inventario estatal de patrimonio cultural inmaterial. Esta tradición también se enseña en casas de cultura.', image:'assets/municipios/comalcalco.webp' },
-      '27015': { title:'Tacotalpa', description:'Cuenta con la agrupación de tamborileros «Iak Guid», registrada en el programa Cultura Comunitaria.', image:'assets/municipios/tacotalpa.webp' }
+      '27013': { title:'Nacajuca', description:'En comunidades yokot’an como Tucta, los tamborileros acompañan la Danza del Baila Viejo, fiestas patronales, ofrendas de siembra y celebraciones religiosas.', image:'Nacajuca.webp' },
+      '27003': { title:'Centla', description:'Forma parte de la región yokot’an, donde la tradición musical de los tamborileros se transmite de generación en generación.', image:'centla.webp' },
+      '27004': { title:'Centro', description:'La música de los tamborileros forma parte de la vida cultural del municipio y se relaciona con danzas como la del Caballito y diversas celebraciones comunitarias.', image:'Centro.webp' },
+      '27012': { title:'Macuspana', description:'Cuenta con agrupaciones como el Semillero Creativo «Talla Brava», que contribuyen a la continuidad de esta tradición musical.', image:'Macuspana.webp' },
+      '27010': { title:'Jalpa de Méndez', description:'Forma parte de la región yokot’an, donde la tradición de los tamborileros se conserva en las comunidades y familias.', image:'Jalpa.webp' },
+      '27011': { title:'Jonuta', description:'Cuenta con población yokot’an y presencia tradicional de agrupaciones de tamborileros.', image:'Jonuta.webp' },
+      '27005': { title:'Comalcalco', description:'Cuenta con agrupaciones de tamborileros reconocidas en el inventario estatal de patrimonio cultural inmaterial. Esta tradición también se enseña en casas de cultura.', image:'Comalcalco.webp' },
+      '27015': { title:'Tacotalpa', description:'Cuenta con la agrupación de tamborileros «Iak Guid», registrada en el programa Cultura Comunitaria.', image:'Tacotalpa.webp' }
     };
     const mapHost = $('#tabascoMap');
     const municipalityCard = $('#municipalityCard');
