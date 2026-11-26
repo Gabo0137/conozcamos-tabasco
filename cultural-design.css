@@ -453,3 +453,9 @@ body[data-module]{padding-top:80px}
  .journey-stage[data-journey-stage="0"] .story-controls #story-prev{left:50px}
  .journey-stage[data-journey-stage="0"] .story-controls #story-next{right:50px}
 }
+.module-banner{margin-bottom:8px}
+.learning-journey-nav{margin-top:0;margin-bottom:8px}
+.reinforcement-section.is-complete{padding-top:12px;padding-bottom:14px}
+.reinforcement-section.is-complete .reinforcement-complete{padding:22px 18px}
+.reinforcement-section.is-complete .reinforcement-complete h3{line-height:1.2}
+.reinforcement-section.is-complete .reinforcement-complete p{line-height:1.2}

@@ -42,6 +42,7 @@
   if (module === 'tradicion') {
     const journeyStages = all('[data-journey-stage]');
     const journeySteps = all('[data-journey-target]');
+    const journeyNav = $('[data-journey-nav]');
     const journeyState = { current:0, completed:new Set(), mapVisited:new Set(), evaluationFinished:false };
     const journeyStageCount = journeyStages.length;
     const journeyStepLabels = ['Carrusel','Mapa interactivo','¿Sabías que?','Video','Evaluación final'];
@@ -75,6 +76,14 @@
       updateJourneyProgress();
     }
 
+    function scrollToJourneyStage(stage) {
+      const navRect = journeyNav?.getBoundingClientRect();
+      const stageRect = stage.getBoundingClientRect();
+      const visibleTop = navRect ? navRect.bottom + 8 : 8;
+      const targetTop = Math.max(0, window.scrollY + stageRect.top - visibleTop);
+      window.scrollTo({ top:targetTop, behavior:'smooth' });
+    }
+
     function showJourneyStage(index) {
       if (index < 0 || index >= journeyStageCount) return;
       const evaluationLocked = journeyState.current === 4 && !journeyState.evaluationFinished;
@@ -82,7 +91,8 @@
       if (evaluationLocked || !unlocked) return;
       journeyState.current = index;
       updateJourneyProgress();
-      window.scrollTo({ top:0, behavior:'smooth' });
+      const activeStage = journeyStages[index];
+      if (activeStage) window.requestAnimationFrame(() => scrollToJourneyStage(activeStage));
       if (index === 1) window.requestAnimationFrame(() => { window.dispatchEvent(new Event('resize')); refreshTabascoMapMarkerPositions(); });
     }
 
@@ -444,6 +454,9 @@
     const reinforcementProgress = $('#reinforcementProgress');
     const reinforcementProgressFill = $('#reinforcementProgressFill');
     if (reinforcementActivity) {
+      const reinforcementSection = reinforcementActivity.closest('.reinforcement-section');
+      const reinforcementHeading = reinforcementSection?.querySelector('.reinforcement-heading');
+      const reinforcementProgressContainer = reinforcementSection?.querySelector('.reinforcement-progress');
       const reinforcementData = [
       { type:'multi-image', title:'Identifica los instrumentos', instruction:'Selecciona los dos instrumentos que utilizan tradicionalmente los tamborileros.', correct:['flauta','tambor'], feedbackCorrect:'¡Excelente! La flauta de carrizo interpreta la melodía y los tambores acompañan con sus ritmos.', feedbackIncorrect:'Recuerda que los tamborileros utilizan instrumentos de viento y percusión.', options:[{id:'flauta',label:'Flauta de carrizo',image:'Flautis carizo.png',alt:'Flauta de carrizo'},{id:'guitarra',label:'Guitarra',image:'Guitarra clásica de madera miel.webp',alt:'Guitarra clásica de madera'},{id:'violin',label:'Violín',image:'Violín de madera y arco realistas.webp',alt:'Violín de madera con arco'},{id:'tambor',label:'Tambor tradicional',image:'Tambor.png',alt:'Tambor tradicional'}] },
         { type:'image-single', title:'Reconoce la vestimenta tradicional', instruction:'Selecciona la imagen que representa la vestimenta tradicional de los tamborileros de Tabasco.', correct:['traje-tamborilero'], feedbackCorrect:'¡Correcto! Su vestimenta tradicional incluye prendas de manta blanca, paliacate rojo, sombrero chontal y huaraches.', feedbackIncorrect:'Recuerda las prendas blancas y los accesorios que caracterizan a los tamborileros tabasqueños.', options:[{id:'traje-tamborilero',image:'Traje Tamborilero.webp',alt:'Traje tradicional de tamborilero tabasqueño'},{id:'mariachi',image:'Mariachi.webp',alt:'Traje de mariachi'},{id:'ropa-casual',image:'Ropa casual.webp',alt:'Ropa casual'}] },
@@ -475,12 +488,16 @@
 
       function showCompletion() {
         reinforcementActivity.classList.remove('is-changing');
-        reinforcementProgress.textContent = 'Evaluación completada';
-        reinforcementProgressFill.style.width = '100%';
+        reinforcementSection?.classList.add('is-complete');
+        reinforcementHeading?.toggleAttribute('hidden', true);
+        reinforcementProgressContainer?.toggleAttribute('hidden', true);
         reinforcementActivity.innerHTML = '<div class="reinforcement-complete"><div class="reinforcement-complete-icon" aria-hidden="true">✓</div><h3>¡Excelente! Has completado la evaluación</h3><p>Ahora conoces los instrumentos, la vestimenta, algunos de los municipios y la importancia cultural de los tamborileros de Tabasco.</p><button type="button" class="reinforcement-retry" data-reinforcement-retry>Reintentar evaluación</button></div>';
         reinforcementActivity.querySelector('[data-reinforcement-retry]').addEventListener('click', () => {
           journeyState.evaluationFinished = false;
           journeyState.completed.delete(4);
+          reinforcementSection?.classList.remove('is-complete');
+          reinforcementHeading?.toggleAttribute('hidden', false);
+          reinforcementProgressContainer?.toggleAttribute('hidden', false);
           reinforcementHistory.push(reinforcementRecords.map(record => ({ ...record })));
           reinforcementRecords = reinforcementData.map(() => ({ firstAttemptCorrect:false, incorrectAnswers:0, attempts:0, responseTime:0, completed:false, startedAt:null }));
           window.tamborilerosReinforcementEvaluation = reinforcementRecords;
