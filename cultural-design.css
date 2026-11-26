@@ -134,6 +134,7 @@ body[data-module="tradicion"],body[data-module="instrumentos"],body[data-module=
 .heritage-card p{font-size:17px;line-height:1.75;margin-bottom:18px}
 .heritage-card strong{color:#ffe2a1;font-weight:600}
 .heritage-card .heritage-note{margin:0;padding-top:16px;border-top:1px solid #fcf9f030;color:#d7e4dc;font-size:15px;line-height:1.65}
+.heritage-credit a{color:inherit;text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:2px}
 @media(max-width:760px){.heritage-card{width:100%;gap:10px;margin:32px auto;padding:24px;flex-direction:column}.heritage-visual{width:100%;flex-basis:auto;min-height:175px}.heritage-visual img{width:220px;height:200px}.heritage-card h2{font-size:25px}.heritage-card p{font-size:16px}}
 .landscape{border-radius:45% 12px 42% 12px / 17% 12px 16% 12px;padding:38px;min-height:420px}
 body[data-module="tradicion"] .landscape{position:relative;isolation:isolate;overflow:hidden;background-image:none;--story-current-image:url('Tamborileros de Tabasco en armonía.webp');--story-next-image:url('Tamborileros de Tabasco en armonía.webp')}
