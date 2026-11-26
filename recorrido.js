@@ -217,6 +217,31 @@
     const municipalityDescription = $('#municipalityDescription');
     let selectedMunicipality = '27013';
 
+    function updateMunicipalityMarkerLabels() {
+      const markers = all('.tabasco-map-marker');
+      const selectedMarker = markers.find(marker => marker.dataset.municipality === selectedMunicipality);
+      markers.forEach(marker => {
+        const isSelected = marker === selectedMarker;
+        marker.style.zIndex = isSelected ? '20' : '3';
+        marker.classList.toggle('is-label-lifted', false);
+        marker.style.removeProperty('--label-lift');
+      });
+      if (!selectedMarker || markers.length < 2) return;
+
+      const selectedRect = selectedMarker.getBoundingClientRect();
+      let nearestDistance = Infinity;
+      markers.forEach(marker => {
+        if (marker === selectedMarker) return;
+        const rect = marker.getBoundingClientRect();
+        nearestDistance = Math.min(nearestDistance, Math.hypot(rect.left - selectedRect.left, rect.top - selectedRect.top));
+      });
+      if (nearestDistance < 72) {
+        const labelLift = Math.min(34, Math.max(10, 72 - nearestDistance));
+        selectedMarker.classList.add('is-label-lifted');
+        selectedMarker.style.setProperty('--label-lift', `${labelLift}px`);
+      }
+    }
+
     function renderMunicipality(id) {
       const municipality = municipalityData[id];
       if (!municipality) return;
@@ -227,6 +252,7 @@
         marker.classList.toggle('is-selected', selected);
         marker.setAttribute('aria-pressed', String(selected));
       });
+      window.requestAnimationFrame(updateMunicipalityMarkerLabels);
       municipalityCard?.classList.add('is-changing');
       municipalityTitle.textContent = municipality.title;
       municipalityDescription.textContent = municipality.description;
@@ -270,6 +296,7 @@
           path.setAttribute('aria-label', municipality.title);
         });
         renderMunicipality(selectedMunicipality);
+        window.addEventListener('resize', updateMunicipalityMarkerLabels, { passive: true });
     }
 
     async function loadTabascoMap() {
