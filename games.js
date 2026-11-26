@@ -175,7 +175,7 @@ document.addEventListener('DOMContentLoaded', () => {
     
     const memoryItems = [
         { id: 'flauta', name: 'Flauta de carrizo', icon: '<img src="Hueco.png" alt="Hueco" />' },
-        { id: 'tambor', name: 'Tambor', icon: '<img src="Tamborcito.png" alt="Tamborcito" />' },
+        { id: 'tambor', name: 'Tambor', icon: '<img src="Tambor.png" alt="Tambor tradicional" />' },
         { id: 'caparazon', name: 'Caparazón', icon: '<img src="Concha.png" alt="Concha" />' },
         { id: 'marimba', name: 'Marimba', icon: '<img src="marimba.png" alt="Marimba" />' }
     ];
