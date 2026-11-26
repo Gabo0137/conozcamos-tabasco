@@ -41,7 +41,6 @@ body[data-module="tradicion"],body[data-module="instrumentos"],body[data-module=
 .banner-art img{width:88%;height:220px;object-fit:contain;filter:drop-shadow(0 16px 14px #052e3260);transform:translateY(-14px) rotate(-6deg)}
 .banner-art.photo img{display:none}
 .banner-art.photo::before{inset:-10px 5px 15px -8px;background:var(--gold) url("Tocando tambor.png") center/contain no-repeat}
-.banner-art .art-note{position:absolute;right:0;bottom:-10px;letter-spacing:2px;font-size:11px;text-transform:uppercase;background:var(--cream);color:var(--forest);padding:8px 13px;border-radius:5px;transform:rotate(-3deg);box-shadow:0 8px 18px #032c2a20}
 .panel{border-radius:18px;box-shadow:0 10px 30px #244c3808;border:1px solid #e4e4d8}
 .story-carousel{position:relative;margin-top:20px;padding-bottom:32px}
 .story-viewport{position:relative;z-index:1;overflow:hidden;border:1px solid var(--line);border-radius:18px;background:linear-gradient(135deg,#fffef9,#f5eedb);touch-action:pan-y;box-shadow:0 16px 32px #063c3626}
@@ -254,7 +253,6 @@ button,.action{transition:background-color .18s ease,box-shadow .18s ease}
  .module-banner h1{font-size:38px;letter-spacing:-1px}
  .banner-art{width:240px;max-width:100%;min-height:175px;justify-self:center}
  .banner-art img,.banner-art.photo img{height:175px}
- .banner-art .art-note{right:-5px;font-size:10px}
  .landscape{min-height:330px;padding:26px}
  .stage .instrument-image{height:240px}
  .hero{padding-top:100px;padding-bottom:55px}
