@@ -370,8 +370,10 @@
         { type:'multi-text', title:'Reconoce los municipios', instruction:'Selecciona los tres municipios que conociste durante la exploración del mapa.', correct:['Nacajuca','Centla','Macuspana'], feedbackCorrect:'¡Excelente! Has reconocido tres de los municipios presentados durante el recorrido.', feedbackIncorrect:'Algunos de los municipios seleccionados no estaban destacados en el mapa. Recuerda los lugares que exploraste e inténtalo nuevamente.', options:['Nacajuca','Centla','Cárdenas','Balancán','Macuspana','Tenosique'] },
         { type:'single-text', title:'Nuestro patrimonio cultural', instruction:'¿Qué reconocimiento recibió la música de los tamborileros de Tabasco?', correct:['A'], feedbackCorrect:'¡Correcto! Este reconocimiento contribuye a fortalecer la identidad y las raíces culturales de Tabasco.', feedbackIncorrect:'Recuerda que la música es una expresión cultural que se transmite de generación en generación.', options:[{id:'A',label:'Patrimonio Cultural Intangible del Estado de Tabasco'},{id:'B',label:'Patrimonio Natural del Estado de Tabasco'},{id:'C',label:'Patrimonio Cultural Tangible del Estado de Tabasco'}] }
       ];
-      const reinforcementRecords = reinforcementData.map(() => ({ firstAttemptCorrect:false, incorrectAnswers:0, attempts:0, responseTime:0, completed:false, startedAt:null }));
+      let reinforcementRecords = reinforcementData.map(() => ({ firstAttemptCorrect:false, incorrectAnswers:0, attempts:0, responseTime:0, completed:false, startedAt:null }));
+      const reinforcementHistory = [];
       window.tamborilerosReinforcementEvaluation = reinforcementRecords;
+      window.tamborilerosReinforcementHistory = reinforcementHistory;
       let reinforcementIndex = 0;
 
       const shuffle = items => [...items].sort(() => Math.random() - 0.5);
@@ -394,7 +396,15 @@
       function showCompletion() {
         reinforcementProgress.textContent = 'Evaluación completada';
         reinforcementProgressFill.style.width = '100%';
-        reinforcementActivity.innerHTML = '<div class="reinforcement-complete"><div class="reinforcement-complete-icon" aria-hidden="true">✓</div><h3>¡Excelente! Has completado el desafío.</h3><p>Ahora conoces los instrumentos, la vestimenta, algunos de los municipios y la importancia cultural de los tamborileros de Tabasco.</p></div>';
+        reinforcementActivity.innerHTML = '<div class="reinforcement-complete"><div class="reinforcement-complete-icon" aria-hidden="true">✓</div><h3>¡Excelente! Has completado el desafío.</h3><p>Ahora conoces los instrumentos, la vestimenta, algunos de los municipios y la importancia cultural de los tamborileros de Tabasco.</p><button type="button" class="reinforcement-retry" data-reinforcement-retry>Reintentar evaluación</button></div>';
+        reinforcementActivity.querySelector('[data-reinforcement-retry]').addEventListener('click', () => {
+          reinforcementHistory.push(reinforcementRecords.map(record => ({ ...record })));
+          reinforcementRecords = reinforcementData.map(() => ({ firstAttemptCorrect:false, incorrectAnswers:0, attempts:0, responseTime:0, completed:false, startedAt:null }));
+          window.tamborilerosReinforcementEvaluation = reinforcementRecords;
+          reinforcementIndex = 0;
+          reinforcementActivity.classList.add('is-changing');
+          window.setTimeout(renderReinforcement, 180);
+        });
         discover();
       }
 
