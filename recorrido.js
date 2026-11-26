@@ -585,9 +585,9 @@
     let instrument = 0;
     const instruments = [
       { name:'Flauta de carrizo', image:'Flautis carizo.png', overviewImage:'Flautis carizo.png', materialImage:'Carrizo Cera.png', partsImage:'Flautis carizo.png', details:[['¿Qué es?','Instrumento de viento con seis agujeros en la parte superior y uno posterior.'],['Materiales','Carrizo: planta de tallo hueco, ligero y resistente, utilizado para fabricar el cuerpo de la flauta. Cera de abeja: material natural y moldeable utilizado en la elaboración de la embocadura.'],['Aire y orificios','El aire pone en vibración la columna de aire del interior. Al cubrir y descubrir los orificios, el intérprete cambia los sonidos.']], detailHtml:[null,'<strong>Carrizo:</strong> planta de tallo hueco, ligero y resistente, utilizado para fabricar el cuerpo de la flauta.<br><br><strong>Cera de abeja:</strong> material natural y moldeable utilizado en la elaboración de la embocadura.',null] },
-      { name:'Tambor tradicional', image:'Tambor.png', materialImage:'material_Tambor.png', partsImage:'tambor grande.png', details:[['Materiales','La estructura usa madera de cedro. El cuero puede ser piel de borrego o de venado; se tensa con cuerdas y se toca con baquetas de palo.'],['Cuerpo, parche y sujeción','El parche vibra al recibir el golpe. El cuerpo y la tensión de la membrana intervienen en el sonido. Observa también cómo está sujeta la piel.']], detailHtml:['<span class="material-entry"><strong>Madera de cedro:</strong> utilizada para fabricar el cuerpo del tambor.</span><span class="material-entry"><strong>Piel de borrego o venado:</strong> utilizada para elaborar los parches que producen el sonido al ser golpeados.</span><span class="material-entry"><strong>Cuerdas:</strong> permiten sujetar y tensar los parches del tambor.</span><span class="material-entry"><strong>Baquetas de madera:</strong> utilizadas para golpear los parches y ejecutar los diferentes ritmos tradicionales.</span>',null] }
+      { name:'Tambor tradicional', image:'Tambor.png', overviewImage:'Tambor.png', materialImage:'material_Tambor.png', partsImage:'tambor grande.png', details:[['¿Qué es?','El tambor es uno de los instrumentos musicales más antiguos y se elabora de manera artesanal.'],['Materiales','La estructura usa madera de cedro. El cuero puede ser piel de borrego o de venado; se tensa con cuerdas y se toca con baquetas de palo.'],['Cuerpo, parche y sujeción','El parche vibra al recibir el golpe. El cuerpo y la tensión de la membrana intervienen en el sonido. Observa también cómo está sujeta la piel.']], detailHtml:[null,'<span class="material-entry"><strong>Madera de cedro:</strong> utilizada para fabricar el cuerpo del tambor.</span><span class="material-entry"><strong>Piel de borrego o venado:</strong> utilizada para elaborar los parches que producen el sonido al ser golpeados.</span><span class="material-entry"><strong>Cuerdas:</strong> permiten sujetar y tensar los parches del tambor.</span><span class="material-entry"><strong>Baquetas de madera:</strong> utilizadas para golpear los parches y ejecutar los diferentes ritmos tradicionales.</span>',null] }
     ];
-    const partLabels = [['① ¿Qué es?','② El material','③ Las partes'],['① El material','② Las partes']];
+    const partLabels = [['① ¿Qué es?','② El material','③ Las partes'],['① ¿Qué es?','② El material','③ Las partes']];
     const stage = $('.stage');
     const instrumentVisual = document.createElement('div');
     instrumentVisual.className = 'instrument-visual';
@@ -627,17 +627,17 @@
       const overviewImage = part === 0 && instruments[instrument].overviewImage ? instruments[instrument].overviewImage : null;
       const materialPart = instrument === 0 ? 1 : 0;
       const detailImage = part === materialPart && instruments[instrument].materialImage ? instruments[instrument].materialImage : instruments[instrument].image;
-      const partsImage = ((instrument === 0 && part === 2) || (instrument === 1 && part === 1)) && instruments[instrument].partsImage ? instruments[instrument].partsImage : detailImage;
+      const partsImage = ((instrument === 0 && part === 2) || (instrument === 1 && part === 2)) && instruments[instrument].partsImage ? instruments[instrument].partsImage : detailImage;
       $('#instrument-image').src = partsImage;
       if (overviewImage) $('#instrument-image').src = overviewImage;
       $('#instrument-image').alt = part === 0 ? `${instruments[instrument].name}: ${detail[0]}` : instruments[instrument].name;
       stage?.classList.toggle('is-material', part === 0);
-      stage?.classList.toggle('is-parts', instrument === 1 && part === 1);
+      stage?.classList.toggle('is-parts', instrument === 1 && part === 2);
       stage?.classList.toggle('is-flute-parts', instrument === 0 && part === 2);
       stage?.classList.toggle('is-flute-overview', instrument === 0 && part === 0);
       stage?.classList.toggle('is-drum', instrument === 1);
       all('[data-hotspot]').forEach(point => point.setAttribute('aria-pressed', 'false'));
-      drumHotspots.hidden = !(instrument === 1 && part === 1);
+      drumHotspots.hidden = !(instrument === 1 && part === 2);
       fluteHotspots.hidden = !(instrument === 0 && part === 2);
       const labels = partLabels[instrument];
       all('[data-part]').forEach((b,i) => { b.hidden = i >= labels.length; if (i < labels.length) { b.textContent = labels[i]; b.setAttribute('aria-pressed', String(i === part)); } });

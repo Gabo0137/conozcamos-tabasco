@@ -183,7 +183,7 @@ body[data-module="tradicion"] .split > .panel{background:#eee7d6;border-color:#d
 .stage .hotspots{gap:10px;margin-top:2px}
 .stage .hotspots{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));align-items:stretch}
 .stage .hotspots button{width:100%;min-width:0}
-.stage.is-drum .hotspots{grid-template-columns:repeat(2,minmax(0,1fr))}
+.stage.is-drum .hotspots{grid-template-columns:repeat(3,minmax(0,1fr))}
 .stage .hotspots button{background:#ffffff0c;border:1px solid #ffffff38;color:#fff4db;border-radius:17px;padding:12px 22px;box-shadow:inset 0 1px 0 #ffffff0b;transition:background-color .2s ease,border-color .2s ease,transform .2s ease,box-shadow .2s ease}
 .stage .hotspots button:hover,.stage .hotspots button:focus-visible{background:#ffffff18;border-color:#fff4db;transform:translateY(-1px);box-shadow:0 6px 14px #061b1844}
 .stage .hotspots button[aria-pressed=true]{background:var(--gold);border-color:var(--gold);color:#173d35;box-shadow:0 8px 16px #061b1844}
