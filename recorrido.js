@@ -394,9 +394,10 @@
       }
 
       function showCompletion() {
+        reinforcementActivity.classList.remove('is-changing');
         reinforcementProgress.textContent = 'Evaluación completada';
         reinforcementProgressFill.style.width = '100%';
-        reinforcementActivity.innerHTML = '<div class="reinforcement-complete"><div class="reinforcement-complete-icon" aria-hidden="true">✓</div><h3>¡Excelente! Has completado el desafío.</h3><p>Ahora conoces los instrumentos, la vestimenta, algunos de los municipios y la importancia cultural de los tamborileros de Tabasco.</p><button type="button" class="reinforcement-retry" data-reinforcement-retry>Reintentar evaluación</button></div>';
+        reinforcementActivity.innerHTML = '<div class="reinforcement-complete"><div class="reinforcement-complete-icon" aria-hidden="true">✓</div><h3>¡Excelente! Has completado la evaluación</h3><p>Ahora conoces los instrumentos, la vestimenta, algunos de los municipios y la importancia cultural de los tamborileros de Tabasco.</p><button type="button" class="reinforcement-retry" data-reinforcement-retry>Reintentar evaluación</button></div>';
         reinforcementActivity.querySelector('[data-reinforcement-retry]').addEventListener('click', () => {
           reinforcementHistory.push(reinforcementRecords.map(record => ({ ...record })));
           reinforcementRecords = reinforcementData.map(() => ({ firstAttemptCorrect:false, incorrectAnswers:0, attempts:0, responseTime:0, completed:false, startedAt:null }));
