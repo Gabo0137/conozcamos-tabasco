@@ -400,3 +400,17 @@ body[data-module]{padding-top:80px}
  .journey-stage[data-journey-stage="3"] .encuentro-section>.muted{margin-bottom:10px}
  .journey-stage[data-journey-stage="4"]>.reinforcement-section{padding:18px 14px}
 }
+/* El carrusel usa el espacio disponible entre la barra de progreso y sus controles. */
+.learning-journey-nav{margin-bottom:8px}
+.journey-stage[data-journey-stage="0"]>.story-carousel{margin-top:0;margin-bottom:0;padding-top:4px;padding-bottom:20px}
+.journey-stage[data-journey-stage="0"] .story-instruction{margin-top:0;margin-bottom:6px;padding-top:0;padding-bottom:0}
+.journey-stage[data-journey-stage="0"] .story-track{height:clamp(300px,calc(100svh - 430px),390px)}
+.journey-stage[data-journey-stage="0"] .story-card{height:calc(clamp(300px,calc(100svh - 430px),390px) - 40px)}
+.journey-stage[data-journey-stage="0"] .story-coverflow .story-card img{height:56%;flex-basis:56%}
+.journey-stage[data-journey-stage="0"]>.journey-stage-toolbar{margin-top:6px;padding-top:6px;min-height:46px}
+.journey-stage[data-journey-stage="0"]>.journey-stage-toolbar:has(.journey-next[hidden]){min-height:0;margin-top:0;padding-top:0;border-top:0}
+@media(max-width:760px){
+ .journey-stage[data-journey-stage="0"] .story-track{height:clamp(260px,calc(100svh - 280px),360px)}
+ .journey-stage[data-journey-stage="0"] .story-card{height:calc(clamp(260px,calc(100svh - 280px),360px) - 30px)}
+ .journey-stage[data-journey-stage="0"] .story-coverflow .story-card img{height:45%;flex-basis:45%}
+}
