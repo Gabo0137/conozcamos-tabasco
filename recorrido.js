@@ -201,17 +201,20 @@
     renderStory(0);
 
     const municipalityData = {
-      '27013': { title:'Nacajuca', subtitle:'Una tradición entre generaciones.', description:'En comunidades como Guaytalpa, la música de los tamborileros se transmite a niños y jóvenes mediante la enseñanza y la práctica musical.', image:'assets/municipios/nacajuca.webp' },
-      '27003': { title:'Centla', subtitle:'Música y tradición comunitaria.', description:'La música tradicional de los tamborileros está vinculada con las prácticas culturales y ceremoniales de las comunidades yokot\'an.', image:'assets/municipios/centla.webp' },
-      '27010': { title:'Jalpa de Méndez', subtitle:'Una expresión cultural viva.', description:'Los tamborileros forman parte de las expresiones culturales del municipio y contribuyen a mantener viva la tradición musical tabasqueña.', image:'assets/municipios/jalpa-de-mendez.webp' },
-      '27004': { title:'Centro', subtitle:'Difusión de nuestra identidad.', description:'La música de los tamborileros forma parte de las manifestaciones culturales que se difunden mediante celebraciones y actividades artísticas.', image:'assets/municipios/centro.webp' },
-      '27012': { title:'Macuspana', subtitle:'Raíces musicales.', description:'Forma parte del territorio con presencia histórica del pueblo yokot\'an, al que se vincula la tradición musical de los tamborileros.', image:'assets/municipios/macuspana.webp' },
-      '27011': { title:'Jonuta', subtitle:'Herencia cultural.', description:'La presencia histórica del pueblo yokot\'an vincula a este municipio con las raíces culturales de la música tradicional tabasqueña.', image:'assets/municipios/jonuta.webp' }
+      '27013': { title:'Nacajuca', description:'En comunidades yokot’an como Tucta, los tamborileros acompañan la Danza del Baila Viejo, fiestas patronales, ofrendas de siembra y celebraciones religiosas.', image:'assets/municipios/nacajuca.webp' },
+      '27003': { title:'Centla', description:'Forma parte de la región yokot’an, donde la tradición musical de los tamborileros se transmite de generación en generación.', image:'assets/municipios/centla.webp' },
+      '27004': { title:'Centro', description:'La música de los tamborileros forma parte de la vida cultural del municipio y se relaciona con danzas como la del Caballito y diversas celebraciones comunitarias.', image:'assets/municipios/centro.webp' },
+      '27012': { title:'Macuspana', description:'Cuenta con agrupaciones como el Semillero Creativo «Talla Brava», que contribuyen a la continuidad de esta tradición musical.', image:'assets/municipios/macuspana.webp' },
+      '27010': { title:'Jalpa de Méndez', description:'Forma parte de la región yokot’an, donde la tradición de los tamborileros se conserva en las comunidades y familias.', image:'assets/municipios/jalpa-de-mendez.webp' },
+      '27011': { title:'Jonuta', description:'Cuenta con población yokot’an y presencia tradicional de agrupaciones de tamborileros.', image:'assets/municipios/jonuta.webp' },
+      '27005': { title:'Comalcalco', description:'Cuenta con agrupaciones de tamborileros reconocidas en el inventario estatal de patrimonio cultural inmaterial. Esta tradición también se enseña en casas de cultura.', image:'assets/municipios/comalcalco.webp' },
+      '27015': { title:'Tacotalpa', description:'Cuenta con la agrupación de tamborileros «Iak Guid», registrada en el programa Cultura Comunitaria.', image:'assets/municipios/tacotalpa.webp' }
     };
     const mapHost = $('#tabascoMap');
     const municipalityCard = $('#municipalityCard');
     const municipalityImage = $('#municipalityImage');
     const municipalityTitle = $('#municipalityTitle');
+    const municipalityDescription = $('#municipalityDescription');
     let selectedMunicipality = '27013';
 
     function renderMunicipality(id) {
@@ -226,6 +229,7 @@
       });
       municipalityCard?.classList.add('is-changing');
       municipalityTitle.textContent = municipality.title;
+      municipalityDescription.textContent = municipality.description;
       municipalityImage.alt = `Fotografía pendiente de ${municipality.title}`;
       municipalityImage.hidden = true;
       municipalityImage.onload = () => { municipalityImage.hidden = false; municipalityCard?.classList.remove('is-changing'); };
