@@ -623,9 +623,9 @@
       const detailHtml = instruments[instrument].detailHtml?.[part];
       if (detailHtml) $('#part-text').innerHTML = detailHtml;
       else $('#part-text').textContent = detail[1];
-      $('.panel')?.classList.toggle('is-drum-material', instrument === 1 && part === 0);
+      const materialPart = 1;
+      $('.panel')?.classList.toggle('is-drum-material', instrument === 1 && part === materialPart);
       const overviewImage = part === 0 && instruments[instrument].overviewImage ? instruments[instrument].overviewImage : null;
-      const materialPart = instrument === 0 ? 1 : 0;
       const detailImage = part === materialPart && instruments[instrument].materialImage ? instruments[instrument].materialImage : instruments[instrument].image;
       const partsImage = ((instrument === 0 && part === 2) || (instrument === 1 && part === 2)) && instruments[instrument].partsImage ? instruments[instrument].partsImage : detailImage;
       $('#instrument-image').src = partsImage;
