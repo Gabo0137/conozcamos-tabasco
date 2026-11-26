@@ -322,3 +322,7 @@ body[data-module]{padding-top:80px}
 .reinforcement-image-wrap img{box-sizing:border-box;padding:6px;object-fit:contain}
 .reinforcement-option.is-correct,.reinforcement-option.is-correct.is-selected{border-color:#2E7D32!important}
 .reinforcement-option.is-incorrect,.reinforcement-option.is-incorrect.is-selected{border-color:#C0392B!important}
+.reinforcement-option.is-selected{border:3px solid #F2C557!important;opacity:1!important}
+.reinforcement-option.is-correct{border:3px solid #16A34A!important;opacity:1!important}
+.reinforcement-option.is-incorrect{border:3px solid #C0392B!important;opacity:1!important}
+.reinforcement-option:disabled{opacity:1}
