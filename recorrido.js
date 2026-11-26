@@ -40,6 +40,61 @@
   function select(group, chosen) { all(group).forEach(b => b.setAttribute('aria-pressed', String(b === chosen))); }
 
   if (module === 'tradicion') {
+    const journeyStages = all('[data-journey-stage]');
+    const journeySteps = all('[data-journey-target]');
+    const journeyState = { current:0, completed:new Set(), mapVisited:new Set(), evaluationFinished:false };
+    const journeyStageCount = journeyStages.length;
+    const journeyStepLabels = ['Carrusel','Mapa interactivo','¿Sabías que?','Video','Evaluación final'];
+
+    function updateJourneyProgress() {
+      const evaluationLocked = journeyState.current === 4 && !journeyState.evaluationFinished;
+      journeySteps.forEach((button, index) => {
+        const unlocked = index === 0 || journeyState.completed.has(index - 1);
+        const current = index === journeyState.current;
+        const icon = button.querySelector('.learning-journey-icon');
+        button.disabled = evaluationLocked ? !current : !unlocked;
+        button.closest('li')?.classList.toggle('is-complete', journeyState.completed.has(index));
+        button.closest('li')?.classList.toggle('is-current', current);
+        button.closest('li')?.classList.toggle('is-locked', !unlocked);
+        button.setAttribute('aria-current', current ? 'step' : 'false');
+        button.setAttribute('aria-label', `${journeyStepLabels[index]}${journeyState.completed.has(index) ? ', completada' : !unlocked ? ', bloqueada' : current ? ', actual' : ''}`);
+        if (icon) icon.textContent = journeyState.completed.has(index) ? '✓' : !unlocked ? '🔒' : String(index + 1);
+      });
+      journeyStages.forEach((stage, index) => {
+        const isCurrent = index === journeyState.current;
+        stage.hidden = !isCurrent;
+        stage.classList.toggle('journey-stage-active', isCurrent);
+        stage.querySelector('[data-stage-prev]')?.toggleAttribute('hidden', index === 0 || (index === 4 && !journeyState.evaluationFinished));
+        const next = stage.querySelector('[data-stage-next]');
+        if (next) next.hidden = index === 4 || (index < 2 && !journeyState.completed.has(index));
+      });
+    }
+
+    function completeJourneyStage(index) {
+      journeyState.completed.add(index);
+      updateJourneyProgress();
+    }
+
+    function showJourneyStage(index) {
+      if (index < 0 || index >= journeyStageCount) return;
+      const evaluationLocked = journeyState.current === 4 && !journeyState.evaluationFinished;
+      const unlocked = index === 0 || journeyState.completed.has(index - 1);
+      if (evaluationLocked || !unlocked) return;
+      journeyState.current = index;
+      updateJourneyProgress();
+      window.scrollTo({ top:0, behavior:'smooth' });
+      if (index === 1) window.requestAnimationFrame(() => { window.dispatchEvent(new Event('resize')); updateMunicipalityMarkerLabels(); });
+    }
+
+    journeySteps.forEach(button => button.addEventListener('click', () => showJourneyStage(Number(button.dataset.journeyTarget))));
+    all('[data-stage-next]').forEach(button => button.addEventListener('click', () => {
+      const current = journeyState.current;
+      if (current === 2 || current === 3) completeJourneyStage(current);
+      showJourneyStage(current + 1);
+    }));
+    all('[data-stage-prev]').forEach(button => button.addEventListener('click', () => showJourneyStage(journeyState.current - 1)));
+    updateJourneyProgress();
+
     all('.instrument-flip').forEach(button => button.addEventListener('click', () => {
       const flipped = button.getAttribute('aria-pressed') !== 'true';
       button.setAttribute('aria-pressed', String(flipped));
@@ -152,6 +207,7 @@
       if (correct) {
         record.correctAnswers += 1; record.completed = true; record.state = 'completada';
         card.classList.add('is-completed');
+        if (storyEvaluation.every(item => item.completed)) completeJourneyStage(0);
         finishQuiz(card, index, true);
       } else {
         record.incorrectAnswers += 1;
@@ -265,10 +321,14 @@
       }
     }
 
-    function renderMunicipality(id) {
+    function renderMunicipality(id, interacted = false) {
       const municipality = municipalityData[id];
       if (!municipality) return;
       selectedMunicipality = id;
+      if (interacted) {
+        journeyState.mapVisited.add(id);
+        if (journeyState.mapVisited.size === Object.keys(municipalityData).length) completeJourneyStage(1);
+      }
       all('#tabascoMap svg path').forEach(path => path.classList.toggle('is-selected', path.id === id));
       all('.tabasco-map-marker').forEach(marker => {
         const selected = marker.dataset.municipality === id;
@@ -315,11 +375,11 @@
           label.textContent = municipality.title;
           label.dataset.position = 'top';
           marker.append(label);
-          marker.addEventListener('click', () => renderMunicipality(id));
+          marker.addEventListener('click', () => renderMunicipality(id, true));
           marker.style.left = `${((bounds.x + bounds.width / 2 - viewBoxX) / viewBoxWidth) * 100}%`;
           marker.style.top = `${((bounds.y + bounds.height / 2 - viewBoxY) / viewBoxHeight) * 100}%`;
           mapHost.append(marker);
-          path.addEventListener('click', () => renderMunicipality(id));
+          path.addEventListener('click', () => renderMunicipality(id, true));
           path.setAttribute('tabindex', '0');
           path.setAttribute('aria-label', municipality.title);
         });
@@ -399,6 +459,8 @@
         reinforcementProgressFill.style.width = '100%';
         reinforcementActivity.innerHTML = '<div class="reinforcement-complete"><div class="reinforcement-complete-icon" aria-hidden="true">✓</div><h3>¡Excelente! Has completado la evaluación</h3><p>Ahora conoces los instrumentos, la vestimenta, algunos de los municipios y la importancia cultural de los tamborileros de Tabasco.</p><button type="button" class="reinforcement-retry" data-reinforcement-retry>Reintentar evaluación</button></div>';
         reinforcementActivity.querySelector('[data-reinforcement-retry]').addEventListener('click', () => {
+          journeyState.evaluationFinished = false;
+          journeyState.completed.delete(4);
           reinforcementHistory.push(reinforcementRecords.map(record => ({ ...record })));
           reinforcementRecords = reinforcementData.map(() => ({ firstAttemptCorrect:false, incorrectAnswers:0, attempts:0, responseTime:0, completed:false, startedAt:null }));
           window.tamborilerosReinforcementEvaluation = reinforcementRecords;
@@ -406,6 +468,8 @@
           reinforcementActivity.classList.add('is-changing');
           window.setTimeout(renderReinforcement, 180);
         });
+        journeyState.evaluationFinished = true;
+        completeJourneyStage(4);
         discover();
       }
 
