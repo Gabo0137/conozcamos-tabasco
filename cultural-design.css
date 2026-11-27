@@ -468,10 +468,13 @@ body[data-module]{padding-top:80px}
 .instrument-journey-meter{display:flex;max-width:960px;align-items:center;gap:10px;margin:8px auto 0;color:var(--forest);font-size:12px;font-weight:800}
 .instrument-journey-meter>div{height:7px;flex:1;overflow:hidden;border-radius:8px;background:#d7decf}
 .instrument-journey-meter>div>span{display:block;width:0;height:100%;border-radius:inherit;background:#16A34A;transition:width .35s ease}
-.instrument-stage-controls{display:flex;justify-content:flex-end;min-height:0;margin:0 0 8px}
-.instrument-stage-next{display:inline-flex;box-sizing:border-box;width:40px;height:40px;min-width:40px;min-height:40px;margin:0;padding:0;border:1px solid #F2C557;border-radius:50%;align-items:center;justify-content:center;background:#F2C557;color:#173F31;font-size:24px;font-weight:800;line-height:1;transition:transform .2s ease,filter .2s ease}
-.instrument-stage-next:hover,.instrument-stage-next:focus-visible{transform:scale(1.08);filter:brightness(.97)}
-@media(max-width:760px){.instrument-journey-nav{top:76px;margin-bottom:12px;padding-inline:10px}.instrument-journey-nav ol{gap:4px}.instrument-journey-nav button{min-height:56px;flex-direction:column;gap:3px;padding:5px 3px;font-size:10px}.instrument-journey-icon{flex-basis:22px;width:22px;height:22px}}
+#instrument-learning-content{position:relative}
+.instrument-stage-controls{position:absolute;z-index:12;inset:0;pointer-events:none}
+.instrument-stage-prev,.instrument-stage-next{position:absolute;top:50%;display:inline-flex;box-sizing:border-box;width:40px;height:40px;min-width:40px;min-height:40px;margin:0;padding:0;border:1px solid #F2C557;border-radius:50%;align-items:center;justify-content:center;transform:translateY(-50%);background:#F2C557;color:#173F31;font-size:24px;font-weight:800;line-height:1;pointer-events:auto;transition:transform .2s ease,filter .2s ease}
+.instrument-stage-prev{left:-24px}
+.instrument-stage-next{right:-24px}
+.instrument-stage-prev:hover,.instrument-stage-prev:focus-visible,.instrument-stage-next:hover,.instrument-stage-next:focus-visible{transform:translateY(-50%) scale(1.08);filter:brightness(.97)}
+@media(max-width:760px){.instrument-journey-nav{top:76px;margin-bottom:12px;padding-inline:10px}.instrument-journey-nav ol{gap:4px}.instrument-journey-nav button{min-height:56px;flex-direction:column;gap:3px;padding:5px 3px;font-size:10px}.instrument-journey-icon{flex-basis:22px;width:22px;height:22px}.instrument-stage-prev{left:2px}.instrument-stage-next{right:2px}}
 .reinforcement-section.is-complete{padding-top:12px;padding-bottom:14px}
 .reinforcement-section.is-complete .reinforcement-complete{padding:22px 18px}
 .reinforcement-section.is-complete .reinforcement-complete h3{line-height:1.2}

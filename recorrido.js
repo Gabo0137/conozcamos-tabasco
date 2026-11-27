@@ -586,6 +586,7 @@
     const instrumentJourneyState = { current:0, completed:new Set(), visited:{ 0:new Set(), 1:new Set() }, hotspots:{ 0:new Set(), 1:new Set() }, evaluationCompleted:0, evaluationActive:false, evaluationFinished:false };
     const instrumentJourneyButtons = all('[data-instrument-stage]');
     const instrumentLearningContent = $('#instrument-learning-content');
+    const instrumentPrevButton = $('[data-instrument-prev]');
     const instrumentNextButton = $('[data-instrument-next]');
 
     function instrumentStageComplete(index) {
@@ -623,6 +624,7 @@
       if (evaluationStart) evaluationStart.disabled = !evaluationUnlocked || instrumentJourneyState.evaluationActive;
       const evaluationLaunch = $('#instrumentEvaluationLaunch');
       if (evaluationLaunch && !evaluationUnlocked && !instrumentJourneyState.evaluationActive && !instrumentJourneyState.evaluationFinished) evaluationLaunch.hidden = true;
+      if (instrumentPrevButton) instrumentPrevButton.hidden = instrumentJourneyState.current === 0 || (instrumentJourneyState.current === 2 && !instrumentJourneyState.evaluationFinished) || instrumentJourneyState.evaluationActive;
       if (instrumentNextButton) instrumentNextButton.hidden = !((instrumentJourneyState.current === 0 && fluteComplete) || (instrumentJourneyState.current === 1 && drumComplete)) || instrumentJourneyState.evaluationActive;
     }
 
@@ -653,6 +655,7 @@
     }
 
     instrumentJourneyButtons.forEach(button => button.addEventListener('click', () => showInstrumentStage(Number(button.dataset.instrumentStage))));
+    instrumentPrevButton?.addEventListener('click', () => showInstrumentStage(instrumentJourneyState.current - 1));
     instrumentNextButton?.addEventListener('click', () => showInstrumentStage(instrumentJourneyState.current + 1));
 
     function markInstrumentPart(part) {
