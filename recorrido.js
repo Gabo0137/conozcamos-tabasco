@@ -597,8 +597,8 @@
     drumHotspots.className = 'drum-parts-hotspots';
     drumHotspots.hidden = true;
     drumHotspots.setAttribute('aria-label', 'Partes interactivas del tambor');
-    drumHotspots.innerHTML = '<button type="button" class="drum-hotspot hotspot-body" data-hotspot="body" aria-label="Ver información del cuerpo"></button><button type="button" class="drum-hotspot hotspot-parche" data-hotspot="parche" aria-label="Ver información del parche"></button><button type="button" class="drum-hotspot hotspot-amarre" data-hotspot="amarre" aria-label="Ver información del amarre"></button><button type="button" class="drum-hotspot hotspot-baquetas" data-hotspot="baquetas" aria-label="Ver información de las baquetas"></button>';
-    stage?.insertBefore(drumHotspots, $('.hotspots'));
+    drumHotspots.innerHTML = '<button type="button" class="drum-hotspot hotspot-body" data-hotspot="body" aria-label="Ver información del cuerpo" aria-pressed="false"><span>Cuerpo</span></button><button type="button" class="drum-hotspot hotspot-parche" data-hotspot="parche" aria-label="Ver información del parche" aria-pressed="false"><span>Parche</span></button><button type="button" class="drum-hotspot hotspot-amarre" data-hotspot="amarre" aria-label="Ver información del amarre" aria-pressed="false"><span>Amarre</span></button><button type="button" class="drum-hotspot hotspot-baquetas" data-hotspot="baquetas" aria-label="Ver información de las baquetas" aria-pressed="false"><span>Baquetas</span></button>';
+    instrumentVisual.append(drumHotspots);
     const fluteHotspots = document.createElement('div');
     fluteHotspots.className = 'flute-parts-hotspots';
     fluteHotspots.hidden = true;

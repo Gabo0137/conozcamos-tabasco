@@ -533,5 +533,18 @@ body[data-module]{padding-top:80px}
 .flute-orificios{left:36%;top:54%}
 .flute-carrizo{left:68%;top:34%}
 .flute-boquilla{left:95%;top:8%}
+.stage.is-drum.is-parts .instrument-visual{display:block;position:relative;width:min(100%,340px);aspect-ratio:639/416;margin:0 auto 16px}
+.stage.is-drum.is-parts .instrument-image{display:block;width:100%;height:100%;object-fit:contain}
+.stage.is-drum.is-parts .drum-parts-hotspots{inset:0}
+.drum-hotspot{position:absolute;width:44px;height:44px;min-height:44px;padding:0;border:0;border-radius:50%;background:transparent;transform:translate(-50%,-50%);pointer-events:auto;isolation:isolate}
+.drum-hotspot::before{content:"";position:absolute;inset:8px;border:2px solid #fff4d7;border-radius:50%;background:#9bc9a9;box-shadow:0 0 0 5px #9bc9a944,0 4px 10px #061b1866;transition:transform .2s ease,box-shadow .2s ease,background-color .2s ease}
+.drum-hotspot span{position:absolute;bottom:calc(100% - 4px);left:50%;transform:translateX(-50%);color:#fff4db;font-size:14px;font-weight:500;line-height:1.3;white-space:nowrap;text-shadow:0 2px 5px #102c27}
+.drum-hotspot:hover,.drum-hotspot[aria-pressed=true]{background:transparent;filter:none}
+.drum-hotspot:hover::before,.drum-hotspot:focus-visible::before,.drum-hotspot[aria-pressed=true]::before{transform:scale(1.15);background:#ffd273;box-shadow:0 0 0 7px #edb33638,0 4px 10px #061b1866}
+.drum-hotspot:focus-visible{outline:2px solid #fff4d7;outline-offset:3px}
+.hotspot-parche span{left:8px;transform:none}
+.hotspot-baquetas span{left:auto;right:8px;transform:none}
+.hotspot-amarre span{top:calc(100% - 4px);bottom:auto}
+.hotspot-body{left:61%;top:43%}.hotspot-parche{left:18%;top:52%}.hotspot-amarre{left:74%;top:31%}.hotspot-baquetas{left:77%;top:82%}
 @media(max-width:760px){.instrument-evaluation-section{margin-top:24px}.instrument-evaluation-shell{padding-inline:10px}.instrument-evaluation-card{padding:12px}.instrument-classification-grid{grid-template-columns:1fr}.instrument-true-false-row{grid-template-columns:1fr}.instrument-true-false-row>div{grid-template-columns:repeat(2,minmax(0,1fr))}.instrument-true-false-row .reinforcement-text-option{width:100%}.instrument-fill-layout{grid-template-columns:100px 1fr}.instrument-fill-layout>.reinforcement-image-wrap,.instrument-fill-layout>.reinforcement-image-wrap img{height:95px;min-height:95px}.instrument-fill-sentence{font-size:14px}.instrument-fill-options{grid-column:1 / -1}}
 @media(max-width:760px){.instrument-match-layout{gap:7px}.instrument-match-card-shell{padding:9px 10px}.instrument-match-card-shell .instrument-match-layout{grid-template-columns:minmax(100px,.68fr) minmax(0,1.32fr)}.instrument-match-card-shell .instrument-match-card{width:100%;height:28px;min-height:28px;font-size:11px}.instrument-match-card-shell .instrument-match-target{height:60px;min-height:60px;font-size:10px}.instrument-match-card-shell .instrument-match-slot{height:22px;min-height:22px}.instrument-match-card-shell .instrument-match-slot .instrument-match-card{height:22px;min-height:22px;font-size:9px}}
