@@ -709,7 +709,7 @@
         if (activity.type === 'classify') body = `<div class="instrument-classification-grid">${activity.items.map(item => `<div class="instrument-classification-row" data-answer-group="${item.id}"><div class="instrument-classification-heading"><img src="${item.image}" alt="${item.label}"><strong>${item.label}</strong></div><div class="instrument-classification-options">${shuffleEvaluation(activity.options).map(textButton).join('')}</div></div>`).join('')}</div>`;
         if (activity.type === 'true-false') body = `<div class="instrument-true-false-list">${activity.items.map(item => `<div class="instrument-true-false-row" data-answer-group="${item.id}"><p>${item.text}</p><div>${activity.options.map(textButton).join('')}</div></div>`).join('')}</div>`;
         if (activity.type === 'fill') body = `<div class="instrument-fill-layout"><span class="reinforcement-image-wrap"><img src="${activity.image}" alt="${activity.imageAlt}"></span><p class="instrument-fill-sentence">${activity.sentence} <span class="instrument-fill-blank" data-answer-slot aria-live="polite">________</span> del tambor.</p><div class="instrument-fill-options">${shuffleEvaluation(activity.options).map(textButton).join('')}</div></div>`;
-        if (activity.type === 'match') body = `<div class="instrument-match-layout"><div class="instrument-match-column"><h4>Partes</h4><div class="instrument-match-parts">${shuffleEvaluation(activity.items).map(item => `<button type="button" class="instrument-match-card" draggable="true" data-match-part="${item.id}">${item.label}</button>`).join('')}</div></div><div class="instrument-match-column"><h4>Funciones</h4><div class="instrument-match-targets">${shuffleEvaluation(activity.items).map(item => `<button type="button" class="instrument-match-target" data-match-target="${item.id}"><span>${item.function}</span><small data-match-slot>Arrastra aquí</small></button>`).join('')}</div></div></div>`;
+        if (activity.type === 'match') body = `<div class="instrument-match-layout"><div class="instrument-match-column"><h4>Partes</h4><div class="instrument-match-parts">${shuffleEvaluation(activity.items).map(item => `<button type="button" class="instrument-match-card" draggable="true" data-match-part="${item.id}">${item.label}</button>`).join('')}</div></div><div class="instrument-match-column"><h4>Funciones</h4><div class="instrument-match-targets">${shuffleEvaluation(activity.items).map(item => `<div class="instrument-match-target" data-match-target="${item.id}" role="button" tabindex="0"><span>${item.function}</span><div class="instrument-match-slot" data-match-slot>Arrastra aquí</div></div>`).join('')}</div></div></div>`;
         const nextLabel = activity.type === 'match' ? 'Finalizar evaluación' : 'Siguiente';
         instrumentEvaluationActivity.innerHTML = `<div class="reinforcement-card instrument-evaluation-card"><div class="reinforcement-card-top"><span>Actividad ${evaluationIndex + 1}</span><span class="reinforcement-card-tag">Evaluación</span></div><h3>${activity.title}</h3><p class="reinforcement-instruction">${activity.instruction}</p>${body}<p class="reinforcement-feedback" aria-live="polite"></p><div class="reinforcement-actions"><button type="button" class="reinforcement-check" data-instrument-evaluation-check disabled>Comprobar</button><button type="button" class="reinforcement-next" data-instrument-evaluation-next hidden>${nextLabel}</button></div></div>`;
         instrumentEvaluationActivity.querySelectorAll('.reinforcement-option').forEach(option => option.addEventListener('click', () => {
@@ -727,29 +727,55 @@
           updateInstrumentEvaluationControls();
         }));
         if (activity.type === 'match') {
-          const assignMatch = (partId, targetId) => {
-            Object.keys(matchAssignments).forEach(key => { if (matchAssignments[key] === partId) delete matchAssignments[key]; });
-            matchAssignments[targetId] = partId;
-            selectedMatchPart = null;
-            instrumentEvaluationActivity.querySelectorAll('[data-match-part]').forEach(card => card.classList.toggle('is-selected', card.dataset.matchPart === partId));
+          const partsContainer = instrumentEvaluationActivity.querySelector('.instrument-match-parts');
+          const refreshMatchLayout = () => {
             instrumentEvaluationActivity.querySelectorAll('[data-match-target]').forEach(target => {
               const assigned = matchAssignments[target.dataset.matchTarget];
               const item = activity.items.find(entry => entry.id === assigned);
+              const slot = target.querySelector('[data-match-slot]');
               target.classList.toggle('is-assigned', Boolean(item));
-              target.querySelector('[data-match-slot]').textContent = item ? item.label : 'Arrastra aquí';
+              if (slot) slot.querySelectorAll('[data-match-part]').forEach(card => { if (!item || card.dataset.matchPart !== item.id) partsContainer.append(card); });
+              if (slot && item) {
+                const assignedCard = instrumentEvaluationActivity.querySelector(`[data-match-part="${item.id}"]`);
+                if (assignedCard && assignedCard.parentElement !== slot) slot.append(assignedCard);
+              }
+              if (slot && !item) slot.textContent = 'Arrastra aquí';
             });
+          };
+          const removeMatch = partId => {
+            Object.keys(matchAssignments).forEach(key => { if (matchAssignments[key] === partId) delete matchAssignments[key]; });
+            const card = instrumentEvaluationActivity.querySelector(`[data-match-part="${partId}"]`);
+            if (card) partsContainer.append(card);
+            selectedMatchPart = null;
+            refreshMatchLayout();
+            updateInstrumentEvaluationControls();
+          };
+          const assignMatch = (partId, targetId) => {
+            const target = instrumentEvaluationActivity.querySelector(`[data-match-target="${targetId}"]`);
+            if (!target || target.dataset.locked === 'true') return;
+            target.classList.remove('is-drag-over');
+            const previousPart = matchAssignments[targetId];
+            if (previousPart && previousPart !== partId) delete matchAssignments[targetId];
+            Object.keys(matchAssignments).forEach(key => { if (matchAssignments[key] === partId) delete matchAssignments[key]; });
+            matchAssignments[targetId] = partId;
+            selectedMatchPart = null;
+            refreshMatchLayout();
             updateInstrumentEvaluationControls();
           };
           instrumentEvaluationActivity.querySelectorAll('[data-match-part]').forEach(card => {
             card.addEventListener('dragstart', event => { selectedMatchPart = card.dataset.matchPart; event.dataTransfer?.setData('text/plain', selectedMatchPart); card.classList.add('is-selected'); });
             card.addEventListener('dragend', () => card.classList.remove('is-selected'));
-            card.addEventListener('click', () => { selectedMatchPart = card.dataset.matchPart; instrumentEvaluationActivity.querySelectorAll('[data-match-part]').forEach(item => item.classList.toggle('is-selected', item === card)); });
+            card.addEventListener('click', event => { event.stopPropagation(); if (card.parentElement !== partsContainer) { removeMatch(card.dataset.matchPart); return; } selectedMatchPart = card.dataset.matchPart; instrumentEvaluationActivity.querySelectorAll('[data-match-part]').forEach(item => item.classList.toggle('is-selected', item === card)); });
           });
           instrumentEvaluationActivity.querySelectorAll('[data-match-target]').forEach(target => {
-            target.addEventListener('dragover', event => event.preventDefault());
+            target.addEventListener('dragover', event => { event.preventDefault(); if (target.dataset.locked !== 'true') target.classList.add('is-drag-over'); });
+            target.addEventListener('dragleave', () => target.classList.remove('is-drag-over'));
             target.addEventListener('drop', event => { event.preventDefault(); const partId = event.dataTransfer?.getData('text/plain') || selectedMatchPart; if (partId) assignMatch(partId, target.dataset.matchTarget); });
             target.addEventListener('click', () => { if (selectedMatchPart) assignMatch(selectedMatchPart, target.dataset.matchTarget); });
           });
+          partsContainer.addEventListener('dragover', event => { event.preventDefault(); partsContainer.classList.add('is-drag-over'); });
+          partsContainer.addEventListener('dragleave', () => partsContainer.classList.remove('is-drag-over'));
+          partsContainer.addEventListener('drop', event => { event.preventDefault(); partsContainer.classList.remove('is-drag-over'); const partId = event.dataTransfer?.getData('text/plain') || selectedMatchPart; if (partId) removeMatch(partId); });
         }
         instrumentEvaluationActivity.querySelector('[data-instrument-evaluation-check]').addEventListener('click', checkInstrumentEvaluation);
       }
@@ -798,7 +824,7 @@
             const isCorrectTarget = matchAssignments[targetId] === targetId;
             target.classList.toggle('is-correct', isCorrectTarget);
             target.classList.toggle('is-incorrect', !isCorrectTarget);
-            target.disabled = true;
+            target.dataset.locked = 'true';
           });
           instrumentEvaluationActivity.querySelectorAll('[data-match-part]').forEach(card => {
             const targetId = Object.keys(matchAssignments).find(key => matchAssignments[key] === card.dataset.matchPart);

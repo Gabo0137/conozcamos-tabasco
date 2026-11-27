@@ -500,11 +500,14 @@ body[data-module]{padding-top:80px}
 .instrument-match-card{cursor:grab;justify-content:flex-start}
 .instrument-match-card:active{cursor:grabbing}
 .instrument-match-target{display:flex;min-height:54px;flex-direction:column;align-items:flex-start;justify-content:center;gap:3px;font-weight:500}
+.instrument-match-slot{display:flex;min-height:24px;width:100%;align-items:center}
 .instrument-match-target small{color:#6b7a70;font-size:11px;font-weight:700}
 .instrument-match-card.is-selected,.instrument-match-target.is-assigned{border-color:#F2C557;background:#fff1a8}
 .instrument-match-card.is-correct,.instrument-match-target.is-correct{border-color:#16A34A!important;background:#f7f3e6}
 .instrument-match-card.is-incorrect,.instrument-match-target.is-incorrect{border-color:#C0392B!important;background:#f7f3e6}
 .instrument-match-target:disabled{opacity:1;cursor:default}
+.instrument-match-target.is-drag-over{border-color:#F2C557;background:#fff1a8;box-shadow:0 0 0 3px #F2C55755}
+.instrument-match-parts.is-drag-over{outline:3px dashed #F2C557;outline-offset:4px;border-radius:10px}
 .instrument-match-card.is-correct::after,.instrument-match-target.is-correct::after,.instrument-match-card.is-incorrect::after,.instrument-match-target.is-incorrect::after{position:absolute;right:8px;top:50%;transform:translateY(-50%);font-size:18px;font-weight:900;line-height:1}
 .instrument-match-card.is-correct::after,.instrument-match-target.is-correct::after{content:'✓';color:#16A34A}
 .instrument-match-card.is-incorrect::after,.instrument-match-target.is-incorrect::after{content:'✕';color:#C0392B}
