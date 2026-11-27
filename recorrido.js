@@ -618,7 +618,6 @@
         const icon = button.querySelector('.instrument-journey-icon');
         if (icon) icon.textContent = instrumentJourneyState.completed.has(index) ? '✓' : !unlocked ? '🔒' : String(index + 1);
       });
-      all('[data-instrument]').forEach(button => { button.disabled = Number(button.dataset.instrument) === 1 && !fluteComplete; });
       const evaluationStart = $('#startInstrumentEvaluation');
       if (evaluationStart) evaluationStart.disabled = !evaluationUnlocked || instrumentJourneyState.evaluationActive;
       const evaluationLaunch = $('#instrumentEvaluationLaunch');
@@ -636,7 +635,6 @@
       const panel = $('#instrumentEvaluationPanel');
       if (index < 2) {
         instrument = index;
-        select('[data-instrument]', $(`[data-instrument="${index}"]`));
         $('#instrument-image').src = instruments[instrument].image;
         $('#instrument-image').alt = instruments[instrument].name;
         instrumentLearningContent.hidden = false;
@@ -721,10 +719,6 @@
       const labels = partLabels[instrument];
       all('[data-part]').forEach((b,i) => { b.hidden = i >= labels.length; if (i < labels.length) { b.textContent = labels[i]; b.setAttribute('aria-pressed', String(i === part)); } });
     }
-    all('[data-instrument]').forEach(button => button.addEventListener('click', () => {
-      if (button.disabled) return;
-      showInstrumentStage(Number(button.dataset.instrument));
-    }));
     all('[data-part]').forEach(button => button.addEventListener('click', () => { markInstrumentPart(Number(button.dataset.part)); showDetail(Number(button.dataset.part)); }));
     all('[data-hotspot]').forEach(button => button.addEventListener('click', () => {
       const detail = hotspotDetails[button.dataset.hotspot] || fluteHotspotDetails[button.dataset.hotspot];
