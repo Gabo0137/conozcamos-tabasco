@@ -871,7 +871,7 @@
         instrumentEvaluationProgress.textContent = 'Evaluación completada';
         instrumentEvaluationProgressFill.style.width = '100%';
         instrumentEvaluationActivity.innerHTML = '<div class="reinforcement-complete"><div class="reinforcement-complete-icon" aria-hidden="true">✓</div><h3>¡Excelente! Has completado la evaluación.</h3><p>Ahora conoces los materiales, las características y el funcionamiento de los instrumentos tradicionales de los tamborileros de Tabasco.</p><div class="reinforcement-complete-actions"><button type="button" class="reinforcement-return" data-instrument-return>Volver al contenido</button><button type="button" class="reinforcement-finish" data-instrument-finish>Finalizar</button></div></div>';
-        instrumentLearningContent.hidden = false;
+        instrumentLearningContent.hidden = true;
         updateInstrumentJourney();
         instrumentEvaluationActivity.querySelector('[data-instrument-return]').addEventListener('click', () => showInstrumentStage(0));
         instrumentEvaluationActivity.querySelector('[data-instrument-finish]').addEventListener('click', () => { discover(); window.location.assign('course.html#mapa'); });
