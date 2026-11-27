@@ -453,6 +453,22 @@ body[data-module]{padding-top:80px}
 }
 .module-banner{margin-bottom:8px}
 .learning-journey-nav{margin-top:0;margin-bottom:8px}
+.instrument-journey-nav{position:sticky;top:80px;z-index:19;margin:0 calc(50% - 50vw) 18px;padding:10px clamp(14px,4vw,42px);border-bottom:1px solid #b5d3bd55;background:rgba(255,253,242,.96);backdrop-filter:blur(12px);box-shadow:0 8px 20px #063c3612}
+.instrument-journey-nav ol{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;max-width:960px;margin:0 auto;padding:0;list-style:none}
+.instrument-journey-nav li{min-width:0}
+.instrument-journey-nav button{display:flex;width:100%;min-height:46px;align-items:center;justify-content:center;gap:7px;padding:7px 9px;border:1px solid #d7decf;border-radius:12px;background:#eef0ed;color:#7a837c;font-size:12px;font-weight:800;line-height:1.15;text-align:center;transition:background-color .2s ease,border-color .2s ease,color .2s ease,transform .2s ease}
+.instrument-journey-nav button:not(:disabled):hover{transform:translateY(-1px)}
+.instrument-journey-nav button:disabled{opacity:1;cursor:default}
+.instrument-journey-icon{display:grid;flex:0 0 24px;place-items:center;width:24px;height:24px;border-radius:50%;background:#cfd4cf;color:#69736b;font-size:12px}
+.instrument-journey-nav li.is-current button{border-color:#F2C557;background:#FFF1A8;color:#173F31}
+.instrument-journey-nav li.is-current .instrument-journey-icon{background:#F2C557;color:#173F31}
+.instrument-journey-nav li.is-complete button{border-color:#16A34A;background:#EAF7ED;color:#166534}
+.instrument-journey-nav li.is-complete .instrument-journey-icon{background:#16A34A;color:#fff;font-size:16px}
+.instrument-journey-nav li.is-locked button{border-color:#D7DECF;background:#EEF0ED;color:#7A837C}
+.instrument-journey-meter{display:flex;max-width:960px;align-items:center;gap:10px;margin:8px auto 0;color:var(--forest);font-size:12px;font-weight:800}
+.instrument-journey-meter>div{height:7px;flex:1;overflow:hidden;border-radius:8px;background:#d7decf}
+.instrument-journey-meter>div>span{display:block;width:0;height:100%;border-radius:inherit;background:#16A34A;transition:width .35s ease}
+@media(max-width:760px){.instrument-journey-nav{top:76px;margin-bottom:12px;padding-inline:10px}.instrument-journey-nav ol{gap:4px}.instrument-journey-nav button{min-height:56px;flex-direction:column;gap:3px;padding:5px 3px;font-size:10px}.instrument-journey-icon{flex-basis:22px;width:22px;height:22px}}
 .reinforcement-section.is-complete{padding-top:12px;padding-bottom:14px}
 .reinforcement-section.is-complete .reinforcement-complete{padding:22px 18px}
 .reinforcement-section.is-complete .reinforcement-complete h3{line-height:1.2}

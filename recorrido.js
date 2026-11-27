@@ -583,6 +583,85 @@
 
   if (module === 'instrumentos') {
     let instrument = 0;
+    const instrumentJourneyState = { current:0, completed:new Set(), visited:{ 0:new Set(), 1:new Set() }, hotspots:{ 0:new Set(), 1:new Set() }, evaluationCompleted:0, evaluationActive:false, evaluationFinished:false };
+    const instrumentJourneyButtons = all('[data-instrument-stage]');
+    const instrumentLearningContent = $('#instrument-learning-content');
+
+    function instrumentStageComplete(index) {
+      if (index === 0) return instrumentJourneyState.visited[0].size >= 3 && instrumentJourneyState.hotspots[0].size >= 4;
+      if (index === 1) return instrumentJourneyState.visited[1].size >= 3 && instrumentJourneyState.hotspots[1].size >= 4;
+      return instrumentJourneyState.evaluationFinished;
+    }
+
+    function updateInstrumentJourney() {
+      const fluteComplete = instrumentStageComplete(0);
+      const drumComplete = instrumentStageComplete(1);
+      if (fluteComplete) instrumentJourneyState.completed.add(0);
+      if (drumComplete) instrumentJourneyState.completed.add(1);
+      if (instrumentJourneyState.evaluationFinished) instrumentJourneyState.completed.add(2);
+      const evaluationUnlocked = fluteComplete && drumComplete;
+      const totalProgress = Math.min(19, instrumentJourneyState.visited[0].size + instrumentJourneyState.hotspots[0].size + instrumentJourneyState.visited[1].size + instrumentJourneyState.hotspots[1].size + instrumentJourneyState.evaluationCompleted);
+      const percentage = Math.round((totalProgress / 19) * 100);
+      const percentageLabel = $('[data-instrument-percentage]');
+      const percentageFill = $('[data-instrument-progress-fill]');
+      if (percentageLabel) percentageLabel.textContent = `${percentage}%`;
+      if (percentageFill) percentageFill.style.width = `${percentage}%`;
+      instrumentJourneyButtons.forEach((button, index) => {
+        const unlocked = index === 0 || (index === 1 && fluteComplete) || (index === 2 && evaluationUnlocked);
+        const current = index === instrumentJourneyState.current;
+        const lockedByEvaluation = instrumentJourneyState.evaluationActive && !instrumentJourneyState.evaluationFinished && index !== 2;
+        button.disabled = !unlocked || lockedByEvaluation;
+        button.closest('li')?.classList.toggle('is-current', current);
+        button.closest('li')?.classList.toggle('is-complete', instrumentJourneyState.completed.has(index));
+        button.closest('li')?.classList.toggle('is-locked', !unlocked);
+        button.setAttribute('aria-current', current ? 'step' : 'false');
+        const icon = button.querySelector('.instrument-journey-icon');
+        if (icon) icon.textContent = instrumentJourneyState.completed.has(index) ? '✓' : !unlocked ? '🔒' : String(index + 1);
+      });
+      all('[data-instrument]').forEach(button => { button.disabled = Number(button.dataset.instrument) === 1 && !fluteComplete; });
+      const evaluationStart = $('#startInstrumentEvaluation');
+      if (evaluationStart) evaluationStart.disabled = !evaluationUnlocked || instrumentJourneyState.evaluationActive;
+      const evaluationLaunch = $('#instrumentEvaluationLaunch');
+      if (evaluationLaunch && !evaluationUnlocked && !instrumentJourneyState.evaluationActive && !instrumentJourneyState.evaluationFinished) evaluationLaunch.hidden = true;
+    }
+
+    function showInstrumentStage(index) {
+      const fluteComplete = instrumentStageComplete(0);
+      const evaluationUnlocked = fluteComplete && instrumentStageComplete(1);
+      if (index === 1 && !fluteComplete) return;
+      if (index === 2 && !evaluationUnlocked) return;
+      if (instrumentJourneyState.evaluationActive && !instrumentJourneyState.evaluationFinished && index !== 2) return;
+      instrumentJourneyState.current = index;
+      const launch = $('#instrumentEvaluationLaunch');
+      const panel = $('#instrumentEvaluationPanel');
+      if (index < 2) {
+        instrument = index;
+        select('[data-instrument]', $(`[data-instrument="${index}"]`));
+        $('#instrument-image').src = instruments[instrument].image;
+        $('#instrument-image').alt = instruments[instrument].name;
+        instrumentLearningContent.hidden = false;
+        if (typeof showDetail === 'function') showDetail(0);
+        if (launch) launch.hidden = true;
+        if (panel) panel.hidden = true;
+      } else {
+        instrumentLearningContent.hidden = true;
+        if (launch) launch.hidden = instrumentJourneyState.evaluationFinished;
+        if (panel) panel.hidden = !instrumentJourneyState.evaluationActive && !instrumentJourneyState.evaluationFinished;
+      }
+      updateInstrumentJourney();
+    }
+
+    instrumentJourneyButtons.forEach(button => button.addEventListener('click', () => showInstrumentStage(Number(button.dataset.instrumentStage))));
+
+    function markInstrumentPart(part) {
+      instrumentJourneyState.visited[instrument].add(part);
+      updateInstrumentJourney();
+    }
+
+    function markInstrumentHotspot(id) {
+      instrumentJourneyState.hotspots[instrument].add(id);
+      updateInstrumentJourney();
+    }
     const instruments = [
       { name:'Flauta de carrizo', image:'Flauta.webp', overviewImage:'Flauta.webp', materialImage:'Carrizo Cera.png', partsImage:'Flauta de madera .webp', details:[['¿Qué es?','Instrumento de viento con seis agujeros en la parte superior y uno posterior.'],['Materiales','Carrizo: planta de tallo hueco, ligero y resistente, utilizado para fabricar el cuerpo de la flauta. Cera de abeja: material natural y moldeable utilizado en la elaboración de la embocadura.'],['Aire y orificios','El aire pone en vibración la columna de aire del interior. Al cubrir y descubrir los orificios, el intérprete cambia los sonidos.']], detailHtml:[null,'<strong>Carrizo:</strong> planta de tallo hueco, ligero y resistente, utilizado para fabricar el cuerpo de la flauta.<br><br><strong>Cera de abeja:</strong> material natural y moldeable utilizado en la elaboración de la embocadura.',null] },
       { name:'Tambor tradicional', image:'Tambor.png', overviewImage:'Tambor.png', materialImage:'material_Tambor.png', partsImage:'tambor grande.png', details:[['¿Qué es?','El tambor es uno de los instrumentos musicales más antiguos y se elabora de manera artesanal.'],['Materiales','La estructura usa madera de cedro. El cuero puede ser piel de borrego o de venado; se tensa con cuerdas y se toca con baquetas de palo.'],['Cuerpo, parche y sujeción','El parche vibra al recibir el golpe. El cuerpo y la tensión de la membrana intervienen en el sonido. Observa también cómo está sujeta la piel.']], detailHtml:[null,'<span class="material-entry"><strong>Madera de cedro:</strong> utilizada para fabricar el cuerpo del tambor.</span><span class="material-entry"><strong>Piel de borrego o venado:</strong> utilizada para elaborar los parches que producen el sonido al ser golpeados.</span><span class="material-entry"><strong>Cuerdas:</strong> permiten sujetar y tensar los parches del tambor.</span><span class="material-entry"><strong>Baquetas de madera:</strong> utilizadas para golpear los parches y ejecutar los diferentes ritmos tradicionales.</span>',null] }
@@ -643,16 +722,16 @@
       all('[data-part]').forEach((b,i) => { b.hidden = i >= labels.length; if (i < labels.length) { b.textContent = labels[i]; b.setAttribute('aria-pressed', String(i === part)); } });
     }
     all('[data-instrument]').forEach(button => button.addEventListener('click', () => {
-      instrument = Number(button.dataset.instrument); select('[data-instrument]', button);
-      $('#instrument-image').src = instruments[instrument].image; $('#instrument-image').alt = instruments[instrument].name;
-      showDetail(0);
+      if (button.disabled) return;
+      showInstrumentStage(Number(button.dataset.instrument));
     }));
-    all('[data-part]').forEach(button => button.addEventListener('click', () => showDetail(Number(button.dataset.part))));
+    all('[data-part]').forEach(button => button.addEventListener('click', () => { markInstrumentPart(Number(button.dataset.part)); showDetail(Number(button.dataset.part)); }));
     all('[data-hotspot]').forEach(button => button.addEventListener('click', () => {
       const detail = hotspotDetails[button.dataset.hotspot] || fluteHotspotDetails[button.dataset.hotspot];
       if (!detail) return;
       $('#part-title').textContent = detail[0]; $('#part-text').textContent = detail[1];
       all('[data-hotspot]').forEach(point => point.setAttribute('aria-pressed', String(point === button)));
+      markInstrumentHotspot(button.dataset.hotspot);
     }));
     showDetail(0);
     $('#compare-open')?.addEventListener('click', () => $('#compare-dialog').showModal());
@@ -668,7 +747,6 @@
     const instrumentEvaluationActivity = $('#instrumentEvaluationActivity');
     const instrumentEvaluationProgress = $('#instrumentEvaluationProgress');
     const instrumentEvaluationProgressFill = $('#instrumentEvaluationProgressFill');
-    const instrumentLearningContent = $('#instrument-learning-content');
     const startInstrumentEvaluation = $('#startInstrumentEvaluation');
     if (instrumentEvaluationActivity && instrumentEvaluationPanel && startInstrumentEvaluation) {
       const evaluationData = [
@@ -783,12 +861,20 @@
 
       function showInstrumentEvaluationCompletion() {
         evaluationCompleted = true;
+        instrumentJourneyState.evaluationActive = false;
+        instrumentJourneyState.evaluationFinished = true;
+        instrumentJourneyState.evaluationCompleted = evaluationData.length;
         instrumentEvaluationProgress.textContent = 'Evaluación completada';
         instrumentEvaluationProgressFill.style.width = '100%';
         instrumentEvaluationActivity.innerHTML = '<div class="reinforcement-complete"><div class="reinforcement-complete-icon" aria-hidden="true">✓</div><h3>¡Excelente! Has completado la evaluación.</h3><p>Ahora conoces los materiales, las características y el funcionamiento de los instrumentos tradicionales de los tamborileros de Tabasco.</p><button type="button" class="reinforcement-retry" data-instrument-evaluation-retry>Reintentar evaluación</button></div>';
         instrumentLearningContent.hidden = false;
+        updateInstrumentJourney();
         instrumentEvaluationActivity.querySelector('[data-instrument-evaluation-retry]').addEventListener('click', () => {
           evaluationCompleted = false;
+          instrumentJourneyState.evaluationActive = true;
+          instrumentJourneyState.evaluationFinished = false;
+          instrumentJourneyState.evaluationCompleted = 0;
+          instrumentJourneyState.completed.delete(2);
           evaluationIndex = 0;
           instrumentLearningContent.hidden = true;
           instrumentEvaluationActivity.classList.add('is-changing');
@@ -838,6 +924,8 @@
         feedback.className = `reinforcement-feedback ${correct ? 'is-correct' : 'is-incorrect'}`;
         feedback.innerHTML = `<strong>${correct ? '¡Respuesta correcta!' : 'Respuesta incorrecta'}</strong><span>${correct ? activity.feedbackCorrect : 'Revisa las opciones e inténtalo nuevamente.'}</span>`;
         if (correct) {
+          instrumentJourneyState.evaluationCompleted = Math.max(instrumentJourneyState.evaluationCompleted, evaluationIndex + 1);
+          updateInstrumentJourney();
           check.hidden = true;
           const next = instrumentEvaluationActivity.querySelector('[data-instrument-evaluation-next]');
           next.hidden = false;
@@ -850,15 +938,20 @@
       }
 
       startInstrumentEvaluation.addEventListener('click', () => {
+        instrumentJourneyState.current = 2;
+        instrumentJourneyState.evaluationActive = true;
+        instrumentJourneyState.evaluationFinished = false;
         instrumentLearningContent.hidden = true;
         instrumentEvaluationLaunch.hidden = true;
         instrumentEvaluationPanel.hidden = false;
         evaluationIndex = 0;
         evaluationCompleted = false;
+        updateInstrumentJourney();
         renderInstrumentEvaluation();
         instrumentEvaluationPanel.scrollIntoView({ behavior:'smooth', block:'start' });
       });
     }
+    updateInstrumentJourney();
   }
 
   if (module === 'sonidos') {
