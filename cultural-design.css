@@ -527,5 +527,11 @@ body[data-module]{padding-top:80px}
 .instrument-match-card-shell .instrument-match-slot .instrument-match-card{width:100%;height:22px;min-height:22px;padding:2px 5px;border-width:2px;font-size:10px;line-height:1.1}
 .instrument-match-card-shell .reinforcement-feedback{min-height:28px;margin-top:3px;font-size:12px;line-height:1.2}
 .instrument-match-card-shell .reinforcement-actions{margin-top:4px}
+.stage.is-flute-parts{padding-top:30px}
+.is-flute-parts .instrument-visual{aspect-ratio:1764/1000;margin-bottom:22px}
+.flute-embocadura{left:7%;top:78%}
+.flute-orificios{left:36%;top:54%}
+.flute-carrizo{left:68%;top:34%}
+.flute-boquilla{left:95%;top:8%}
 @media(max-width:760px){.instrument-evaluation-section{margin-top:24px}.instrument-evaluation-shell{padding-inline:10px}.instrument-evaluation-card{padding:12px}.instrument-classification-grid{grid-template-columns:1fr}.instrument-true-false-row{grid-template-columns:1fr}.instrument-true-false-row>div{grid-template-columns:repeat(2,minmax(0,1fr))}.instrument-true-false-row .reinforcement-text-option{width:100%}.instrument-fill-layout{grid-template-columns:100px 1fr}.instrument-fill-layout>.reinforcement-image-wrap,.instrument-fill-layout>.reinforcement-image-wrap img{height:95px;min-height:95px}.instrument-fill-sentence{font-size:14px}.instrument-fill-options{grid-column:1 / -1}}
 @media(max-width:760px){.instrument-match-layout{gap:7px}.instrument-match-card-shell{padding:9px 10px}.instrument-match-card-shell .instrument-match-layout{grid-template-columns:minmax(100px,.68fr) minmax(0,1.32fr)}.instrument-match-card-shell .instrument-match-card{width:100%;height:28px;min-height:28px;font-size:11px}.instrument-match-card-shell .instrument-match-target{height:60px;min-height:60px;font-size:10px}.instrument-match-card-shell .instrument-match-slot{height:22px;min-height:22px}.instrument-match-card-shell .instrument-match-slot .instrument-match-card{height:22px;min-height:22px;font-size:9px}}
