@@ -12,4 +12,20 @@ for (const entry of await readdir(root, { withFileTypes: true })) {
   await copyFile(join(root, entry.name), join(output, entry.name));
   count++;
 }
+async function copyDirectory(relativeDirectory) {
+  const source = join(root, relativeDirectory);
+  const target = join(output, relativeDirectory);
+  await mkdir(target, { recursive: true });
+  for (const entry of await readdir(source, { withFileTypes: true })) {
+    const sourcePath = join(source, entry.name);
+    const targetPath = join(target, entry.name);
+    if (entry.isDirectory()) {
+      await copyDirectory(join(relativeDirectory, entry.name));
+    } else if (extensions.has(extname(entry.name).toLowerCase())) {
+      await copyFile(sourcePath, targetPath);
+      count++;
+    }
+  }
+}
+await copyDirectory('Valceo');
 console.log(`Sitio preparado: ${count} archivos públicos.`);

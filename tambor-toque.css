@@ -92,6 +92,17 @@ body.module3-simulator-only #tamborDemo {
 .menu-card-cta { display: inline-flex; align-items: center; gap: 8px; margin-top: auto; padding-top: 16px; color: #fff9e8; font-size: .72rem; font-weight: 900; }
 .menu-card-cta strong { display: grid; place-items: center; width: 23px; height: 23px; border-radius: 50%; background: #edb336; color: #063c36; font-size: .85rem; transition: transform .18s ease; }
 .tambor-menu-card:hover .menu-card-cta strong, .tambor-menu-card:focus-visible .menu-card-cta strong { transform: translateX(3px); }
+.tambor-menu-section .section-intro-title,
+.tambor-menu-section .section-intro-desc,
+.tambor-menu-card .menu-card-title,
+.tambor-demo-section .rhythm-card-title,
+.tambor-demo-section .hand-legend,
+.tambor-demo-section .speed-control,
+.tambor-demo-section .speed-control legend,
+.tambor-demo-section .demo-status,
+.tambor-game-section .section-intro-title,
+.tambor-game-section .game-meta,
+.tambor-game-section .game-meta strong{color:#DAF1DE!important}
 .menu-card-visual { position: absolute; z-index: 1; right: 8px; top: 14%; display: grid; width: 40%; height: 72%; place-items: center; border-radius: 50%; font-family: Georgia, serif; font-size: 3.8rem; line-height: 1; }
 .menu-visual-drum { background: #ffe8a0; }
 .menu-card-visual img { width: 100%; height: 100%; object-fit: contain; filter: drop-shadow(0 10px 10px #a56c2d33); }
