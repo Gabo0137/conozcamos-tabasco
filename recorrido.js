@@ -1,3 +1,46 @@
+/* Pantalla previa del curso: se mantiene separada de la navegación y del estado del recorrido. */
+(() => {
+  'use strict';
+  const body = document.body;
+  if (body.dataset.module !== 'tradicion') return;
+  body.classList.add('course-welcome-pending');
+  const main = document.getElementById('contenido');
+  if (!main) return;
+
+  const welcome = document.createElement('section');
+  welcome.className = 'course-welcome';
+  welcome.id = 'courseWelcome';
+  welcome.setAttribute('aria-labelledby', 'courseWelcomeTitle');
+  welcome.innerHTML = `
+    <div class="course-welcome-copy">
+      <h1 id="courseWelcomeTitle">¡Hola! Qué gusto tenerte por aquí.</h1>
+      <div class="course-welcome-text">
+        <p>Hoy vamos a descubrir el alma musical de nuestras fiestas: <strong>los tamborileros de Tabasco</strong>.</p>
+        <p>Su música ha acompañado durante generaciones nuestras celebraciones y tradiciones, convirtiéndose en una parte esencial de nuestra identidad cultural.</p>
+      </div>
+      <button type="button" class="course-welcome-start" id="courseWelcomeStart">Comenzar</button>
+    </div>
+    <div class="course-welcome-art" aria-hidden="true"><div class="course-welcome-art-glow"></div><img src="Choco.webp" alt=""></div>`;
+  main.insertBefore(welcome, main.firstElementChild);
+
+  const start = welcome.querySelector('#courseWelcomeStart');
+  let started = false;
+  start.addEventListener('click', () => {
+    if (started) return;
+    started = true;
+    start.disabled = true;
+    welcome.classList.add('is-leaving');
+    const delay = window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 0 : 420;
+    window.setTimeout(() => {
+      body.classList.remove('course-welcome-pending');
+      main.classList.add('course-content-entering');
+      window.scrollTo({ top: 0, behavior: 'instant' });
+      window.setTimeout(() => main.classList.remove('course-content-entering'), 600);
+      document.querySelector('[data-journey-target="0"]')?.focus({ preventScroll: true });
+    }, delay);
+  });
+})();
+
 /* Cultural route v1: independent from the old instrument completion flags. */
 (() => {
   'use strict';
