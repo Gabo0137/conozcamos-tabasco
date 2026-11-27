@@ -481,7 +481,7 @@ body[data-module]{padding-top:80px}
 .reinforcement-section.is-complete .reinforcement-complete p{line-height:1.2}
 .instrument-evaluation-section{margin:34px 0 28px}
 .instrument-evaluation-launch{width:min(100%,960px);margin:0 auto;padding:22px clamp(18px,4vw,42px);border:1px solid #b5d3bd55;border-top:3px solid var(--gold);border-radius:24px;background:linear-gradient(145deg,rgba(22,63,49,.97),rgba(11,48,46,.97));color:var(--cream);text-align:center;box-shadow:0 18px 38px #063c3630}
-.instrument-evaluation-launch h2{margin:0 0 8px;color:#dce9df}
+.instrument-evaluation-launch h2{margin:0 0 8px;color:#dce9df!important}
 .instrument-evaluation-launch p{margin:0 auto 14px;line-height:1.2;color:#dce9df}
 .instrument-evaluation-start{background:var(--gold);color:var(--forest-deep);font-weight:800}
 .instrument-evaluation-shell{width:min(100%,960px);margin:0 auto;padding:14px clamp(14px,3vw,30px) 16px}
