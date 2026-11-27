@@ -4,6 +4,21 @@ document.addEventListener('DOMContentLoaded', () => {
     const demoContainer = baseCard?.parentElement;
     let activeSimulator = null;
     let activeView = 'menu';
+    const progressionKey = 'tambor_toque_progress_v1';
+    let rhythmProgress = { zapateado: false, valceo: false };
+    try {
+        const saved = JSON.parse(localStorage.getItem(progressionKey));
+        if (saved && typeof saved === 'object') {
+            rhythmProgress = {
+                zapateado: saved.zapateado === true,
+                valceo: saved.valceo === true
+            };
+        }
+    } catch { /* El recorrido sigue disponible aunque el almacenamiento no responda. */ }
+
+    function persistRhythmProgress() {
+        try { localStorage.setItem(progressionKey, JSON.stringify(rhythmProgress)); } catch { /* Opcional. */ }
+    }
 
     const rhythmConfigs = {
         zapateado: {
@@ -85,7 +100,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    function createSimulator(card, config) {
+    function createSimulator(card, config, rhythmKey) {
         const sequence = renderSequence(card, config);
         const hits = [...card.querySelectorAll('.sequence-hit')];
         const rightStick = card.querySelector('.stick-right');
@@ -196,6 +211,9 @@ document.addEventListener('DOMContentLoaded', () => {
                     timer = null;
                     position = 0;
                     nextDue = 0;
+                    rhythmProgress[rhythmKey] = true;
+                    persistRhythmProgress();
+                    updateMenuProgress();
                     playButton.classList.remove('is-selected');
                     pauseButton.classList.remove('is-selected');
                     completionTimer = window.setTimeout(() => {
@@ -274,8 +292,8 @@ document.addEventListener('DOMContentLoaded', () => {
     isolateSvgIds(valceoCard, 'valceo-');
     demoContainer.appendChild(valceoCard);
 
-    const zapateadoSimulator = createSimulator(baseCard, rhythmConfigs.zapateado);
-    const valceoSimulator = createSimulator(valceoCard, rhythmConfigs.valceo);
+    const zapateadoSimulator = createSimulator(baseCard, rhythmConfigs.zapateado, 'zapateado');
+    const valceoSimulator = createSimulator(valceoCard, rhythmConfigs.valceo, 'valceo');
 
     // ===== Minijuego: desafíos individuales y combinados =====
     const gameChallengeName = document.getElementById('gameChallengeName');
@@ -455,6 +473,34 @@ document.addEventListener('DOMContentLoaded', () => {
     const viewSections = [demoSection, gameSection];
     const backButton = document.getElementById('btnBack');
     const menuButton = document.getElementById('btnMenu');
+    const menuCards = [...document.querySelectorAll('[data-open-view]')];
+    const gameMenuCard = menuCards.find(card => card.dataset.openView === 'game');
+    const lockedDialog = document.createElement('dialog');
+    lockedDialog.className = 'tambor-lock-dialog';
+    lockedDialog.innerHTML = '<p>Antes de continuar, explora los dos tipos de toques: Zapateado y Valceo</p><button type="button">Aceptar</button>';
+    document.body.appendChild(lockedDialog);
+    lockedDialog.querySelector('button').addEventListener('click', () => lockedDialog.close());
+
+    function updateMenuProgress() {
+        const bothRhythmsCompleted = rhythmProgress.zapateado && rhythmProgress.valceo;
+        menuCards.forEach(card => {
+            const view = card.dataset.openView;
+            const isGame = view === 'game';
+            const completed = view === 'zapateado' ? rhythmProgress.zapateado : view === 'valceo' ? rhythmProgress.valceo : bothRhythmsCompleted;
+            card.classList.toggle('is-complete', completed);
+            card.classList.toggle('is-locked', isGame && !bothRhythmsCompleted);
+            card.setAttribute('aria-disabled', String(isGame && !bothRhythmsCompleted));
+            let state = card.querySelector('.menu-card-state');
+            if (!state) {
+                state = document.createElement('span');
+                state.className = 'menu-card-state';
+                state.setAttribute('aria-hidden', 'true');
+                card.appendChild(state);
+            }
+            state.textContent = isGame && !bothRhythmsCompleted ? '🔒' : completed ? '✓' : '';
+        });
+        if (gameMenuCard) gameMenuCard.title = bothRhythmsCompleted ? '' : 'Completa Zapateado y Valceo para continuar';
+    }
 
     function showMenu() {
         stopAllActivities();
@@ -483,8 +529,15 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     document.querySelectorAll('[data-open-view]').forEach(card => {
-        card.addEventListener('click', () => showView(card.dataset.openView));
+        card.addEventListener('click', () => {
+            if (card.dataset.openView === 'game' && !(rhythmProgress.zapateado && rhythmProgress.valceo)) {
+                if (typeof lockedDialog.showModal === 'function') lockedDialog.showModal();
+                return;
+            }
+            showView(card.dataset.openView);
+        });
     });
+    updateMenuProgress();
     showMenu();
 
     backButton?.addEventListener('click', () => {

@@ -81,6 +81,15 @@ body.module3-simulator-only #tamborDemo {
     transform: translateY(-4px);
     outline: none;
 }
+.tambor-menu-card.is-locked{cursor:not-allowed;filter:saturate(.7)}
+.tambor-menu-card.is-locked:hover,.tambor-menu-card.is-locked:focus-visible{transform:none;filter:saturate(.7)}
+.tambor-menu-card.is-complete{border-color:#65b989}
+.menu-card-state{position:absolute;z-index:3;top:12px;right:14px;display:grid;place-items:center;width:27px;height:27px;border-radius:50%;background:#65b989;color:#0b302e;font-size:.9rem;font-weight:900;line-height:1}
+.tambor-menu-card.is-locked .menu-card-state{background:#52665f;color:#dce9df}
+.tambor-lock-dialog{width:min(420px,calc(100% - 32px));padding:28px;border:1px solid #65b989;border-top:4px solid #f2c557;border-radius:20px;background:#16483f;color:#daf1de;text-align:center;box-shadow:0 20px 50px #051f2099}
+.tambor-lock-dialog::backdrop{background:#051f20aa}
+.tambor-lock-dialog p{margin:0 0 20px;color:#daf1de;font-weight:700;line-height:1.5}
+.tambor-lock-dialog button{background:#f2c557!important;border-color:#f2c557!important;color:#173f31!important;font-weight:800}
 .menu-card-copy { position: relative; z-index: 2; display: flex; min-width: 0; max-width: 58%; flex: 0 0 58%; flex-direction: column; align-items: flex-start; justify-content: center; }
 .menu-card-kicker { display: flex; align-items: center; gap: 9px; color: #f2c45a; font-size: .62rem; font-weight: 900; letter-spacing: .08em; }
 .menu-card-kicker span { color: #fff9e8; font-size: .66rem; letter-spacing: .02em; }
