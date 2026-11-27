@@ -479,6 +479,11 @@ body[data-module]{padding-top:80px}
 .reinforcement-section.is-complete .reinforcement-complete{padding:22px 18px}
 .reinforcement-section.is-complete .reinforcement-complete h3{line-height:1.2}
 .reinforcement-section.is-complete .reinforcement-complete p{line-height:1.2}
+.instrument-evaluation-shell.is-complete .reinforcement-heading{display:none}
+.reinforcement-complete-actions{display:flex;justify-content:center;gap:10px;margin-top:18px}
+.reinforcement-complete-actions .reinforcement-return,.reinforcement-complete-actions .reinforcement-finish{flex:1;min-width:0}
+.reinforcement-complete-actions .reinforcement-return{background:var(--forest);color:#fff9e8}
+.reinforcement-complete-actions .reinforcement-finish{background:var(--gold);color:var(--forest-deep);font-weight:800}
 .instrument-evaluation-section{margin:34px 0 28px}
 .instrument-evaluation-launch{width:min(100%,960px);margin:0 auto;padding:22px clamp(18px,4vw,42px);border:1px solid #b5d3bd55;border-top:3px solid var(--gold);border-radius:24px;background:linear-gradient(145deg,rgba(22,63,49,.97),rgba(11,48,46,.97));color:var(--cream);text-align:center;box-shadow:0 18px 38px #063c3630}
 .instrument-evaluation-launch h2{margin:0 0 8px;color:#dce9df!important}

@@ -648,8 +648,10 @@
         if (panel) panel.hidden = true;
       } else {
         instrumentLearningContent.hidden = true;
-        if (launch) launch.hidden = instrumentJourneyState.evaluationFinished;
-        if (panel) panel.hidden = !instrumentJourneyState.evaluationActive && !instrumentJourneyState.evaluationFinished;
+        if (launch) launch.hidden = false;
+        if (panel) panel.hidden = !instrumentJourneyState.evaluationActive;
+        const start = $('#startInstrumentEvaluation');
+        if (start) start.textContent = instrumentJourneyState.evaluationFinished ? 'Repetir evaluación' : 'Comenzar evaluación';
       }
       updateInstrumentJourney();
     }
@@ -865,22 +867,14 @@
         instrumentJourneyState.evaluationActive = false;
         instrumentJourneyState.evaluationFinished = true;
         instrumentJourneyState.evaluationCompleted = evaluationData.length;
+        instrumentEvaluationPanel.classList.add('is-complete');
         instrumentEvaluationProgress.textContent = 'Evaluación completada';
         instrumentEvaluationProgressFill.style.width = '100%';
-        instrumentEvaluationActivity.innerHTML = '<div class="reinforcement-complete"><div class="reinforcement-complete-icon" aria-hidden="true">✓</div><h3>¡Excelente! Has completado la evaluación.</h3><p>Ahora conoces los materiales, las características y el funcionamiento de los instrumentos tradicionales de los tamborileros de Tabasco.</p><button type="button" class="reinforcement-retry" data-instrument-evaluation-retry>Reintentar evaluación</button></div>';
+        instrumentEvaluationActivity.innerHTML = '<div class="reinforcement-complete"><div class="reinforcement-complete-icon" aria-hidden="true">✓</div><h3>¡Excelente! Has completado la evaluación.</h3><p>Ahora conoces los materiales, las características y el funcionamiento de los instrumentos tradicionales de los tamborileros de Tabasco.</p><div class="reinforcement-complete-actions"><button type="button" class="reinforcement-return" data-instrument-return>Volver al contenido</button><button type="button" class="reinforcement-finish" data-instrument-finish>Finalizar</button></div></div>';
         instrumentLearningContent.hidden = false;
         updateInstrumentJourney();
-        instrumentEvaluationActivity.querySelector('[data-instrument-evaluation-retry]').addEventListener('click', () => {
-          evaluationCompleted = false;
-          instrumentJourneyState.evaluationActive = true;
-          instrumentJourneyState.evaluationFinished = false;
-          instrumentJourneyState.evaluationCompleted = 0;
-          instrumentJourneyState.completed.delete(2);
-          evaluationIndex = 0;
-          instrumentLearningContent.hidden = true;
-          instrumentEvaluationActivity.classList.add('is-changing');
-          window.setTimeout(renderInstrumentEvaluation, 180);
-        });
+        instrumentEvaluationActivity.querySelector('[data-instrument-return]').addEventListener('click', () => showInstrumentStage(0));
+        instrumentEvaluationActivity.querySelector('[data-instrument-finish]').addEventListener('click', () => { discover(); window.location.assign('course.html#mapa'); });
       }
 
       function checkInstrumentEvaluation() {
@@ -942,6 +936,9 @@
         instrumentJourneyState.current = 2;
         instrumentJourneyState.evaluationActive = true;
         instrumentJourneyState.evaluationFinished = false;
+        instrumentJourneyState.evaluationCompleted = 0;
+        instrumentJourneyState.completed.delete(2);
+        instrumentEvaluationPanel.classList.remove('is-complete');
         instrumentLearningContent.hidden = true;
         instrumentEvaluationLaunch.hidden = true;
         instrumentEvaluationPanel.hidden = false;
