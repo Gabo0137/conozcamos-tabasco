@@ -496,7 +496,7 @@ body[data-module]{padding-top:80px}
 .instrument-match-column{min-width:0}
 .instrument-match-column h4{margin:0 0 6px;color:var(--forest);font-size:13px;text-transform:uppercase;letter-spacing:.5px}
 .instrument-match-parts,.instrument-match-targets{display:grid;gap:6px}
-.instrument-match-card,.instrument-match-target{width:100%;min-height:42px;padding:9px 10px;border:3px solid #d7decf;border-radius:11px;background:#f7f3e6;color:var(--forest-deep);font-size:13px;font-weight:700;line-height:1.2;text-align:left;transition:background-color .2s ease,border-color .2s ease,transform .2s ease}
+.instrument-match-card,.instrument-match-target{position:relative;width:100%;min-height:42px;padding:9px 10px;border:3px solid #d7decf;border-radius:11px;background:#f7f3e6;color:var(--forest-deep);font-size:13px;font-weight:700;line-height:1.2;text-align:left;transition:background-color .2s ease,border-color .2s ease,transform .2s ease}
 .instrument-match-card{cursor:grab;justify-content:flex-start}
 .instrument-match-card:active{cursor:grabbing}
 .instrument-match-target{display:flex;min-height:54px;flex-direction:column;align-items:flex-start;justify-content:center;gap:3px;font-weight:500}
@@ -505,5 +505,9 @@ body[data-module]{padding-top:80px}
 .instrument-match-card.is-correct,.instrument-match-target.is-correct{border-color:#16A34A!important;background:#f7f3e6}
 .instrument-match-card.is-incorrect,.instrument-match-target.is-incorrect{border-color:#C0392B!important;background:#f7f3e6}
 .instrument-match-target:disabled{opacity:1;cursor:default}
+.instrument-match-card.is-correct::after,.instrument-match-target.is-correct::after,.instrument-match-card.is-incorrect::after,.instrument-match-target.is-incorrect::after{position:absolute;right:8px;top:50%;transform:translateY(-50%);font-size:18px;font-weight:900;line-height:1}
+.instrument-match-card.is-correct::after,.instrument-match-target.is-correct::after{content:'✓';color:#16A34A}
+.instrument-match-card.is-incorrect::after,.instrument-match-target.is-incorrect::after{content:'✕';color:#C0392B}
+.instrument-evaluation-section .reinforcement-text-option.is-correct,.instrument-evaluation-section .reinforcement-text-option.is-incorrect{padding-right:34px}
 @media(max-width:760px){.instrument-evaluation-section{margin-top:24px}.instrument-evaluation-shell{padding-inline:10px}.instrument-evaluation-card{padding:12px}.instrument-classification-grid{grid-template-columns:1fr}.instrument-true-false-row{grid-template-columns:1fr}.instrument-true-false-row>div{grid-template-columns:repeat(2,minmax(0,1fr))}.instrument-true-false-row .reinforcement-text-option{width:100%}.instrument-fill-layout{grid-template-columns:100px 1fr}.instrument-fill-layout>.reinforcement-image-wrap,.instrument-fill-layout>.reinforcement-image-wrap img{height:95px;min-height:95px}.instrument-fill-sentence{font-size:14px}.instrument-fill-options{grid-column:1 / -1}}
 @media(max-width:760px){.instrument-match-layout{gap:8px}.instrument-match-card,.instrument-match-target{min-height:38px;padding:7px 8px;font-size:12px}.instrument-match-target{min-height:46px}}

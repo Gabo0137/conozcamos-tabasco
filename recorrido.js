@@ -783,13 +783,14 @@
         instrumentEvaluationActivity.querySelectorAll('.reinforcement-option').forEach(option => {
           option.disabled = true;
           const group = option.closest('[data-answer-group]');
+          const wasSelected = option.classList.contains('is-selected');
           let isCorrectOption = false;
           if (activity.type === 'materials') isCorrectOption = activity.correct.includes(option.dataset.value);
           if (activity.type === 'classify') isCorrectOption = activity.items.find(item => item.id === group?.dataset.answerGroup)?.correct === option.dataset.value;
           if (activity.type === 'true-false') isCorrectOption = activity.items.find(item => item.id === group?.dataset.answerGroup)?.correct === option.dataset.value;
           if (activity.type === 'fill') isCorrectOption = option.dataset.value === activity.correct;
-          option.classList.toggle('is-correct', isCorrectOption);
-          option.classList.toggle('is-incorrect', option.classList.contains('is-selected') && !isCorrectOption);
+          option.classList.toggle('is-correct', wasSelected && isCorrectOption);
+          option.classList.toggle('is-incorrect', wasSelected && !isCorrectOption);
         });
         if (activity.type === 'match') {
           instrumentEvaluationActivity.querySelectorAll('[data-match-target]').forEach(target => {
