@@ -621,3 +621,18 @@ body[data-module="tradicion"] .journey-stage[data-journey-stage="3"]>.encuentro-
 body[data-module="tradicion"] .journey-stage[data-journey-stage="3"] .youtube-frame{width:auto;height:clamp(170px,calc(100svh - 430px),315px);max-width:100%;aspect-ratio:16/9;flex:0 0 auto}
 body[data-module="tradicion"] .journey-stage[data-journey-stage="3"] .video-reference{width:min(560px,100%);margin:8px auto 0;overflow-wrap:anywhere}
 @media(max-width:760px){body[data-module="tradicion"] .journey-stage[data-journey-stage="3"]>.encuentro-section{height:min(calc(100svh - 205px),560px);padding:18px 14px}.journey-stage[data-journey-stage="3"] .youtube-frame{height:clamp(150px,calc(100svh - 390px),240px)}}
+
+/* Ajustes visuales exclusivos de la página Los instrumentos. */
+html body[data-module="instrumentos"]{background-color:#0b3a33!important;background-image:linear-gradient(rgba(11,58,51,.84),rgba(11,58,51,.84)),url('FondoBeige.png')!important;background-position:center!important;background-size:cover!important;background-repeat:no-repeat!important;background-attachment:fixed!important;color:#daf1de!important}
+body[data-module="instrumentos"] .instrument-journey-nav{background:rgba(11,58,51,.94);border-bottom-color:transparent;box-shadow:0 8px 20px rgba(3,34,30,.28)}
+body[data-module="instrumentos"] .instrument-journey-nav button{background:#16483f!important;border-color:#3c6f62!important;color:#dce9df!important}
+body[data-module="instrumentos"] .instrument-journey-nav li.is-current button{background:#f2c557!important;border-color:#f2c557!important;color:#173f31!important}
+body[data-module="instrumentos"] .instrument-journey-nav li.is-current .instrument-journey-icon{background:#f2c557!important;color:#173f31!important}
+body[data-module="instrumentos"] .instrument-journey-nav li.is-complete button{background:#2f7b55!important;border-color:#65b989!important;color:#fff9e8!important}
+body[data-module="instrumentos"] .instrument-journey-nav li.is-complete .instrument-journey-icon{background:#65b989!important;color:#0b302e!important}
+body[data-module="instrumentos"] .instrument-journey-nav li.is-locked button{background:#29443e!important;border-color:#52665f!important;color:#aebdb5!important}
+body[data-module="instrumentos"] .instrument-journey-nav li.is-locked .instrument-journey-icon{background:#52665f!important;color:#dce9df!important}
+body[data-module="instrumentos"] .instrument-journey-meter{color:#dce9df!important}
+body[data-module="instrumentos"] .instrument-journey-meter>div{background:#29443e!important}
+body[data-module="instrumentos"] .instrument-journey-meter>div>span{background:#65b989!important}
+body[data-module="instrumentos"] .module-banner::after,body[data-module="instrumentos"] .page-end::before{display:none!important}
