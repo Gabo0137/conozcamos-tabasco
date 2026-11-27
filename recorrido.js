@@ -88,6 +88,50 @@
   });
 })();
 
+/* Presentación previa del módulo final: conserva intacto el contenido de cierre. */
+(() => {
+  'use strict';
+  const body = document.body;
+  if (body.dataset.module !== 'descubrimientos') return;
+  body.classList.add('course-welcome-pending');
+  const main = document.getElementById('contenido');
+  if (!main) return;
+
+  const welcome = document.createElement('section');
+  welcome.className = 'course-welcome final-course-welcome';
+  welcome.id = 'finalWelcome';
+  welcome.setAttribute('aria-labelledby', 'finalWelcomeTitle');
+  welcome.innerHTML = `
+    <div class="course-welcome-copy">
+      <h1 id="finalWelcomeTitle">¡Has llegado a la etapa final!</h1>
+      <div class="course-welcome-text">
+        <p>Ya conoces un poco más sobre nuestra tradición musical.</p>
+        <p>Ahora es momento de demostrar lo que has aprendido a lo largo de este recorrido.</p>
+      </div>
+      <button type="button" class="course-welcome-start" id="finalWelcomeStart">Comenzar evaluación</button>
+    </div>
+    <div class="course-welcome-art" aria-hidden="true"><div class="course-welcome-art-glow"></div><img src="victoria.webp" alt=""></div>`;
+  main.insertBefore(welcome, main.firstElementChild);
+
+  const start = welcome.querySelector('#finalWelcomeStart');
+  let started = false;
+  start.addEventListener('click', () => {
+    if (started) return;
+    started = true;
+    start.disabled = true;
+    welcome.classList.add('is-leaving');
+    const delay = window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 0 : 420;
+    window.setTimeout(() => {
+      welcome.remove();
+      body.classList.remove('course-welcome-pending');
+      body.classList.add('course-welcome-revealed');
+      main.classList.add('course-content-entering');
+      window.scrollTo(0, 0);
+      window.setTimeout(() => main.classList.remove('course-content-entering'), 600);
+    }, delay);
+  });
+})();
+
 /* Cultural route v1: independent from the old instrument completion flags. */
 (() => {
   'use strict';
