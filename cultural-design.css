@@ -636,3 +636,4 @@ body[data-module="instrumentos"] .instrument-journey-meter{color:#dce9df!importa
 body[data-module="instrumentos"] .instrument-journey-meter>div{background:#29443e!important}
 body[data-module="instrumentos"] .instrument-journey-meter>div>span{background:#65b989!important}
 body[data-module="instrumentos"] .module-banner::after,body[data-module="instrumentos"] .page-end::before{display:none!important}
+body[data-module="instrumentos"] .instrument-stage-next{display:inline-flex;box-sizing:border-box;width:40px;height:40px;min-width:40px;min-height:40px;margin:0;padding:0;border:1px solid #f2c557;border-radius:50%;align-items:center;justify-content:center;background:#f2c557;color:#173f31;font-size:24px;font-weight:800;line-height:1;transform:translateY(-50%)}
