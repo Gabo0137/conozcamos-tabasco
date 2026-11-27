@@ -613,7 +613,7 @@
     };
     const fluteHotspotDetails = {
       embocadura: ['Embocadura', 'Abertura donde se sopla para introducir el aire en la flauta y producir la vibración.'],
-      orificios: ['Orificios', 'Agujeros del cuerpo que se tapan y destapan con los dedos para cambiar las notas.'],
+      orificios: ['Orificios', 'Cuenta con seis orificios en la parte superior y uno en la parte posterior. Al cubrirlos y descubrirlos con los dedos, se producen diferentes notas musicales'],
       carrizo: ['Carrizo', 'Tallo hueco, ligero y resistente de una planta parecida a la caña, usado para fabricar la flauta.'],
       boquilla: ['Boquilla', 'Observa el extremo abierto de la flauta y la forma hueca del carrizo que permite el paso del aire.']
     };
