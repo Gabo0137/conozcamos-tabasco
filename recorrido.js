@@ -32,9 +32,11 @@
     welcome.classList.add('is-leaving');
     const delay = window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 0 : 420;
     window.setTimeout(() => {
+      welcome.remove();
       body.classList.remove('course-welcome-pending');
+      body.classList.add('course-welcome-revealed');
       main.classList.add('course-content-entering');
-      window.scrollTo({ top: 0, behavior: 'instant' });
+      window.scrollTo(0, 0);
       window.setTimeout(() => main.classList.remove('course-content-entering'), 600);
       document.querySelector('[data-journey-target="0"]')?.focus({ preventScroll: true });
     }, delay);
