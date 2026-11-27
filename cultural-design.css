@@ -593,3 +593,22 @@ body[data-module]{padding-top:80px}
 .drum-hotspot[aria-pressed=true]::before{transform:none!important;background:#ffd273;box-shadow:0 0 0 5px #edb33638,0 4px 10px #061b1866}
 @media(max-width:760px){.instrument-evaluation-section{margin-top:24px}.instrument-evaluation-shell{padding-inline:10px}.instrument-evaluation-card{padding:12px}.instrument-classification-grid{grid-template-columns:1fr}.instrument-true-false-row{grid-template-columns:1fr}.instrument-true-false-row>div{grid-template-columns:repeat(2,minmax(0,1fr))}.instrument-true-false-row .reinforcement-text-option{width:100%}.instrument-fill-layout{grid-template-columns:100px 1fr}.instrument-fill-layout>.reinforcement-image-wrap,.instrument-fill-layout>.reinforcement-image-wrap img{height:95px;min-height:95px}.instrument-fill-sentence{font-size:14px}.instrument-fill-options{grid-column:1 / -1}}
 @media(max-width:760px){.instrument-match-layout{gap:7px}.instrument-match-card-shell{padding:9px 10px}.instrument-match-card-shell .instrument-match-layout{grid-template-columns:minmax(100px,.68fr) minmax(0,1.32fr)}.instrument-match-card-shell .instrument-match-card{width:100%;height:28px;min-height:28px;font-size:11px}.instrument-match-card-shell .instrument-match-target{height:60px;min-height:60px;font-size:10px}.instrument-match-card-shell .instrument-match-slot{height:22px;min-height:22px}.instrument-match-card-shell .instrument-match-slot .instrument-match-card{height:22px;min-height:22px;font-size:9px}}
+
+/* Ajustes visuales exclusivos de la página Los Tamborileros. */
+html body[data-module="tradicion"]{background-color:#0b3a33!important;background-image:linear-gradient(rgba(11,58,51,.84),rgba(11,58,51,.84)),url('FondoBeige.png')!important;background-position:center!important;background-size:cover!important;background-repeat:no-repeat!important;background-attachment:fixed!important;color:#daf1de!important}
+body[data-module="tradicion"] .learning-journey-nav{background:rgba(11,58,51,.94);border-bottom-color:transparent;box-shadow:0 8px 20px rgba(3,34,30,.28)}
+body[data-module="tradicion"] .learning-journey-steps button{background:#16483f!important;border-color:#3c6f62!important;color:#dce9df!important}
+body[data-module="tradicion"] .learning-journey-steps li.is-current button{background:#f2c557!important;border-color:#f2c557!important;color:#173f31!important}
+body[data-module="tradicion"] .learning-journey-steps li.is-current .learning-journey-icon{background:#f2c557!important;color:#173f31!important}
+body[data-module="tradicion"] .learning-journey-steps li.is-complete button{background:#2f7b55!important;border-color:#65b989!important;color:#fff9e8!important}
+body[data-module="tradicion"] .learning-journey-steps li.is-complete .learning-journey-icon{background:#65b989!important;color:#0b302e!important}
+body[data-module="tradicion"] .learning-journey-steps li.is-locked button{background:#29443e!important;border-color:#52665f!important;color:#aebdb5!important}
+body[data-module="tradicion"] .learning-journey-steps li.is-locked .learning-journey-icon{background:#52665f!important;color:#dce9df!important}
+body[data-module="tradicion"] .story-instruction,body[data-module="tradicion"] .journey-stage-label,body[data-module="tradicion"] .encuentro-section>h2,body[data-module="tradicion"] .encuentro-section>.muted,body[data-module="tradicion"] .video-reference{color:#dce9df!important}
+body[data-module="tradicion"] .video-reference a{color:#f2c557!important}
+body[data-module="tradicion"] .journey-stage>.journey-stage-toolbar{border-top-color:transparent!important}
+body[data-module="tradicion"] .journey-stage>.journey-stage-toolbar .journey-prev{background:#235d4b!important;border-color:#8eb69b!important;color:#fff9e8!important}
+body[data-module="tradicion"] .journey-stage>.journey-stage-toolbar .journey-next{background:#f2c557!important;border-color:#f2c557!important;color:#173f31!important}
+body[data-module="tradicion"] .story-coverflow .story-controls #story-prev{background:#235d4b!important;color:#fff9e8!important}
+body[data-module="tradicion"] .story-coverflow .story-controls #story-next{background:#f2c557!important;color:#173f31!important}
+body[data-module="tradicion"] .module-banner::after,body[data-module="tradicion"] .page-end::before{display:none!important}
