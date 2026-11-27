@@ -43,6 +43,51 @@
   });
 })();
 
+/* Pantalla previa del curso de instrumentos: no altera el recorrido existente. */
+(() => {
+  'use strict';
+  const body = document.body;
+  if (body.dataset.module !== 'instrumentos') return;
+  body.classList.add('course-welcome-pending');
+  const main = document.getElementById('contenido');
+  if (!main) return;
+
+  const welcome = document.createElement('section');
+  welcome.className = 'course-welcome instrument-course-welcome';
+  welcome.id = 'instrumentWelcome';
+  welcome.setAttribute('aria-labelledby', 'instrumentWelcomeTitle');
+  welcome.innerHTML = `
+    <div class="course-welcome-copy">
+      <h1 id="instrumentWelcomeTitle">¡Conozcamos los instrumentos!</h1>
+      <div class="course-welcome-text">
+        <p>¿Sabes de qué están hechos los instrumentos que utilizan los tamborileros?</p>
+        <p>Descubre cómo están elaborados y qué los hace tan especiales dentro de nuestra tradición musical.</p>
+      </div>
+      <button type="button" class="course-welcome-start" id="instrumentWelcomeStart">Comenzar</button>
+    </div>
+    <div class="course-welcome-art" aria-hidden="true"><div class="course-welcome-art-glow"></div><img src="Presentando instrumentos.webp" alt=""></div>`;
+  main.insertBefore(welcome, main.firstElementChild);
+
+  const start = welcome.querySelector('#instrumentWelcomeStart');
+  let started = false;
+  start.addEventListener('click', () => {
+    if (started) return;
+    started = true;
+    start.disabled = true;
+    welcome.classList.add('is-leaving');
+    const delay = window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 0 : 420;
+    window.setTimeout(() => {
+      welcome.remove();
+      body.classList.remove('course-welcome-pending');
+      body.classList.add('course-welcome-revealed');
+      main.classList.add('course-content-entering');
+      window.scrollTo(0, 0);
+      window.setTimeout(() => main.classList.remove('course-content-entering'), 600);
+      document.querySelector('[data-instrument-stage="0"]')?.focus({ preventScroll: true });
+    }, delay);
+  });
+})();
+
 /* Cultural route v1: independent from the old instrument completion flags. */
 (() => {
   'use strict';
