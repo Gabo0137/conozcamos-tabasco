@@ -675,10 +675,13 @@
         { type:'materials', title:'Identifica los materiales', instruction:'Selecciona los dos materiales utilizados para elaborar la flauta de carrizo.', correct:['carrizo','cera'], feedbackCorrect:'La flauta se elabora con carrizo y cera de abeja.', options:[{id:'carrizo',label:'Carrizo',image:'carrizo.webp',alt:'Carrizo'},{id:'piel',label:'Piel',image:'Piel.webp',alt:'Piel de venado'},{id:'cera',label:'Cera de abeja',image:'Cera.webp',alt:'Cera de abeja'},{id:'madera',label:'Madera de cedro',image:'Madera de cedro.webp',alt:'Madera de cedro'}] },
         { type:'classify', title:'Clasifica los instrumentos', instruction:'Identifica a qué familia musical pertenece cada instrumento.', feedbackCorrect:'La flauta pertenece a la familia de viento y el tambor a la familia de percusión.', items:[{id:'flauta',label:'Flauta de carrizo',image:'Flautis carizo.png',correct:'viento'},{id:'tambor',label:'Tambor tradicional',image:'Tambor.png',correct:'percusion'}], options:[{id:'viento',label:'Viento'},{id:'percusion',label:'Percusión'},{id:'cuerda',label:'Cuerda'}] },
         { type:'true-false', title:'Verdadero o falso', instruction:'Indica si las siguientes afirmaciones son verdaderas o falsas.', feedbackCorrect:'Has identificado correctamente las características de la flauta y el tambor.', items:[{id:'aire',text:'La flauta de carrizo produce sonido mediante el aire.',correct:'verdadero'},{id:'metal',text:'El tambor tradicional se fabrica principalmente con metal.',correct:'falso'},{id:'notas',text:'Al cubrir o descubrir los orificios de la flauta cambian las notas.',correct:'verdadero'}], options:[{id:'verdadero',label:'Verdadero'},{id:'falso',label:'Falso'}] },
-        { type:'fill', title:'Completa la frase', instruction:'Selecciona la palabra que completa correctamente la frase.', correct:'parche', feedbackCorrect:'El parche vibra al ser golpeado por las baquetas y produce el sonido.', image:'Tambor.png', imageAlt:'Tambor tradicional', sentence:'Los golpes de las baquetas hacen vibrar el', options:[{id:'cuerpo',label:'Cuerpo'},{id:'parche',label:'Parche'},{id:'amarre',label:'Amarre'}] }
+        { type:'fill', title:'Completa la frase', instruction:'Selecciona la palabra que completa correctamente la frase.', correct:'parche', feedbackCorrect:'El parche vibra al ser golpeado por las baquetas y produce el sonido.', image:'Tambor.png', imageAlt:'Tambor tradicional', sentence:'Los golpes de las baquetas hacen vibrar el', options:[{id:'cuerpo',label:'Cuerpo'},{id:'parche',label:'Parche'},{id:'amarre',label:'Amarre'}] },
+        { type:'match', title:'Cada parte tiene una función', instruction:'Relaciona cada parte del instrumento con su función correspondiente', items:[{id:'parche',label:'Parche',function:'Vibra al ser golpeado.'},{id:'orificios',label:'Orificios',function:'Permiten cambiar las notas.'},{id:'amarre',label:'Amarre',function:'Mantiene tensos los parches.'},{id:'embocadura',label:'Embocadura',function:'Permite introducir el aire en la flauta.'},{id:'baquetas',label:'Baquetas',function:'Permiten golpear el tambor.'}], feedbackCorrect:'Has relacionado correctamente cada parte con su función.' }
       ];
       let evaluationIndex = 0;
       let evaluationCompleted = false;
+      let matchAssignments = {};
+      let selectedMatchPart = null;
       const shuffleEvaluation = items => [...items].sort(() => Math.random() - 0.5);
       const optionButton = option => `<button type="button" class="reinforcement-option reinforcement-image-option" data-value="${option.id}"><span class="reinforcement-image-wrap"><img src="${option.image}" alt="${option.alt}"></span><span class="reinforcement-option-name">${option.label}</span></button>`;
       const textButton = option => `<button type="button" class="reinforcement-option reinforcement-text-option" data-value="${option.id}">${option.label}</button>`;
@@ -689,6 +692,7 @@
         if (activity.type === 'materials') ready = instrumentEvaluationActivity.querySelectorAll('.reinforcement-option.is-selected').length === 2;
         if (activity.type === 'classify' || activity.type === 'true-false') ready = [...instrumentEvaluationActivity.querySelectorAll('[data-answer-group]')].every(group => group.querySelector('.is-selected'));
         if (activity.type === 'fill') ready = Boolean(instrumentEvaluationActivity.querySelector('.reinforcement-option.is-selected'));
+        if (activity.type === 'match') ready = Object.keys(matchAssignments).length === activity.items.length;
         const check = instrumentEvaluationActivity.querySelector('[data-instrument-evaluation-check]');
         if (check) check.disabled = !ready;
       }
@@ -696,6 +700,8 @@
       function renderInstrumentEvaluation() {
         const activity = evaluationData[evaluationIndex];
         instrumentEvaluationActivity.classList.remove('is-changing');
+        matchAssignments = {};
+        selectedMatchPart = null;
         instrumentEvaluationProgress.textContent = `Actividad ${evaluationIndex + 1} de ${evaluationData.length}`;
         instrumentEvaluationProgressFill.style.width = `${(evaluationIndex / evaluationData.length) * 100}%`;
         let body = '';
@@ -703,7 +709,9 @@
         if (activity.type === 'classify') body = `<div class="instrument-classification-grid">${activity.items.map(item => `<div class="instrument-classification-row" data-answer-group="${item.id}"><div class="instrument-classification-heading"><img src="${item.image}" alt="${item.label}"><strong>${item.label}</strong></div><div class="instrument-classification-options">${shuffleEvaluation(activity.options).map(textButton).join('')}</div></div>`).join('')}</div>`;
         if (activity.type === 'true-false') body = `<div class="instrument-true-false-list">${activity.items.map(item => `<div class="instrument-true-false-row" data-answer-group="${item.id}"><p>${item.text}</p><div>${activity.options.map(textButton).join('')}</div></div>`).join('')}</div>`;
         if (activity.type === 'fill') body = `<div class="instrument-fill-layout"><span class="reinforcement-image-wrap"><img src="${activity.image}" alt="${activity.imageAlt}"></span><p class="instrument-fill-sentence">${activity.sentence} <span class="instrument-fill-blank" data-answer-slot aria-live="polite">________</span> del tambor.</p><div class="instrument-fill-options">${shuffleEvaluation(activity.options).map(textButton).join('')}</div></div>`;
-        instrumentEvaluationActivity.innerHTML = `<div class="reinforcement-card instrument-evaluation-card"><div class="reinforcement-card-top"><span>Actividad ${evaluationIndex + 1}</span><span class="reinforcement-card-tag">Evaluación</span></div><h3>${activity.title}</h3><p class="reinforcement-instruction">${activity.instruction}</p>${body}<p class="reinforcement-feedback" aria-live="polite"></p><div class="reinforcement-actions"><button type="button" class="reinforcement-check" data-instrument-evaluation-check disabled>Comprobar</button><button type="button" class="reinforcement-next" data-instrument-evaluation-next hidden>Siguiente</button></div></div>`;
+        if (activity.type === 'match') body = `<div class="instrument-match-layout"><div class="instrument-match-column"><h4>Partes</h4><div class="instrument-match-parts">${shuffleEvaluation(activity.items).map(item => `<button type="button" class="instrument-match-card" draggable="true" data-match-part="${item.id}">${item.label}</button>`).join('')}</div></div><div class="instrument-match-column"><h4>Funciones</h4><div class="instrument-match-targets">${shuffleEvaluation(activity.items).map(item => `<button type="button" class="instrument-match-target" data-match-target="${item.id}"><span>${item.function}</span><small data-match-slot>Arrastra aquí</small></button>`).join('')}</div></div></div>`;
+        const nextLabel = activity.type === 'match' ? 'Finalizar evaluación' : 'Siguiente';
+        instrumentEvaluationActivity.innerHTML = `<div class="reinforcement-card instrument-evaluation-card"><div class="reinforcement-card-top"><span>Actividad ${evaluationIndex + 1}</span><span class="reinforcement-card-tag">Evaluación</span></div><h3>${activity.title}</h3><p class="reinforcement-instruction">${activity.instruction}</p>${body}<p class="reinforcement-feedback" aria-live="polite"></p><div class="reinforcement-actions"><button type="button" class="reinforcement-check" data-instrument-evaluation-check disabled>Comprobar</button><button type="button" class="reinforcement-next" data-instrument-evaluation-next hidden>${nextLabel}</button></div></div>`;
         instrumentEvaluationActivity.querySelectorAll('.reinforcement-option').forEach(option => option.addEventListener('click', () => {
           if (option.disabled) return;
           const group = option.closest('[data-answer-group]');
@@ -718,6 +726,31 @@
           }
           updateInstrumentEvaluationControls();
         }));
+        if (activity.type === 'match') {
+          const assignMatch = (partId, targetId) => {
+            Object.keys(matchAssignments).forEach(key => { if (matchAssignments[key] === partId) delete matchAssignments[key]; });
+            matchAssignments[targetId] = partId;
+            selectedMatchPart = null;
+            instrumentEvaluationActivity.querySelectorAll('[data-match-part]').forEach(card => card.classList.toggle('is-selected', card.dataset.matchPart === partId));
+            instrumentEvaluationActivity.querySelectorAll('[data-match-target]').forEach(target => {
+              const assigned = matchAssignments[target.dataset.matchTarget];
+              const item = activity.items.find(entry => entry.id === assigned);
+              target.classList.toggle('is-assigned', Boolean(item));
+              target.querySelector('[data-match-slot]').textContent = item ? item.label : 'Arrastra aquí';
+            });
+            updateInstrumentEvaluationControls();
+          };
+          instrumentEvaluationActivity.querySelectorAll('[data-match-part]').forEach(card => {
+            card.addEventListener('dragstart', event => { selectedMatchPart = card.dataset.matchPart; event.dataTransfer?.setData('text/plain', selectedMatchPart); card.classList.add('is-selected'); });
+            card.addEventListener('dragend', () => card.classList.remove('is-selected'));
+            card.addEventListener('click', () => { selectedMatchPart = card.dataset.matchPart; instrumentEvaluationActivity.querySelectorAll('[data-match-part]').forEach(item => item.classList.toggle('is-selected', item === card)); });
+          });
+          instrumentEvaluationActivity.querySelectorAll('[data-match-target]').forEach(target => {
+            target.addEventListener('dragover', event => event.preventDefault());
+            target.addEventListener('drop', event => { event.preventDefault(); const partId = event.dataTransfer?.getData('text/plain') || selectedMatchPart; if (partId) assignMatch(partId, target.dataset.matchTarget); });
+            target.addEventListener('click', () => { if (selectedMatchPart) assignMatch(selectedMatchPart, target.dataset.matchTarget); });
+          });
+        }
         instrumentEvaluationActivity.querySelector('[data-instrument-evaluation-check]').addEventListener('click', checkInstrumentEvaluation);
       }
 
@@ -746,6 +779,7 @@
         if (activity.type === 'classify') correct = activity.items.every(item => instrumentEvaluationActivity.querySelector(`[data-answer-group="${item.id}"] .is-selected`)?.dataset.value === item.correct);
         if (activity.type === 'true-false') correct = activity.items.every(item => instrumentEvaluationActivity.querySelector(`[data-answer-group="${item.id}"] .is-selected`)?.dataset.value === item.correct);
         if (activity.type === 'fill') correct = selected[0]?.dataset.value === activity.correct;
+        if (activity.type === 'match') correct = activity.items.every(item => matchAssignments[item.id] === item.id);
         instrumentEvaluationActivity.querySelectorAll('.reinforcement-option').forEach(option => {
           option.disabled = true;
           const group = option.closest('[data-answer-group]');
@@ -757,6 +791,21 @@
           option.classList.toggle('is-correct', isCorrectOption);
           option.classList.toggle('is-incorrect', option.classList.contains('is-selected') && !isCorrectOption);
         });
+        if (activity.type === 'match') {
+          instrumentEvaluationActivity.querySelectorAll('[data-match-target]').forEach(target => {
+            const targetId = target.dataset.matchTarget;
+            const isCorrectTarget = matchAssignments[targetId] === targetId;
+            target.classList.toggle('is-correct', isCorrectTarget);
+            target.classList.toggle('is-incorrect', !isCorrectTarget);
+            target.disabled = true;
+          });
+          instrumentEvaluationActivity.querySelectorAll('[data-match-part]').forEach(card => {
+            const targetId = Object.keys(matchAssignments).find(key => matchAssignments[key] === card.dataset.matchPart);
+            card.draggable = false;
+            card.classList.toggle('is-correct', targetId === card.dataset.matchPart);
+            card.classList.toggle('is-incorrect', targetId !== card.dataset.matchPart);
+          });
+        }
         const feedback = instrumentEvaluationActivity.querySelector('.reinforcement-feedback');
         feedback.className = `reinforcement-feedback ${correct ? 'is-correct' : 'is-incorrect'}`;
         feedback.innerHTML = `<strong>${correct ? '¡Respuesta correcta!' : 'Respuesta incorrecta'}</strong><span>${correct ? activity.feedbackCorrect : 'Revisa las opciones e inténtalo nuevamente.'}</span>`;
