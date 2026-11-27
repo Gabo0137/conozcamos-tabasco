@@ -92,6 +92,32 @@
     let restartReinforcementEvaluation = null;
     const journeyStageCount = journeyStages.length;
     const journeyStepLabels = ['Carrusel','Mapa interactivo','¿Sabías que?','Video','Evaluación final'];
+    let encounterYoutubePlayer = null;
+    let encounterYoutubeReady = false;
+
+    function pauseEncounterVideo() {
+      if (encounterYoutubeReady && encounterYoutubePlayer && typeof encounterYoutubePlayer.pauseVideo === 'function') encounterYoutubePlayer.pauseVideo();
+    }
+
+    function initializeEncounterYoutubePlayer() {
+      const iframe = document.querySelector('.encuentro-section iframe[src*="youtube.com/embed"]');
+      if (!iframe) return;
+      const iframeUrl = new URL(iframe.getAttribute('src'), window.location.href);
+      iframeUrl.searchParams.set('enablejsapi', '1');
+      iframe.setAttribute('src', iframeUrl.toString());
+      const createPlayer = () => {
+        if (encounterYoutubePlayer || !window.YT?.Player) return;
+        encounterYoutubePlayer = new window.YT.Player(iframe, { events: { onReady: () => { encounterYoutubeReady = true; } } });
+      };
+      if (window.YT?.Player) { createPlayer(); return; }
+      const previousReady = window.onYouTubeIframeAPIReady;
+      window.onYouTubeIframeAPIReady = () => { previousReady?.(); createPlayer(); };
+      if (!document.querySelector('script[src="https://www.youtube.com/iframe_api"]')) {
+        const apiScript = document.createElement('script');
+        apiScript.src = 'https://www.youtube.com/iframe_api';
+        document.head.append(apiScript);
+      }
+    }
 
     function updateJourneyProgress() {
       const evaluationLocked = journeyState.current === 4 && !journeyState.evaluationFinished;
@@ -140,6 +166,7 @@
       const evaluationLocked = journeyState.current === 4 && !journeyState.evaluationFinished;
       const unlocked = index === 0 || journeyState.completed.has(index - 1);
       if (evaluationLocked || !unlocked) return;
+      if (journeyState.current === 3 && index !== 3) pauseEncounterVideo();
       journeyState.current = index;
       updateJourneyProgress();
       const activeStage = journeyStages[index];
@@ -155,6 +182,7 @@
     }));
     all('[data-stage-prev]').forEach(button => button.addEventListener('click', () => showJourneyStage(journeyState.current - 1)));
     updateJourneyProgress();
+    initializeEncounterYoutubePlayer();
 
     all('.instrument-flip').forEach(button => button.addEventListener('click', () => {
       const flipped = button.getAttribute('aria-pressed') !== 'true';
