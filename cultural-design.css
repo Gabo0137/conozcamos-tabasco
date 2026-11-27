@@ -1,6 +1,7 @@
 @import url('palette.css');
 @import url('responsive.css');
 /* Visual direction: a cultural journey in forest green, warm paper and gold. */
+html body[data-module="tradicion"],html body[data-module="instrumentos"],html body[data-module="sonidos"],html body[data-module="descubrimientos"]{background-color:#051f20!important;background-image:linear-gradient(rgba(5,31,32,.9),rgba(5,31,32,.9)),url('FondoBeige.png')!important;background-position:center!important;background-size:cover!important;background-repeat:no-repeat!important;background-attachment:fixed!important;color:#daf1de!important}
 :root{--forest:#074c45;--forest-deep:#063c36;--gold:#edb336;--cream:#fcf9f0;--paper:#fcf9f0;--ink:#123f38;--panel:#fffef9;--soft:#f2ebd8;--muted:#536c62;--brand:#074c45;--line:#dddcc9;--accent:#a66a09}
 body{background:var(--cream);color:var(--ink)}
 body[data-module="tradicion"],body[data-module="instrumentos"],body[data-module="sonidos"],body[data-module="descubrimientos"]{background-color:var(--cream);background-image:linear-gradient(#fcf9f033,#fcf9f033),url('FondoBeige.png');background-position:center top;background-size:auto,max(100%,1200px) auto;background-repeat:repeat,repeat-y}

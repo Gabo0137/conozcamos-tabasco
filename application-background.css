@@ -1,0 +1,5 @@
+/* Fondo visual compartido de la aplicación, excepto course.html. */
+html{background:#051f20}
+html body{background-color:#051f20!important;background-image:linear-gradient(rgba(5,31,32,.9),rgba(5,31,32,.9)),url('FondoBeige.png')!important;background-position:center!important;background-size:cover!important;background-repeat:no-repeat!important;background-attachment:fixed!important;color:#daf1de!important}
+html body .brand-panel{background:linear-gradient(rgba(5,31,32,.9),rgba(5,31,32,.9)),url('FondoBeige.png') center/cover no-repeat!important}
+html body.module3-simulator-only .module-main,html body .module1-simulator-main{background:transparent!important}
