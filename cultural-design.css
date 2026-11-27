@@ -612,3 +612,6 @@ body[data-module="tradicion"] .journey-stage>.journey-stage-toolbar .journey-nex
 body[data-module="tradicion"] .story-coverflow .story-controls #story-prev{background:#235d4b!important;color:#fff9e8!important}
 body[data-module="tradicion"] .story-coverflow .story-controls #story-next{background:#f2c557!important;color:#173f31!important}
 body[data-module="tradicion"] .module-banner::after,body[data-module="tradicion"] .page-end::before{display:none!important}
+body[data-module="tradicion"] .tabasco-map-legend{display:none!important}
+body[data-module="tradicion"] .tradition-map-heading h2{color:#dce9df!important}
+body[data-module="tradicion"] .journey-stage[data-journey-stage="4"]>.tamborileros-evaluation-launch{flex:1;display:flex;flex-direction:column;justify-content:center}

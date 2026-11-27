@@ -463,7 +463,7 @@
           path.setAttribute('tabindex', '0');
           path.setAttribute('aria-label', municipality.title);
         });
-        renderMunicipality(selectedMunicipality);
+        renderMunicipality(selectedMunicipality, true);
         refreshTabascoMapMarkerPositions();
         window.addEventListener('resize', updateMunicipalityMarkerLabels, { passive: true });
     }
@@ -496,7 +496,7 @@
         message.className = 'tabasco-map-loading';
         message.textContent = 'No se pudo cargar el mapa. Las tarjetas están preparadas para futuras fotografías municipales.';
         mapHost.replaceChildren(message);
-        renderMunicipality(selectedMunicipality);
+          renderMunicipality(selectedMunicipality, true);
       }
     }
     loadTabascoMap();
@@ -506,6 +506,12 @@
     const reinforcementProgressFill = $('#reinforcementProgressFill');
     if (reinforcementActivity) {
       const reinforcementSection = reinforcementActivity.closest('.reinforcement-section');
+      const reinforcementLaunch = document.createElement('div');
+      reinforcementLaunch.className = 'instrument-evaluation-launch tamborileros-evaluation-launch';
+      reinforcementLaunch.innerHTML = '<h2>Evaluación final</h2><p>Comprueba lo que aprendiste sobre los tamborileros de Tabasco, su historia y sus tradiciones.</p><button type="button" class="instrument-evaluation-start">Comenzar evaluación</button>';
+      reinforcementSection?.before(reinforcementLaunch);
+      reinforcementSection?.toggleAttribute('hidden', true);
+      const startReinforcementEvaluation = reinforcementLaunch.querySelector('.instrument-evaluation-start');
       const reinforcementHeading = reinforcementSection?.querySelector('.reinforcement-heading');
       const reinforcementProgressContainer = reinforcementSection?.querySelector('.reinforcement-progress');
       const reinforcementData = [
@@ -551,6 +557,8 @@
       }
 
       restartReinforcementEvaluation = () => {
+        reinforcementLaunch.hidden = true;
+        reinforcementSection.hidden = false;
         reinforcementSection?.classList.remove('is-complete');
         reinforcementHeading?.toggleAttribute('hidden', false);
         reinforcementProgressContainer?.toggleAttribute('hidden', false);
@@ -622,7 +630,11 @@
           check.disabled = false;
         }
       }
-      renderReinforcement();
+      startReinforcementEvaluation?.addEventListener('click', () => {
+        reinforcementLaunch.hidden = true;
+        reinforcementSection.hidden = false;
+        renderReinforcement();
+      });
     }
 
     all('[data-culture-answer]').forEach(button => button.addEventListener('click', () => {
