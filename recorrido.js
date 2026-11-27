@@ -672,7 +672,7 @@
     const startInstrumentEvaluation = $('#startInstrumentEvaluation');
     if (instrumentEvaluationActivity && instrumentEvaluationPanel && startInstrumentEvaluation) {
       const evaluationData = [
-        { type:'materials', title:'Identifica los materiales', instruction:'Selecciona los dos materiales utilizados para elaborar la flauta de carrizo.', correct:['carrizo','cera'], feedbackCorrect:'La flauta se elabora con carrizo y cera de abeja.', options:[{id:'carrizo',label:'Carrizo',image:'Carrizo Cera.png',alt:'Carrizo'},{id:'piel',label:'Piel',image:'material_Tambor.png',alt:'Piel'},{id:'cera',label:'Cera de abeja',image:'Carrizo Cera.png',alt:'Cera de abeja'},{id:'madera',label:'Madera de cedro',image:'material_Tambor.png',alt:'Madera de cedro'}] },
+        { type:'materials', title:'Identifica los materiales', instruction:'Selecciona los dos materiales utilizados para elaborar la flauta de carrizo.', correct:['carrizo','cera'], feedbackCorrect:'La flauta se elabora con carrizo y cera de abeja.', options:[{id:'carrizo',label:'Carrizo',image:'carrizo.webp',alt:'Carrizo'},{id:'piel',label:'Piel',image:'Piel.webp',alt:'Piel de venado'},{id:'cera',label:'Cera de abeja',image:'Cera.webp',alt:'Cera de abeja'},{id:'madera',label:'Madera de cedro',image:'Madera de cedro.webp',alt:'Madera de cedro'}] },
         { type:'classify', title:'Clasifica los instrumentos', instruction:'Identifica a qué familia musical pertenece cada instrumento.', feedbackCorrect:'La flauta pertenece a la familia de viento y el tambor a la familia de percusión.', items:[{id:'flauta',label:'Flauta de carrizo',image:'Flautis carizo.png',correct:'viento'},{id:'tambor',label:'Tambor tradicional',image:'Tambor.png',correct:'percusion'}], options:[{id:'viento',label:'Viento'},{id:'percusion',label:'Percusión'},{id:'cuerda',label:'Cuerda'}] },
         { type:'true-false', title:'Verdadero o falso', instruction:'Indica si las siguientes afirmaciones son verdaderas o falsas.', feedbackCorrect:'Has identificado correctamente las características de la flauta y el tambor.', items:[{id:'aire',text:'La flauta de carrizo produce sonido mediante el aire.',correct:'verdadero'},{id:'metal',text:'El tambor tradicional se fabrica principalmente con metal.',correct:'falso'},{id:'notas',text:'Al cubrir o descubrir los orificios de la flauta cambian las notas.',correct:'verdadero'}], options:[{id:'verdadero',label:'Verdadero'},{id:'falso',label:'Falso'}] },
         { type:'fill', title:'Completa la frase', instruction:'Selecciona la palabra que completa correctamente la frase.', correct:'parche', feedbackCorrect:'El parche vibra al ser golpeado por las baquetas y produce el sonido.', image:'Tambor.png', imageAlt:'Tambor tradicional', sentence:'Los golpes de las baquetas hacen vibrar el', options:[{id:'cuerpo',label:'Cuerpo'},{id:'parche',label:'Parche'},{id:'amarre',label:'Amarre'}] }
@@ -695,6 +695,7 @@
 
       function renderInstrumentEvaluation() {
         const activity = evaluationData[evaluationIndex];
+        instrumentEvaluationActivity.classList.remove('is-changing');
         instrumentEvaluationProgress.textContent = `Actividad ${evaluationIndex + 1} de ${evaluationData.length}`;
         instrumentEvaluationProgressFill.style.width = `${(evaluationIndex / evaluationData.length) * 100}%`;
         let body = '';
