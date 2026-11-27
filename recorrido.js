@@ -44,6 +44,7 @@
     const journeySteps = all('[data-journey-target]');
     const journeyNav = $('[data-journey-nav]');
     const journeyState = { current:0, completed:new Set(), mapVisited:new Set(), evaluationFinished:false };
+    let restartReinforcementEvaluation = null;
     const journeyStageCount = journeyStages.length;
     const journeyStepLabels = ['Carrusel','Mapa interactivo','¿Sabías que?','Video','Evaluación final'];
 
@@ -86,6 +87,11 @@
 
     function showJourneyStage(index) {
       if (index < 0 || index >= journeyStageCount) return;
+      if (index === 4 && journeyState.evaluationFinished && restartReinforcementEvaluation) {
+        journeyState.evaluationFinished = false;
+        journeyState.completed.delete(4);
+        restartReinforcementEvaluation();
+      }
       const evaluationLocked = journeyState.current === 4 && !journeyState.evaluationFinished;
       const unlocked = index === 0 || journeyState.completed.has(index - 1);
       if (evaluationLocked || !unlocked) return;
@@ -491,24 +497,25 @@
         reinforcementSection?.classList.add('is-complete');
         reinforcementHeading?.toggleAttribute('hidden', true);
         reinforcementProgressContainer?.toggleAttribute('hidden', true);
-        reinforcementActivity.innerHTML = '<div class="reinforcement-complete"><div class="reinforcement-complete-icon" aria-hidden="true">✓</div><h3>¡Excelente! Has completado la evaluación</h3><p>Ahora conoces los instrumentos, la vestimenta, algunos de los municipios y la importancia cultural de los tamborileros de Tabasco.</p><button type="button" class="reinforcement-retry" data-reinforcement-retry>Reintentar evaluación</button></div>';
-        reinforcementActivity.querySelector('[data-reinforcement-retry]').addEventListener('click', () => {
-          journeyState.evaluationFinished = false;
-          journeyState.completed.delete(4);
-          reinforcementSection?.classList.remove('is-complete');
-          reinforcementHeading?.toggleAttribute('hidden', false);
-          reinforcementProgressContainer?.toggleAttribute('hidden', false);
-          reinforcementHistory.push(reinforcementRecords.map(record => ({ ...record })));
-          reinforcementRecords = reinforcementData.map(() => ({ firstAttemptCorrect:false, incorrectAnswers:0, attempts:0, responseTime:0, completed:false, startedAt:null }));
-          window.tamborilerosReinforcementEvaluation = reinforcementRecords;
-          reinforcementIndex = 0;
-          reinforcementActivity.classList.add('is-changing');
-          window.setTimeout(renderReinforcement, 180);
-        });
+        reinforcementActivity.innerHTML = '<div class="reinforcement-complete"><div class="reinforcement-complete-icon" aria-hidden="true">✓</div><h3>¡Excelente! Has completado la evaluación</h3><p>Ahora conoces los instrumentos, la vestimenta, algunos de los municipios y la importancia cultural de los tamborileros de Tabasco.</p><div class="reinforcement-complete-actions"><button type="button" class="reinforcement-return" data-reinforcement-return>Volver al contenido</button><button type="button" class="reinforcement-finish" data-reinforcement-finish>Finalizar</button></div></div>';
+        reinforcementActivity.querySelector('[data-reinforcement-return]').addEventListener('click', () => showJourneyStage(0));
+        reinforcementActivity.querySelector('[data-reinforcement-finish]').addEventListener('click', () => { discover(); window.location.assign('course.html#mapa'); });
         journeyState.evaluationFinished = true;
         completeJourneyStage(4);
         discover();
       }
+
+      restartReinforcementEvaluation = () => {
+        reinforcementSection?.classList.remove('is-complete');
+        reinforcementHeading?.toggleAttribute('hidden', false);
+        reinforcementProgressContainer?.toggleAttribute('hidden', false);
+        reinforcementHistory.push(reinforcementRecords.map(record => ({ ...record })));
+        reinforcementRecords = reinforcementData.map(() => ({ firstAttemptCorrect:false, incorrectAnswers:0, attempts:0, responseTime:0, completed:false, startedAt:null }));
+        window.tamborilerosReinforcementEvaluation = reinforcementRecords;
+        reinforcementIndex = 0;
+        reinforcementActivity.classList.add('is-changing');
+        window.setTimeout(renderReinforcement, 180);
+      };
 
       function renderReinforcement() {
         if (reinforcementIndex >= reinforcementData.length) { showCompletion(); return; }
