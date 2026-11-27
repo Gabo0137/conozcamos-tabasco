@@ -586,6 +586,7 @@
     const instrumentJourneyState = { current:0, completed:new Set(), visited:{ 0:new Set(), 1:new Set() }, hotspots:{ 0:new Set(), 1:new Set() }, evaluationCompleted:0, evaluationActive:false, evaluationFinished:false };
     const instrumentJourneyButtons = all('[data-instrument-stage]');
     const instrumentLearningContent = $('#instrument-learning-content');
+    const instrumentNextButton = $('[data-instrument-next]');
 
     function instrumentStageComplete(index) {
       if (index === 0) return instrumentJourneyState.visited[0].size >= 3 && instrumentJourneyState.hotspots[0].size >= 4;
@@ -622,6 +623,7 @@
       if (evaluationStart) evaluationStart.disabled = !evaluationUnlocked || instrumentJourneyState.evaluationActive;
       const evaluationLaunch = $('#instrumentEvaluationLaunch');
       if (evaluationLaunch && !evaluationUnlocked && !instrumentJourneyState.evaluationActive && !instrumentJourneyState.evaluationFinished) evaluationLaunch.hidden = true;
+      if (instrumentNextButton) instrumentNextButton.hidden = !((instrumentJourneyState.current === 0 && fluteComplete) || (instrumentJourneyState.current === 1 && drumComplete)) || instrumentJourneyState.evaluationActive;
     }
 
     function showInstrumentStage(index) {
@@ -635,6 +637,7 @@
       const panel = $('#instrumentEvaluationPanel');
       if (index < 2) {
         instrument = index;
+        instrumentJourneyState.visited[index].add(0);
         $('#instrument-image').src = instruments[instrument].image;
         $('#instrument-image').alt = instruments[instrument].name;
         instrumentLearningContent.hidden = false;
@@ -650,6 +653,7 @@
     }
 
     instrumentJourneyButtons.forEach(button => button.addEventListener('click', () => showInstrumentStage(Number(button.dataset.instrumentStage))));
+    instrumentNextButton?.addEventListener('click', () => showInstrumentStage(instrumentJourneyState.current + 1));
 
     function markInstrumentPart(part) {
       instrumentJourneyState.visited[instrument].add(part);
@@ -945,6 +949,7 @@
         instrumentEvaluationPanel.scrollIntoView({ behavior:'smooth', block:'start' });
       });
     }
+    instrumentJourneyState.visited[0].add(0);
     updateInstrumentJourney();
   }
 
