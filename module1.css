@@ -1915,6 +1915,25 @@ body {
 
 .module1-simulator-main { background: #fff; }
 
+/* Presentación compacta de las siete notas: conserva la digitación y reduce solo el espacio visual. */
+.flute-notes-explorer{padding:16px 14px 12px}
+.flute-notes-heading{margin-bottom:10px}
+.flute-notes-title{font-size:clamp(1.3rem,2.35vw,1.75rem)}
+.flute-notes-desc{max-width:900px;margin:5px auto 0;font-size:.82rem;line-height:1.35}
+.flute-notes-grid{gap:10px}
+.flute-note-card{padding:8px 8px 7px;border-radius:15px}
+.note-flute{height:120px;margin:0 auto 3px;transform:scale(.6);transform-origin:top center}
+.flute-note-card.is-playing .note-flute{transform:scale(.6) translateY(-2px)}
+.flute-note-label{margin-bottom:5px;font-size:1rem}
+.flute-note-controls{gap:5px}
+.flute-note-button{min-height:30px;padding:4px 4px;font-size:.72rem}
+.flute-notes-status{min-height:1.2em;margin:8px 0 0;font-size:.78rem}
+
+@media (min-width: 561px) and (max-width: 900px) {
+    .flute-notes-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+    .flute-note-card:nth-child(n) { grid-column: auto; }
+}
+
 @media (max-width: 768px) {
     .toolbar-back {
         left: 14px;
