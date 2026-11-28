@@ -6,6 +6,9 @@ document.addEventListener('DOMContentLoaded', () => {
     const positionIntroNext = document.getElementById('positionIntroNext');
     const notesSection = document.getElementById('sectionAudio');
     const positionIntroBack = document.getElementById('positionIntroBack');
+    const notesNext = document.getElementById('fluteNotesNext');
+    const sequenceSection = document.getElementById('sectionSequence');
+    const sequenceBack = document.getElementById('fluteSequenceBack');
 
     function showNotesSection() {
         positionIntro.hidden = true;
@@ -24,8 +27,27 @@ document.addEventListener('DOMContentLoaded', () => {
         positionIntroNext?.focus({ preventScroll: true });
     }
 
+    function showSequenceSection() {
+        notesSection.hidden = true;
+        notesSection.classList.remove('active');
+        sequenceSection.hidden = false;
+        sequenceSection.classList.add('active');
+        window.scrollTo(0, 0);
+    }
+
+    function showNotesFromSequence() {
+        sequenceSection.hidden = true;
+        sequenceSection.classList.remove('active');
+        notesSection.hidden = false;
+        notesSection.classList.add('active');
+        window.scrollTo(0, 0);
+        notesNext?.focus({ preventScroll: true });
+    }
+
     positionIntroNext?.addEventListener('click', showNotesSection);
     positionIntroBack?.addEventListener('click', showPositionIntro);
+    notesNext?.addEventListener('click', showSequenceSection);
+    sequenceBack?.addEventListener('click', showNotesFromSequence);
 
     const fluteNoteData = [
         { note: 'SOL', slug: 'sol', thumbOpen: true, frontStates: ['open', 'open', 'open', 'open', 'open', 'covered'] },
