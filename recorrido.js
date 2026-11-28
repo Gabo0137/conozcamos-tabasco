@@ -88,6 +88,51 @@
   });
 })();
 
+/* Pantalla previa del módulo 3: conserva intacto el menú de instrumentos. */
+(() => {
+  'use strict';
+  const body = document.body;
+  if (body.dataset.module !== 'sonidos') return;
+  body.classList.add('course-welcome-pending');
+  const main = document.getElementById('contenido');
+  if (!main) return;
+
+  const welcome = document.createElement('section');
+  welcome.className = 'course-welcome sounds-course-welcome';
+  welcome.id = 'soundsWelcome';
+  welcome.setAttribute('aria-labelledby', 'soundsWelcomeTitle');
+  welcome.innerHTML = `
+    <div class="course-welcome-copy">
+      <h1 id="soundsWelcomeTitle">¡Demos vida a la música!</h1>
+      <div class="course-welcome-text">
+        <p>¿Sabes cómo se ejecutan las notas y los ritmos de los tamborileros?</p>
+        <p>Descubre las posiciones de los dedos en la flauta de carrizo y explora cómo se ejecutan dos ritmos tradicionales: el zapateado y el valceo.</p>
+      </div>
+      <button type="button" class="course-welcome-start" id="soundsWelcomeStart">Comenzar</button>
+    </div>
+    <div class="course-welcome-art" aria-hidden="true"><div class="course-welcome-art-glow"></div><img src="Tocar.png" alt=""></div>`;
+  main.insertBefore(welcome, main.firstElementChild);
+
+  const start = welcome.querySelector('#soundsWelcomeStart');
+  let started = false;
+  start.addEventListener('click', () => {
+    if (started) return;
+    started = true;
+    start.disabled = true;
+    welcome.classList.add('is-leaving');
+    const delay = window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 0 : 420;
+    window.setTimeout(() => {
+      welcome.remove();
+      body.classList.remove('course-welcome-pending');
+      body.classList.add('course-welcome-revealed');
+      main.classList.add('course-content-entering');
+      window.scrollTo(0, 0);
+      window.setTimeout(() => main.classList.remove('course-content-entering'), 600);
+      document.querySelector('.sound-option-card')?.focus({ preventScroll: true });
+    }, delay);
+  });
+})();
+
 /* Presentación previa del módulo final: conserva intacto el contenido de cierre. */
 (() => {
   'use strict';
