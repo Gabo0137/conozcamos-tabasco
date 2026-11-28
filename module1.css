@@ -1929,6 +1929,10 @@ body {
 .flute-note-button{min-height:30px;padding:4px 4px;font-size:.72rem}
 .flute-notes-status{min-height:1.2em;margin:8px 0 0;font-size:.78rem}
 
+/* El regreso se ancla al contenedor completo para quedar fuera y centrado verticalmente. */
+.flute-notes-heading { position: static; }
+.flute-notes-explorer { position: relative; }
+
 @media (min-width: 561px) and (max-width: 900px) {
     .flute-notes-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); }
     .flute-note-card:nth-child(n) { grid-column: auto; }
