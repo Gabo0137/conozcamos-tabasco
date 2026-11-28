@@ -2,6 +2,18 @@ document.addEventListener('DOMContentLoaded', () => {
     const btnBack = document.getElementById('btnBack');
     const fluteNotesGrid = document.getElementById('fluteNotesGrid');
     const fluteNotesStatus = document.getElementById('fluteNotesStatus');
+    const positionIntro = document.getElementById('sectionPositionIntro');
+    const positionIntroNext = document.getElementById('positionIntroNext');
+    const notesSection = document.getElementById('sectionAudio');
+
+    positionIntroNext?.addEventListener('click', () => {
+        positionIntro.hidden = true;
+        positionIntro.classList.remove('active');
+        notesSection.hidden = false;
+        notesSection.classList.add('active');
+        window.scrollTo(0, 0);
+        document.getElementById('fluteNotesTitle')?.focus?.({ preventScroll: true });
+    });
 
     const fluteNoteData = [
         { note: 'SOL', slug: 'sol', thumbOpen: true, frontStates: ['open', 'open', 'open', 'open', 'open', 'covered'] },
