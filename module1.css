@@ -2026,10 +2026,10 @@ body {
 .flute-sequence-image { display: block; width: 100%; height: 100%; max-width: 100%; max-height: 100%; object-fit: contain; object-position: center; }
 
 /* Deja aire alrededor de la imagen y mantiene las flechas visibles por encima de ella. */
-.flute-sequence-panel { padding: 20px 52px; overflow: visible; }
+.flute-sequence-panel { padding: 8px 40px; overflow: visible; }
 .flute-sequence-panel { min-height: 0; height: min(calc(100dvh - 156px), calc(52vh + 120px)); }
 .flute-sequence-panel { background: #07594f; }
-.flute-sequence-image { width: auto; height: 94%; max-width: calc(100% - 32px); max-height: 94%; min-height: 0; object-fit: contain; object-position: center; z-index: 1; }
+.flute-sequence-image { width: 100%; height: 94%; max-width: 100%; max-height: 94%; min-height: 0; object-fit: contain; object-position: center; z-index: 1; }
 .flute-sequence-back { left: 8px; z-index: 5; }
 .flute-sequence-next { right: 8px; left: auto; z-index: 5; }
 
@@ -2881,4 +2881,21 @@ body {
     #sectionNotePractice .practice-finger-list li { min-height: 30px; padding: 4px 10px; }
     #sectionNotePractice .practice-feedback { margin: 5px 0 4px; }
     #sectionNotePractice .practice-actions { margin: 0; }
+}
+
+/* Evita que las indicaciones crezcan sobre la fila inferior de controles. */
+@media (min-width: 761px) {
+    #sectionNotePractice .note-practice-panel { overflow: hidden; padding: 12px 20px; }
+    #sectionNotePractice .note-practice-workspace { min-height: 0; overflow: hidden; align-items: center; }
+    #sectionNotePractice .practice-fingers-panel { min-height: 0; overflow: hidden; }
+    #sectionNotePractice .practice-finger-groups { gap: 5px; }
+    #sectionNotePractice .practice-hand-group h4 { margin-bottom: 3px; font-size: .82rem; }
+    #sectionNotePractice .practice-hand-group .practice-finger-list { gap: 3px; }
+    #sectionNotePractice .practice-finger-list li { height: 29px; min-height: 29px; padding: 3px 9px; line-height: 1; }
+    #sectionNotePractice .practice-finger-state { font-size: .65rem; }
+    #sectionNotePractice .practice-flute { width: 72px; height: 220px; }
+    #sectionNotePractice .practice-tube { width: 49px; height: 192px; }
+    #sectionNotePractice .practice-hole { width: 29px; height: 29px; }
+    #sectionNotePractice .practice-actions { min-height: 32px; }
+    #sectionNotePractice .practice-action { min-height: 32px; padding: 5px 10px; }
 }
