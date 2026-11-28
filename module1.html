@@ -86,6 +86,7 @@
                     </div>
                     <div class="note-practice-workspace" id="notePracticeWorkspace">
                         <div class="practice-flute-area">
+                            <h3 class="practice-note-name" id="practiceNoteName">SOL</h3>
                             <div class="practice-flute" id="practiceFlute" role="group" aria-label="Orificios interactivos de la flauta">
                                 <div class="practice-mouthpiece"><span></span></div>
                                 <div class="practice-tube">
@@ -101,17 +102,26 @@
                             <div class="practice-flute-caption">Haz clic en los círculos para tapar o destapar</div>
                         </div>
                         <div class="practice-fingers-panel">
-                            <h3 id="practiceNoteName">SOL</h3>
                             <p class="practice-fingers-instruction" id="practiceInstruction">Indicaciones para construir la nota:</p>
-                            <ul class="practice-finger-list" id="practiceFingerList">
-                                <li data-finger="thumb"><span class="practice-finger-mark">◉</span> Pulgar izquierdo</li>
-                                <li data-finger="0"><span class="practice-finger-mark">◉</span> Índice izquierdo</li>
-                                <li data-finger="1"><span class="practice-finger-mark">◉</span> Medio izquierdo</li>
-                                <li data-finger="2"><span class="practice-finger-mark">◉</span> Anular izquierdo</li>
-                                <li data-finger="3"><span class="practice-finger-mark">◉</span> Índice derecho</li>
-                                <li data-finger="4"><span class="practice-finger-mark">◉</span> Medio derecho</li>
-                                <li data-finger="5"><span class="practice-finger-mark">◉</span> Anular derecho</li>
-                            </ul>
+                            <div class="practice-finger-groups" id="practiceFingerList">
+                                <div class="practice-hand-group">
+                                    <h4>Mano izquierda</h4>
+                                    <ul class="practice-finger-list">
+                                        <li data-finger="thumb"><span class="practice-finger-mark">Pulgar</span><span class="practice-finger-state"></span></li>
+                                        <li data-finger="0"><span class="practice-finger-mark">Índice</span><span class="practice-finger-state"></span></li>
+                                        <li data-finger="1"><span class="practice-finger-mark">Medio</span><span class="practice-finger-state"></span></li>
+                                        <li data-finger="2"><span class="practice-finger-mark">Anular</span><span class="practice-finger-state"></span></li>
+                                    </ul>
+                                </div>
+                                <div class="practice-hand-group">
+                                    <h4>Mano derecha</h4>
+                                    <ul class="practice-finger-list">
+                                        <li data-finger="3"><span class="practice-finger-mark">Índice</span><span class="practice-finger-state"></span></li>
+                                        <li data-finger="4"><span class="practice-finger-mark">Medio</span><span class="practice-finger-state"></span></li>
+                                        <li data-finger="5"><span class="practice-finger-mark">Anular</span><span class="practice-finger-state"></span></li>
+                                    </ul>
+                                </div>
+                            </div>
                         </div>
                     </div>
                     <p class="practice-feedback" id="practiceFeedback" role="status" aria-live="polite"></p>

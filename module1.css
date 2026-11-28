@@ -2820,6 +2820,35 @@ body {
     #sectionNotePractice .practice-finger-list li { min-height: 27px; padding: 4px 8px; }
 }
 
+/* Composición compacta de la actividad: nota arriba de la flauta y manos agrupadas. */
+#sectionNotePractice .practice-note-name { margin: 0 0 8px; color: #f2c557 !important; font-size: clamp(1.35rem, 2.8vw, 1.8rem); line-height: 1; text-align: center; }
+#sectionNotePractice #practiceNoteName { color: #f2c557 !important; }
+#sectionNotePractice .practice-finger-groups { display: grid; gap: 9px; }
+#sectionNotePractice .practice-hand-group h4 { margin: 0 0 5px; color: #DAF1DE !important; font-size: .9rem; line-height: 1.1; }
+#sectionNotePractice .practice-hand-group .practice-finger-list { gap: 4px; }
+#sectionNotePractice .practice-finger-list li { justify-content: space-between; gap: 10px; min-height: 29px; padding: 4px 9px; }
+#sectionNotePractice .practice-finger-mark { margin: 0; color: #fff9e8; font-weight: 700; }
+#sectionNotePractice .practice-finger-state { color: #f2c557; font-size: .7rem; font-weight: 800; }
+#sectionNotePractice .practice-finger-list li.is-target-open .practice-finger-state { color: #DAF1DE; }
+
+@media (min-width: 761px) {
+    #sectionNotePractice .note-practice-workspace { grid-template-columns: minmax(260px, .86fr) minmax(0, 1.14fr); gap: clamp(20px, 3vw, 42px); }
+    #sectionNotePractice .practice-flute-area { align-self: center; }
+    #sectionNotePractice .practice-flute { width: 76px; height: 232px; }
+    #sectionNotePractice .practice-tube { width: 51px; height: 202px; }
+    #sectionNotePractice .practice-hole { width: 30px; height: 30px; }
+    #sectionNotePractice .practice-note-name { margin-bottom: 7px; }
+}
+
+@media (max-width: 760px) {
+    #sectionNotePractice .practice-note-name { margin-bottom: 3px; font-size: 1.15rem; }
+    #sectionNotePractice .practice-finger-groups { gap: 6px; }
+    #sectionNotePractice .practice-hand-group h4 { margin-bottom: 3px; font-size: .76rem; }
+    #sectionNotePractice .practice-hand-group .practice-finger-list { gap: 3px; }
+    #sectionNotePractice .practice-finger-list li { min-height: 25px; padding: 3px 7px; font-size: .62rem; }
+    #sectionNotePractice .practice-finger-state { font-size: .6rem; }
+}
+
 /* Distribución equilibrada en escritorio: el área de trabajo y los botones ocupan filas independientes. */
 @media (min-width: 761px) {
     #sectionNotePractice .note-practice-panel {

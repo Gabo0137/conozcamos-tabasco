@@ -133,6 +133,11 @@ document.addEventListener('DOMContentLoaded', () => {
             const state = item.dataset.finger === 'thumb' ? target.thumb : target.front[Number(item.dataset.finger)];
             item.dataset.target = state;
             item.title = practiceWithHelp ? `Debes dejarlo ${state === 'open' ? 'abierto' : 'tapado'}` : 'Recuerda la posición de esta digitación';
+            const stateLabel = item.querySelector('.practice-finger-state');
+            if (stateLabel) {
+                stateLabel.textContent = practiceWithHelp ? (state === 'open' ? 'Destapar' : 'Tapar') : '';
+                stateLabel.hidden = !practiceWithHelp;
+            }
             item.classList.toggle('is-target-covered', state === 'covered');
             item.classList.toggle('is-target-open', state === 'open');
         });
