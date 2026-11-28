@@ -2819,3 +2819,36 @@ body {
     #sectionNotePractice .practice-finger-list { gap: 5px; }
     #sectionNotePractice .practice-finger-list li { min-height: 27px; padding: 4px 8px; }
 }
+
+/* Distribución equilibrada en escritorio: el área de trabajo y los botones ocupan filas independientes. */
+@media (min-width: 761px) {
+    #sectionNotePractice .note-practice-panel {
+        display: grid;
+        grid-template-rows: auto auto minmax(0, 1fr) auto auto;
+        gap: 0;
+        padding: 14px 18px;
+    }
+    #sectionNotePractice .note-practice-heading,
+    #sectionNotePractice .note-practice-toolbar,
+    #sectionNotePractice .note-practice-workspace,
+    #sectionNotePractice .practice-actions {
+        width: 100%;
+        max-width: none;
+    }
+    #sectionNotePractice .note-practice-toolbar { margin: 8px 0 6px; }
+    #sectionNotePractice .note-practice-workspace {
+        grid-template-columns: minmax(250px, .95fr) minmax(0, 1.05fr);
+        gap: clamp(24px, 4vw, 56px);
+        align-items: center;
+        margin: 0;
+        flex: none;
+    }
+    #sectionNotePractice .practice-flute-area { justify-self: center; }
+    #sectionNotePractice .practice-flute { width: 78px; height: 238px; }
+    #sectionNotePractice .practice-tube { width: 52px; height: 208px; }
+    #sectionNotePractice .practice-hole { width: 31px; height: 31px; }
+    #sectionNotePractice .practice-finger-list { gap: 6px; }
+    #sectionNotePractice .practice-finger-list li { min-height: 30px; padding: 4px 10px; }
+    #sectionNotePractice .practice-feedback { margin: 5px 0 4px; }
+    #sectionNotePractice .practice-actions { margin: 0; }
+}
