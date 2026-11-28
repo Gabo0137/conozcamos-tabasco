@@ -85,6 +85,7 @@ body.module3-simulator-only #tamborDemo {
 .tambor-menu-card.is-locked:hover,.tambor-menu-card.is-locked:focus-visible{transform:none;filter:saturate(.7)}
 .tambor-menu-card.is-complete{border-color:#65b989}
 .menu-card-state{position:absolute;z-index:3;top:12px;right:14px;display:grid;place-items:center;width:27px;height:27px;border-radius:50%;background:#65b989;color:#0b302e;font-size:.9rem;font-weight:900;line-height:1}
+.menu-card-state:empty{display:none}
 .tambor-menu-card.is-locked .menu-card-state{background:#52665f;color:#dce9df}
 .tambor-lock-dialog{position:fixed;inset:50% auto auto 50%;width:min(420px,calc(100% - 32px));margin:0;padding:28px;transform:translate(-50%,-50%);border:1px solid #65b989;border-top:4px solid #f2c557;border-radius:20px;background:#16483f;color:#daf1de;text-align:center;box-shadow:0 20px 50px #051f2099}
 .tambor-lock-dialog::backdrop{background:#051f20aa}
