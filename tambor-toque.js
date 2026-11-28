@@ -477,7 +477,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const gameMenuCard = menuCards.find(card => card.dataset.openView === 'game');
     const lockedDialog = document.createElement('dialog');
     lockedDialog.className = 'tambor-lock-dialog';
-    lockedDialog.innerHTML = '<p>Antes de continuar, explora los dos tipos de toques: Zapateado y Valceo</p><button type="button">Aceptar</button>';
+    lockedDialog.innerHTML = '<div class="tambor-lock-icon" aria-hidden="true">🔒</div><p>Antes de continuar, explora los dos tipos de toques: Zapateado y Valceo</p><button type="button">Aceptar</button>';
     document.body.appendChild(lockedDialog);
     lockedDialog.querySelector('button').addEventListener('click', () => lockedDialog.close());
 
