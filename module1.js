@@ -9,6 +9,9 @@ document.addEventListener('DOMContentLoaded', () => {
     const notesNext = document.getElementById('fluteNotesNext');
     const sequenceSection = document.getElementById('sectionSequence');
     const sequenceBack = document.getElementById('fluteSequenceBack');
+    const sequenceNext = document.getElementById('fluteSequenceNext');
+    const notePracticeSection = document.getElementById('sectionNotePractice');
+    const notePracticeBack = document.getElementById('notePracticeBack');
 
     function showNotesSection() {
         positionIntro.hidden = true;
@@ -44,10 +47,29 @@ document.addEventListener('DOMContentLoaded', () => {
         notesNext?.focus({ preventScroll: true });
     }
 
+    function showNotePractice() {
+        sequenceSection.hidden = true;
+        sequenceSection.classList.remove('active');
+        notePracticeSection.hidden = false;
+        notePracticeSection.classList.add('active');
+        window.scrollTo(0, 0);
+    }
+
+    function showSequenceFromPractice() {
+        notePracticeSection.hidden = true;
+        notePracticeSection.classList.remove('active');
+        sequenceSection.hidden = false;
+        sequenceSection.classList.add('active');
+        window.scrollTo(0, 0);
+        sequenceNext?.focus({ preventScroll: true });
+    }
+
     positionIntroNext?.addEventListener('click', showNotesSection);
     positionIntroBack?.addEventListener('click', showPositionIntro);
     notesNext?.addEventListener('click', showSequenceSection);
     sequenceBack?.addEventListener('click', showNotesFromSequence);
+    sequenceNext?.addEventListener('click', showNotePractice);
+    notePracticeBack?.addEventListener('click', showSequenceFromPractice);
 
     const fluteNoteData = [
         { note: 'SOL', slug: 'sol', thumbOpen: true, frontStates: ['open', 'open', 'open', 'open', 'open', 'covered'] },
@@ -58,6 +80,174 @@ document.addEventListener('DOMContentLoaded', () => {
         { note: 'SI', slug: 'si', thumbOpen: false, frontStates: ['covered', 'covered', 'covered', 'covered', 'open', 'covered'] },
         { note: 'LA', slug: 'la', thumbOpen: false, frontStates: ['covered', 'covered', 'covered', 'covered', 'covered', 'covered'] }
     ];
+
+    const practiceAudioPaths = {
+        sol: 'Notas Flauta/sol grave.mp3',
+        fa: 'Notas Flauta/FA GRAVE.mp3',
+        mi: 'Notas Flauta/Mi Grave.mp3',
+        re: 'Notas Flauta/RE GRAVE.mp3',
+        do: 'Notas Flauta/DO.mp3',
+        si: 'Notas Flauta/SI GRAVE.mp3',
+        la: 'Notas Flauta/LA GRAVE.mp3'
+    };
+
+    const practiceHoles = [...document.querySelectorAll('.practice-hole')];
+    const practiceCounter = document.getElementById('practiceCounter');
+    const practiceNoteName = document.getElementById('practiceNoteName');
+    const practiceInstruction = document.getElementById('practiceInstruction');
+    const practiceFingerList = document.getElementById('practiceFingerList');
+    const practiceFeedback = document.getElementById('practiceFeedback');
+    const practiceCheck = document.getElementById('practiceCheck');
+    const practiceRetry = document.getElementById('practiceRetry');
+    const practiceNext = document.getElementById('practiceNext');
+    const practiceComplete = document.getElementById('practiceComplete');
+    const practiceActions = document.querySelector('.practice-actions');
+    const practiceHelp = document.getElementById('practiceHelp');
+    const practiceNoHelp = document.getElementById('practiceNoHelp');
+    const practiceRestart = document.getElementById('practiceRestart');
+    const practiceFinish = document.getElementById('practiceFinish');
+    let practiceIndex = 0;
+    let practiceWithHelp = true;
+    let practiceAudio = null;
+    let practiceState = { thumb: 'open', front: Array(6).fill('open') };
+
+    function targetPracticeState(noteData) {
+        return {
+            thumb: noteData.thumbOpen ? 'open' : 'covered',
+            front: [...noteData.frontStates]
+        };
+    }
+
+    function setPracticeHoleVisual(hole, state) {
+        hole.classList.toggle('is-open', state === 'open');
+        hole.classList.toggle('is-covered', state === 'covered');
+        const label = hole.dataset.hole === 'thumb'
+            ? 'Pulgar izquierdo, orificio posterior'
+            : ['Índice izquierdo', 'Medio izquierdo', 'Anular izquierdo', 'Índice derecho', 'Medio derecho', 'Anular derecho'][Number(hole.dataset.hole)];
+        hole.setAttribute('aria-label', `${label}, ${state === 'open' ? 'abierto' : 'tapado'}`);
+    }
+
+    function updatePracticeHints() {
+        const target = targetPracticeState(fluteNoteData[practiceIndex]);
+        practiceFingerList?.querySelectorAll('li').forEach(item => {
+            const state = item.dataset.finger === 'thumb' ? target.thumb : target.front[Number(item.dataset.finger)];
+            item.dataset.target = state;
+            item.title = practiceWithHelp ? `Debes dejarlo ${state === 'open' ? 'abierto' : 'tapado'}` : 'Recuerda la posición de esta digitación';
+            item.classList.toggle('is-target-covered', state === 'covered');
+            item.classList.toggle('is-target-open', state === 'open');
+        });
+        if (practiceInstruction) {
+            practiceInstruction.textContent = practiceWithHelp
+                ? 'Sigue las indicaciones de los dedos para construir la nota:'
+                : 'Recuerda la digitación y construye la nota:';
+        }
+    }
+
+    function resetPracticeNote() {
+        practiceState = { thumb: 'open', front: Array(6).fill('open') };
+        practiceHoles.forEach(hole => setPracticeHoleVisual(hole, 'open'));
+        practiceFeedback.textContent = '';
+        practiceFeedback.className = 'practice-feedback';
+        practiceNext.disabled = true;
+        updatePracticeHints();
+    }
+
+    function renderPracticeNote() {
+        const noteData = fluteNoteData[practiceIndex];
+        practiceCounter.textContent = `Nota ${practiceIndex + 1} de ${fluteNoteData.length}`;
+        practiceNoteName.textContent = noteData.note;
+        resetPracticeNote();
+    }
+
+    function playPracticeAudio(noteData) {
+        practiceAudio?.pause();
+        practiceAudio = new Audio(practiceAudioPaths[noteData.slug]);
+        practiceAudio.play().catch(() => {
+            practiceFeedback.textContent += ' El audio se encuentra pendiente de carga.';
+        });
+    }
+
+    function practiceMatchesTarget() {
+        const target = targetPracticeState(fluteNoteData[practiceIndex]);
+        return practiceState.thumb === target.thumb && practiceState.front.every((state, index) => state === target.front[index]);
+    }
+
+    practiceHoles.forEach(hole => {
+        hole.addEventListener('click', () => {
+            const key = hole.dataset.hole;
+            if (key === 'thumb') {
+                practiceState.thumb = practiceState.thumb === 'open' ? 'covered' : 'open';
+                setPracticeHoleVisual(hole, practiceState.thumb);
+            } else {
+                const index = Number(key);
+                practiceState.front[index] = practiceState.front[index] === 'open' ? 'covered' : 'open';
+                setPracticeHoleVisual(hole, practiceState.front[index]);
+            }
+            practiceFeedback.textContent = '';
+            practiceFeedback.className = 'practice-feedback';
+            practiceNext.disabled = true;
+        });
+    });
+
+    practiceCheck?.addEventListener('click', () => {
+        if (practiceMatchesTarget()) {
+            practiceFeedback.textContent = '¡Correcto! Has construido la nota.';
+            practiceFeedback.className = 'practice-feedback is-correct';
+            practiceNext.disabled = false;
+            playPracticeAudio(fluteNoteData[practiceIndex]);
+        } else {
+            practiceFeedback.textContent = 'Aún no coincide. Revisa los orificios tapados y abiertos.';
+            practiceFeedback.className = 'practice-feedback is-incorrect';
+            practiceNext.disabled = true;
+        }
+    });
+
+    practiceRetry?.addEventListener('click', resetPracticeNote);
+    practiceNext?.addEventListener('click', () => {
+        if (practiceNext.disabled) return;
+        if (practiceIndex === fluteNoteData.length - 1) {
+            practiceActions.hidden = true;
+            practiceComplete.hidden = false;
+            practiceFeedback.textContent = '';
+            return;
+        }
+        practiceIndex += 1;
+        renderPracticeNote();
+    });
+
+    practiceHelp?.addEventListener('click', () => {
+        practiceWithHelp = true;
+        practiceHelp.classList.add('is-active');
+        practiceNoHelp.classList.remove('is-active');
+        practiceHelp.setAttribute('aria-pressed', 'true');
+        practiceNoHelp.setAttribute('aria-pressed', 'false');
+        updatePracticeHints();
+    });
+
+    practiceNoHelp?.addEventListener('click', () => {
+        practiceWithHelp = false;
+        practiceNoHelp.classList.add('is-active');
+        practiceHelp.classList.remove('is-active');
+        practiceNoHelp.setAttribute('aria-pressed', 'true');
+        practiceHelp.setAttribute('aria-pressed', 'false');
+        updatePracticeHints();
+    });
+
+    practiceRestart?.addEventListener('click', () => {
+        practiceIndex = 0;
+        practiceComplete.hidden = true;
+        practiceActions.hidden = false;
+        practiceFinish.disabled = false;
+        renderPracticeNote();
+    });
+
+    practiceFinish?.addEventListener('click', () => {
+        practiceFinish.disabled = true;
+        practiceFinish.textContent = 'Finalizada';
+        practiceComplete.querySelector('p').textContent = 'Actividad finalizada. ¡Muy bien!';
+    });
+
+    renderPracticeNote();
 
     let activeNoteAudio = null;
     let activeNoteCard = null;

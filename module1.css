@@ -2030,6 +2030,80 @@ body {
 .flute-sequence-image { width: 100%; height: 100%; max-width: calc(100% - 24px); max-height: calc(100% - 24px); z-index: 1; }
 .flute-sequence-back { left: 8px; z-index: 5; }
 
+.note-practice-panel {
+    position: relative;
+    display: flex;
+    min-height: calc(100dvh - 156px);
+    height: calc(100dvh - 156px);
+    flex-direction: column;
+    padding: 14px 34px;
+    overflow: visible;
+    border: 1px solid #0b665d;
+    border-radius: var(--radius-xl);
+    background: #064c45;
+    box-shadow: 0 16px 34px rgba(3, 47, 42, .22);
+}
+.note-practice-back { left: 8px; z-index: 5; }
+.note-practice-heading { text-align: center; }
+.note-practice-heading h2 { margin: 0; color: #fff9e8; font-size: clamp(1.35rem, 2.4vw, 1.9rem); line-height: 1.1; }
+.note-practice-heading p { margin: 4px 0 0; color: #daf1de; font-size: .82rem; }
+.note-practice-toolbar { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin: 8px auto 6px; width: min(100%, 820px); }
+.note-practice-modes { display: flex; gap: 5px; }
+.note-practice-mode, .note-practice-counter { border: 1px solid rgba(218,241,222,.42); border-radius: 999px; color: #daf1de; font-size: .75rem; font-weight: 800; }
+.note-practice-mode { padding: 6px 12px; background: #07594f; cursor: pointer; }
+.note-practice-mode.is-active { border-color: #f2c557; background: #f2c557; color: #173f31; }
+.note-practice-counter { padding: 6px 12px; background: rgba(7,89,79,.65); }
+.note-practice-workspace { display: grid; grid-template-columns: minmax(190px, .75fr) minmax(0, 1.25fr); align-items: center; gap: 24px; width: min(100%, 820px); min-height: 0; margin: 0 auto; flex: 1; }
+.practice-flute-area { display: flex; min-height: 0; flex-direction: column; align-items: center; justify-content: center; }
+.practice-flute { position: relative; width: 72px; height: 238px; }
+.practice-mouthpiece { position: absolute; z-index: 1; top: 0; left: 50%; width: 58px; height: 40px; border-radius: 10px; background: #f2c557; box-shadow: 0 4px 0 rgba(23,63,49,.22); transform: translateX(-50%); }
+.practice-mouthpiece span { position: absolute; top: 12px; left: 50%; width: 26px; height: 18px; background: #704323; transform: translateX(-50%); }
+.practice-tube { position: absolute; top: 30px; left: 50%; width: 50px; height: 208px; border: 2px solid #8c5b24; border-radius: 14px 14px 12px 12px; background: linear-gradient(90deg,#c8892d,#f0c05c 48%,#b87520); transform: translateX(-50%); }
+.practice-hole { position: absolute; z-index: 2; display: block; width: 31px; height: 31px; padding: 0; border: 3px solid #b07a32; border-radius: 50%; background: #daf1de; box-shadow: 0 0 0 2px rgba(23,63,49,.25); cursor: pointer; transform: translate(-50%, -50%); }
+.practice-hole:hover, .practice-hole:focus-visible { border-color: #f2c557; outline: 2px solid #fff9e8; outline-offset: 2px; }
+.practice-hole.is-covered { border-color: #8b5a26; background: #432919; box-shadow: 0 0 0 2px rgba(23,63,49,.28); }
+.practice-thumb-hole { top: 30%; left: -28px; }
+.practice-hole:not(.practice-thumb-hole) { left: 50%; }
+.practice-hole[data-hole="0"] { top: 14%; }
+.practice-hole[data-hole="1"] { top: 27%; }
+.practice-hole[data-hole="2"] { top: 40%; }
+.practice-hole[data-hole="3"] { top: 53%; }
+.practice-hole[data-hole="4"] { top: 66%; }
+.practice-hole[data-hole="5"] { top: 79%; }
+.practice-flute-caption { max-width: 170px; margin-top: 6px; color: #daf1de; font-size: .68rem; text-align: center; }
+.practice-fingers-panel { min-width: 0; }
+.practice-fingers-panel h3 { margin: 0 0 3px; color: #fff9e8; font-size: clamp(1.25rem, 2.2vw, 1.8rem); }
+.practice-fingers-instruction { margin: 0 0 6px; color: #daf1de; font-size: .75rem; }
+.practice-finger-list { display: grid; gap: 4px; margin: 0; padding: 0; list-style: none; }
+.practice-finger-list li { display: flex; align-items: center; min-height: 27px; padding: 4px 8px; border: 1px solid transparent; border-radius: 7px; background: #07594f; color: #fff9e8; font-size: .72rem; transition: background .2s ease, border-color .2s ease; }
+.practice-finger-list li.is-target-covered { border-color: rgba(242,197,87,.6); background: #176f60; }
+.practice-finger-mark { margin-right: 6px; color: #daf1de; font-size: .72rem; }
+.practice-finger-list li.is-target-covered .practice-finger-mark { color: #f2c557; }
+.practice-feedback { min-height: 1.25em; margin: 4px auto; color: #daf1de; font-size: .78rem; font-weight: 800; text-align: center; }
+.practice-feedback.is-correct { color: #7fe0a4; }
+.practice-feedback.is-incorrect { color: #ff9d91; }
+.practice-actions { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 6px; width: min(100%, 820px); margin: 0 auto; }
+.practice-action { min-height: 30px; padding: 5px 10px; border: 1px solid #daf1de; border-radius: 999px; background: #daf1de; color: #173f31; font-size: .75rem; font-weight: 800; cursor: pointer; }
+.practice-action:hover, .practice-action:focus-visible { filter: brightness(.96); outline: 2px solid #f2c557; outline-offset: 2px; }
+.practice-retry { border-color: rgba(218,241,222,.62); background: transparent; color: #daf1de; }
+.practice-action:disabled { cursor: not-allowed; opacity: .45; }
+.practice-complete { margin: 8px auto 0; text-align: center; }
+.practice-complete p { margin: 0 0 6px; color: #7fe0a4; font-size: .95rem; font-weight: 900; }
+.practice-complete > div { display: flex; justify-content: center; gap: 7px; }
+
+@media (max-width: 760px) {
+    .note-practice-panel { min-height: calc(100dvh - 156px); height: calc(100dvh - 156px); padding: 10px 30px; }
+    .note-practice-heading h2 { font-size: 1.2rem; }
+    .note-practice-heading p { font-size: .68rem; }
+    .note-practice-toolbar { margin-top: 5px; }
+    .note-practice-mode, .note-practice-counter { padding: 4px 8px; font-size: .65rem; }
+    .note-practice-workspace { grid-template-columns: 125px minmax(0, 1fr); gap: 10px; }
+    .practice-flute { transform: scale(.82); transform-origin: center; }
+    .practice-finger-list { gap: 3px; }
+    .practice-finger-list li { min-height: 23px; padding: 3px 6px; font-size: .62rem; }
+    .practice-action { min-height: 27px; padding: 4px 6px; font-size: .64rem; }
+}
+
 @media (max-width: 760px) {
     .flute-sequence-panel { min-height: calc(100dvh - 156px); height: calc(100dvh - 156px); }
 }

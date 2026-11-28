@@ -64,6 +64,69 @@
                 <section class="flute-sequence-panel" aria-label="Explicación de la secuencia de las notas">
                     <button class="position-intro-back flute-sequence-back" id="fluteSequenceBack" type="button" aria-label="Regresar a las notas musicales">&lt;</button>
                     <img class="flute-sequence-image" src="Explicacion de las notas.webp" alt="Aprende la secuencia de las notas de la flauta de carrizo">
+                    <button class="position-intro-next flute-sequence-next" id="fluteSequenceNext" type="button" aria-label="Avanzar a la actividad Construye las notas musicales">&gt;</button>
+                </section>
+            </div>
+        </section>
+
+        <section class="content-section" id="sectionNotePractice" aria-labelledby="notePracticeTitle" hidden>
+            <div class="section-container module1-simulator-container">
+                <section class="note-practice-panel" aria-labelledby="notePracticeTitle">
+                    <button class="position-intro-back note-practice-back" id="notePracticeBack" type="button" aria-label="Regresar a la explicación de la secuencia">&lt;</button>
+                    <div class="note-practice-heading">
+                        <h2 id="notePracticeTitle">Construye las notas musicales</h2>
+                        <p>Destapa o tapa los orificios para construir cada nota de la flauta de carrizo.</p>
+                    </div>
+                    <div class="note-practice-toolbar">
+                        <div class="note-practice-modes" role="group" aria-label="Modalidad de la actividad">
+                            <button class="note-practice-mode is-active" id="practiceHelp" type="button" aria-pressed="true">Con ayuda</button>
+                            <button class="note-practice-mode" id="practiceNoHelp" type="button" aria-pressed="false">Sin ayuda</button>
+                        </div>
+                        <div class="note-practice-counter" id="practiceCounter" aria-live="polite">Nota 1 de 7</div>
+                    </div>
+                    <div class="note-practice-workspace" id="notePracticeWorkspace">
+                        <div class="practice-flute-area">
+                            <div class="practice-flute" id="practiceFlute" role="group" aria-label="Orificios interactivos de la flauta">
+                                <div class="practice-mouthpiece"><span></span></div>
+                                <div class="practice-tube">
+                                    <button class="practice-hole practice-thumb-hole is-open" type="button" data-hole="thumb" aria-label="Pulgar izquierdo, orificio posterior, abierto"></button>
+                                    <button class="practice-hole is-open" type="button" data-hole="0" aria-label="Índice izquierdo, orificio frontal 1, abierto"></button>
+                                    <button class="practice-hole is-open" type="button" data-hole="1" aria-label="Medio izquierdo, orificio frontal 2, abierto"></button>
+                                    <button class="practice-hole is-open" type="button" data-hole="2" aria-label="Anular izquierdo, orificio frontal 3, abierto"></button>
+                                    <button class="practice-hole is-open" type="button" data-hole="3" aria-label="Índice derecho, orificio frontal 4, abierto"></button>
+                                    <button class="practice-hole is-open" type="button" data-hole="4" aria-label="Medio derecho, orificio frontal 5, abierto"></button>
+                                    <button class="practice-hole is-open" type="button" data-hole="5" aria-label="Anular derecho, orificio frontal 6, abierto"></button>
+                                </div>
+                            </div>
+                            <div class="practice-flute-caption">Haz clic en los círculos para tapar o destapar</div>
+                        </div>
+                        <div class="practice-fingers-panel">
+                            <h3 id="practiceNoteName">SOL</h3>
+                            <p class="practice-fingers-instruction" id="practiceInstruction">Indicaciones para construir la nota:</p>
+                            <ul class="practice-finger-list" id="practiceFingerList">
+                                <li data-finger="thumb"><span class="practice-finger-mark">◉</span> Pulgar izquierdo</li>
+                                <li data-finger="0"><span class="practice-finger-mark">◉</span> Índice izquierdo</li>
+                                <li data-finger="1"><span class="practice-finger-mark">◉</span> Medio izquierdo</li>
+                                <li data-finger="2"><span class="practice-finger-mark">◉</span> Anular izquierdo</li>
+                                <li data-finger="3"><span class="practice-finger-mark">◉</span> Índice derecho</li>
+                                <li data-finger="4"><span class="practice-finger-mark">◉</span> Medio derecho</li>
+                                <li data-finger="5"><span class="practice-finger-mark">◉</span> Anular derecho</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <p class="practice-feedback" id="practiceFeedback" role="status" aria-live="polite"></p>
+                    <div class="practice-actions">
+                        <button class="practice-action practice-check" id="practiceCheck" type="button">Comprobar</button>
+                        <button class="practice-action practice-retry" id="practiceRetry" type="button">Reintentar</button>
+                        <button class="practice-action practice-next" id="practiceNext" type="button" disabled>Siguiente nota</button>
+                    </div>
+                    <div class="practice-complete" id="practiceComplete" hidden>
+                        <p>¡Excelente! Has completado la actividad de reforzamiento</p>
+                        <div>
+                            <button class="practice-action practice-retry" id="practiceRestart" type="button">Volver a practicar</button>
+                            <button class="practice-action practice-finish" id="practiceFinish" type="button">Finalizar</button>
+                        </div>
+                    </div>
                 </section>
             </div>
         </section>
