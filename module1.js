@@ -5,15 +5,27 @@ document.addEventListener('DOMContentLoaded', () => {
     const positionIntro = document.getElementById('sectionPositionIntro');
     const positionIntroNext = document.getElementById('positionIntroNext');
     const notesSection = document.getElementById('sectionAudio');
+    const positionIntroBack = document.getElementById('positionIntroBack');
 
-    positionIntroNext?.addEventListener('click', () => {
+    function showNotesSection() {
         positionIntro.hidden = true;
         positionIntro.classList.remove('active');
         notesSection.hidden = false;
         notesSection.classList.add('active');
         window.scrollTo(0, 0);
-        document.getElementById('fluteNotesTitle')?.focus?.({ preventScroll: true });
-    });
+    }
+
+    function showPositionIntro() {
+        notesSection.hidden = true;
+        notesSection.classList.remove('active');
+        positionIntro.hidden = false;
+        positionIntro.classList.add('active');
+        window.scrollTo(0, 0);
+        positionIntroNext?.focus({ preventScroll: true });
+    }
+
+    positionIntroNext?.addEventListener('click', showNotesSection);
+    positionIntroBack?.addEventListener('click', showPositionIntro);
 
     const fluteNoteData = [
         { note: 'SOL', slug: 'sol', thumbOpen: true, frontStates: ['open', 'open', 'open', 'open', 'open', 'covered'] },

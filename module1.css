@@ -1796,6 +1796,10 @@ body {
 .position-intro-copy strong{color:#fff9e8}
 .position-intro-next{display:inline-flex;width:48px;height:48px;min-width:48px;min-height:48px;margin:16px 0 0;padding:0;border:1px solid #f2c557!important;border-radius:50%;align-items:center;justify-content:center;background:#f2c557!important;color:#173f31!important;font-size:30px;font-weight:800;line-height:1}
 .position-intro-next:hover,.position-intro-next:focus-visible{transform:translateX(3px);filter:brightness(.97)}
+.position-intro-copy h2{color:#DAF1DE!important}
+.flute-notes-heading{position:relative}
+.position-intro-back{position:absolute;left:0;top:50%;display:inline-flex;width:42px;height:42px;min-width:42px;min-height:42px;margin:0;padding:0;border:1px solid #f2c557!important;border-radius:50%;align-items:center;justify-content:center;background:#f2c557!important;color:#173f31!important;font-size:27px;font-weight:800;line-height:1;transform:translateY(-50%)}
+.position-intro-back:hover,.position-intro-back:focus-visible{transform:translate(-3px,-50%);filter:brightness(.97)}
 
 @media (max-width: 768px) {
     .toolbar-back .toolbar-back-icon { display: inline; font-size: 1.35rem; line-height: 1; }
